@@ -1,0 +1,68 @@
+version: '3.9'
+
+services: 
+  mysql_typers:
+    image: mysql/mysql-server:latest
+    ports: 
+      - "3320:3306"
+    volumes: 
+      - db_volume_typers:/var/lib/mysql
+      - ../db/typers.sql:/docker-entrypoint-initdb.d/typers.sql:ro
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_0900_ai_ci']
+    environment: 
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_HOST: localhost
+      MYSQL_DATABASE: "typers"
+      MYSQL_USER: "root"
+    container_name: db_typers
+  
+  mysql_contactos:
+    image: mysql/mysql-server:latest
+    ports: 
+      - "3321:3306"
+    volumes: 
+      - db_volume_contactos:/var/lib/mysql
+      - ../db/contactos.sql:/docker-entrypoint-initdb.d/contactos.sql:ro
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_0900_ai_ci']
+    environment: 
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_HOST: localhost
+      MYSQL_DATABASE: "contactos"
+      MYSQL_USER: "root"
+    container_name: db_contactos
+  
+  mysql_mensajes:
+    image: mysql/mysql-server:latest
+    ports: 
+      - "3322:3306"
+    volumes: 
+      - db_volume_mensajes:/var/lib/mysql
+      - ../db/mensajes.sql:/docker-entrypoint-initdb.d/mensajes.sql:ro
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_0900_ai_ci']
+    environment: 
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_HOST: localhost
+      MYSQL_DATABASE: "mensajes"
+      MYSQL_USER: "root"
+    container_name: db_mensajes
+  
+  mysql_multimedia:
+    image: mysql/mysql-server:latest
+    ports: 
+      - "3323:3306"
+    volumes: 
+      - db_volume_multimedia:/var/lib/mysql
+      - ../db/multimedia.sql:/docker-entrypoint-initdb.d/multimedia.sql:ro
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_0900_ai_ci']
+    environment: 
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_HOST: localhost
+      MYSQL_DATABASE: "multimedia"
+      MYSQL_USER: "root"
+    container_name: db_multimedia
+
+volumes:
+  db_volume_typers:
+  db_volume_contactos:
+  db_volume_mensajes:
+  db_volume_multimedia:
