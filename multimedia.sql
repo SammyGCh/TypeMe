@@ -5,19 +5,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema multimedia
+-- Schema Multimedias
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema multimedia
+-- Schema Multimedias
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `multimedia` DEFAULT CHARACTER SET utf8 ;
-USE `multimedia` ;
+CREATE SCHEMA IF NOT EXISTS `Multimedias` DEFAULT CHARACTER SET utf8 ;
+USE `Multimedias` ;
 
 -- -----------------------------------------------------
--- Table `multimedia`.`TipoMultimedia`
+-- Table `Multimedias`.`TipoMultimedia`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `multimedia`.`TipoMultimedia` (
+CREATE TABLE IF NOT EXISTS `Multimedias`.`TipoMultimedia` (
   `IdTipoMultimedia` INT NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`IdTipoMultimedia`))
@@ -25,9 +25,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `multimedia`.`Multimedia`
+-- Table `Multimedias`.`Multimedias`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `multimedia`.`Multimedia` (
+CREATE TABLE IF NOT EXISTS `Multimedias`.`Multimedias` (
   `IdMultimedia` INT NOT NULL AUTO_INCREMENT,
   `Ruta` VARCHAR(100) NOT NULL,
   `IdTipoMultimedia` INT NOT NULL,
@@ -36,14 +36,14 @@ CREATE TABLE IF NOT EXISTS `multimedia`.`Multimedia` (
   INDEX `fk_Multimedia_TipoMultimedia_idx` (`IdTipoMultimedia` ASC) VISIBLE,
   CONSTRAINT `fk_Multimedia_TipoMultimedia`
     FOREIGN KEY (`IdTipoMultimedia`)
-    REFERENCES `multimedia`.`TipoMultimedia` (`IdTipoMultimedia`)
+    REFERENCES `Multimedias`.`TipoMultimedia` (`IdTipoMultimedia`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 CREATE USER 'adminMultimedia' IDENTIFIED BY 'proyecto2021';
-GRANT ALL PRIVILEGES ON multimedia.* TO 'adminMultimedia'@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON Multimedias.* TO 'adminMultimedia'@'%' WITH GRANT OPTION;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

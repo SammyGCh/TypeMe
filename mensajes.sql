@@ -5,19 +5,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mensajes
+-- Schema Mensajes
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mensajes
+-- Schema Mensajes
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mensajes` DEFAULT CHARACTER SET utf8 ;
-USE `mensajes` ;
+CREATE SCHEMA IF NOT EXISTS `Mensajes` DEFAULT CHARACTER SET utf8 ;
+USE `Mensajes` ;
 
 -- -----------------------------------------------------
--- Table `mensajes`.`Grupo`
+-- Table `Mensajes`.`Grupo`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mensajes`.`Grupo` (
+CREATE TABLE IF NOT EXISTS `Mensajes`.`Grupos` (
   `IdGrupo` INT NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(45) NULL,
   `Descripcion` VARCHAR(200) NULL,
@@ -27,9 +27,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mensajes`.`Mensaje`
+-- Table `Mensajes`.`Mensaje`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mensajes`.`Mensaje` (
+CREATE TABLE IF NOT EXISTS `Mensajes`.`Mensajes` (
   `IdMensaje` INT NOT NULL AUTO_INCREMENT,
   `Contenido` MEDIUMTEXT NOT NULL,
   `Fecha` DATE NOT NULL,
@@ -40,29 +40,29 @@ CREATE TABLE IF NOT EXISTS `mensajes`.`Mensaje` (
   INDEX `fk_Mensaje_Grupo_idx` (`IdGrupo` ASC) VISIBLE,
   CONSTRAINT `fk_Mensaje_Grupo`
     FOREIGN KEY (`IdGrupo`)
-    REFERENCES `mensajes`.`Grupo` (`IdGrupo`)
+    REFERENCES `Mensajes`.`Grupos` (`IdGrupo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mensajes`.`Pertenece`
+-- Table `Mensajes`.`Pertenece`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mensajes`.`Pertenece` (
+CREATE TABLE IF NOT EXISTS `Mensajes`.`Pertenece` (
   `IdGrupo` INT NOT NULL,
   `Username` VARCHAR(30) NOT NULL,
-  PRIMARY KEY (`IdGrupo`),
+  PRIMARY KEY (`IdGrupo`, `Username`),
   CONSTRAINT `fk_Pertenece_Grupo1`
     FOREIGN KEY (`IdGrupo`)
-    REFERENCES `mensajes`.`Grupo` (`IdGrupo`)
+    REFERENCES `Mensajes`.`Grupos` (`IdGrupo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 CREATE USER 'adminMensajes' IDENTIFIED BY 'proyecto2021';
-GRANT ALL PRIVILEGES ON mensajes.* TO 'adminMensajes'@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON Mensajes.* TO 'adminMensajes'@'%' WITH GRANT OPTION;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
