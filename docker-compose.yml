@@ -61,6 +61,18 @@ services:
       MYSQL_USER: "root"
     container_name: db_multimedia
 
+  ms_typers:
+    image: ms_typers
+    depends_on: 
+        - "mysql_typers"
+    ports:
+        - "3324:80"
+    build: 
+        context: ../MSTypers/
+        dockerfile: Dockerfile
+    environment: 
+        DB_CONNECTION_STRING: "server=mysql_typers;user=adminTypers;password=proyecto2021;database=Typers"
+
 volumes:
   db_volume_typers:
   db_volume_contactos:
