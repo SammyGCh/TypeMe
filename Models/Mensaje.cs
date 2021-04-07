@@ -12,7 +12,7 @@ namespace MSMensajes.Models
         public DateTime Fecha { get; set; }
         public TimeSpan Hora { get; set; }
         public int IdGrupo { get; set; }
-        public string Username { get; set; }
+        public string IdTyper { get; set; }
 
         public virtual Grupo IdGrupoNavigation { get; set; }
     }

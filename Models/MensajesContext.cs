@@ -42,6 +42,10 @@ namespace MSMensajes.Models
                 entity.HasKey(e => e.IdGrupo)
                     .HasName("PRIMARY");
 
+                entity.ToTable("grupos");
+
+                entity.Property(e => e.IdGrupo).HasColumnType("int(11)");
+
                 entity.Property(e => e.Descripcion)
                     .HasColumnType("varchar(200)")
                     .HasCharSet("utf8")
@@ -60,7 +64,11 @@ namespace MSMensajes.Models
                 entity.HasKey(e => e.IdMensaje)
                     .HasName("PRIMARY");
 
+                entity.ToTable("mensajes");
+
                 entity.HasIndex(e => e.IdGrupo, "fk_Mensaje_Grupo_idx");
+
+                entity.Property(e => e.IdMensaje).HasColumnType("int(11)");
 
                 entity.Property(e => e.Contenido)
                     .IsRequired()
@@ -72,9 +80,11 @@ namespace MSMensajes.Models
 
                 entity.Property(e => e.Hora).HasColumnType("time");
 
-                entity.Property(e => e.Username)
+                entity.Property(e => e.IdGrupo).HasColumnType("int(11)");
+
+                entity.Property(e => e.IdTyper)
                     .IsRequired()
-                    .HasColumnType("varchar(30)")
+                    .HasColumnType("varchar(40)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
@@ -87,14 +97,16 @@ namespace MSMensajes.Models
 
             modelBuilder.Entity<Pertenece>(entity =>
             {
-                entity.HasKey(e => new { e.IdGrupo, e.Username })
+                entity.HasKey(e => new { e.IdGrupo, e.IdTyper })
                     .HasName("PRIMARY")
                     .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
-                entity.ToTable("Pertenece");
+                entity.ToTable("pertenece");
 
-                entity.Property(e => e.Username)
-                    .HasColumnType("varchar(30)")
+                entity.Property(e => e.IdGrupo).HasColumnType("int(11)");
+
+                entity.Property(e => e.IdTyper)
+                    .HasColumnType("varchar(40)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
