@@ -259,5 +259,57 @@ namespace MSMensajes.Controllers
 
             return BadRequest("No existe el grupo con el id especificado.");
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idGrupo"></param>
+        /// <param name="idTyper"></param>
+        /// <returns></returns>
+        [HttpPut("salir")]
+        public async Task<ActionResult<bool>> SalirDeGrupo([FromQuery] int idGrupo = -1, [FromQuery] string idTyper = "")
+        {
+            if (idGrupo < VALOR_MINIMO_ID)
+            {
+                return BadRequest("Id de grupo no especificado o incorrecto");
+            }
+
+            if (idTyper.Equals(""))
+            {
+                return BadRequest("Id de typer no especificado o incorrecto");
+            }
+
+            Pertenece perteneceAEliminar = _mensajesContext.Perteneces.SingleOrDefault(pertenece => 
+                pertenece.IdGrupo == idGrupo && pertenece.IdTyper.Equals(idTyper)
+            );
+
+            if (perteneceAEliminar != null)
+            {
+                _mensajesContext.Perteneces.Remove(perteneceAEliminar);
+
+                int resultado;
+
+                try
+                {
+                    resultado = await _mensajesContext.SaveChangesAsync();
+                }
+                catch (DbUpdateException e)
+                {
+                    _logger.LogError("Sucedio una excepcion:\n" + e.InnerException.Message);
+                    return BadRequest(e.InnerException.Message);
+                }
+
+                if (resultado == NINGUN_CAMBIO_REALIZADO)
+                {
+                    return BadRequest(false);
+                }
+            }
+            else
+            {
+                return BadRequest("El id del grupo y/o id del Typer no está registrado");
+            }
+
+            return Ok(true);
+        }
     }
 }
