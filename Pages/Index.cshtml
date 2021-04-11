@@ -1,0 +1,71 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">TypeMe</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div class="prueba">
+
+    </div>
+
+    <button onclick="iniciarSesion()">Iniciar sesión</button>
+    <button onclick="registrarCuenta()">Crear cuenta</button>
+</div>
+
+<link rel="stylesheet" href="~/css/login.css" />
+
+<script>
+    function iniciarSesion()
+    {
+        
+        $.ajax({
+                type: "GET",
+                url: "http://localhost:3324/typer/infoTyper?username=Angel de jesus",
+                jsonpCallback: false,
+                //crossDomain: true,
+                //dataType: "jsonp",
+                //contentType: "application/json",
+                //processData: false,
+                //data: JSON.stringify(alumno),
+                success: function(data) {
+                    //alert(data[0].direccion)
+                    console.log(data)
+                },
+                error: function(error){
+                    alert("Lo sentimos, hubo un error.");
+                    console.log(error)
+                }
+            });
+        
+
+        /*
+        fetch("https://b4dff4c642eb.ngrok.io/typer/obtenerCorreos?idTyper=d9b3ef22-016d-4470-a05f-db81a229e035")
+        .then(res => res.json())
+        .then(resp => alert(resp[0].direccion))
+        .catch(err => console.log(err))
+        
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('GET', 'https://aca1e37dc2cb.ngrok.io/typer/obtenerCorreos?idTyper=d9b3ef22-016d-4470-a05f-db81a229e035');
+
+        xhr.responseType = 'json';
+
+        xhr.onload = function (respuesta) {
+            //alert(respuesta);
+            console.log(respuesta)
+        };
+
+        xhr.send();
+        */
+    }
+
+    function registrarCuenta()
+    {
+        window.location.pathname = '/Privacy'
+    }
+</script>
