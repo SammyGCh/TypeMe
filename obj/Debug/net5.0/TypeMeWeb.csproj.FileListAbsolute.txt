@@ -38,3 +38,4 @@ D:\typeme\TypeMeWeb\obj\Debug\net5.0\ref\TypeMeWeb.dll
 D:\typeme\TypeMeWeb\obj\Debug\net5.0\TypeMeWeb.pdb
 D:\typeme\TypeMeWeb\obj\Debug\net5.0\TypeMeWeb.genruntimeconfig.cache
 D:\typeme\TypeMeWeb\obj\Debug\net5.0\TypeMeWeb.csproj.CopyComplete
+D:\typeme\TypeMeWeb\obj\Debug\net5.0\Razor\Pages\RegistrarCuenta.cshtml.g.cs

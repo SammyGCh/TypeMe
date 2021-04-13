@@ -15644,6 +15644,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\typeme\\TypeMeWeb\\Pages\\RegistrarCuenta.cshtml",
+      "TargetPath": "Pages\\RegistrarCuenta.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\typeme\\TypeMeWeb\\Pages\\Index.cshtml",
       "TargetPath": "Pages\\Index.cshtml",
       "FileKind": "mvc"

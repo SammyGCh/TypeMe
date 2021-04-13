@@ -1,0 +1,39 @@
+.header {
+    background-color: #D30000;
+}
+
+.titulo {
+    color: white;
+}
+
+.contenedor {
+    width: 650px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.contenedorTitulo {
+    background-color: #D30000;
+}
+
+.contenedorBotonRegistrar {
+    margin-top: 50px;
+    min-width: 200px;
+    max-width: 300px;
+    vertical-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contenedorBotonCancelar {
+    min-width: 200px;
+    max-width: 300px;
+    vertical-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contenedorInputs {
+    margin-top: 50px;
+}
