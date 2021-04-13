@@ -8,19 +8,23 @@
     "net5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\sammy\\.nuget\\packages\\": {}
+    "C:\\Users\\Angel\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\typeme\\TypeMeWeb\\TypeMeWeb.csproj",
+      "projectUniqueName": "D:\\Repositorios\\TypeMe\\TypeMeWeb\\TypeMeWeb.csproj",
       "projectName": "TypeMeWeb",
-      "projectPath": "D:\\typeme\\TypeMeWeb\\TypeMeWeb.csproj",
-      "packagesPath": "C:\\Users\\sammy\\.nuget\\packages\\",
-      "outputPath": "D:\\typeme\\TypeMeWeb\\obj\\",
+      "projectPath": "D:\\Repositorios\\TypeMe\\TypeMeWeb\\TypeMeWeb.csproj",
+      "packagesPath": "C:\\Users\\Angel\\.nuget\\packages\\",
+      "outputPath": "D:\\Repositorios\\TypeMe\\TypeMeWeb\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\sammy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Angel\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
