@@ -1,71 +1,91 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Login";
 }
 
-<div class="text-center">
-    <h1 class="display-4">TypeMe</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<link rel="stylesheet" href="~/css/login.css"/>
 
-    <div class="prueba">
+<div class="d-flex justify-content-center">
+    <div class="tarjeta-login col-xl-4 col-lg-4 col-md-6">
+        <div class="tarjeta-login__logo">
+            <img src="~/img/Logo.png" alt="Logo TypeMe">
+        </div>
 
-    </div>
+        <form action="" class="formulario">
+            <label for="usuario" class="formulario__label">Usuario</label><br>
+            <input name="usuario" id="Campo-usuario" type="text" class="formulario__input"><br>
 
-    <button onclick="iniciarSesion()">Iniciar sesión</button>
-    <button onclick="registrarCuenta()">Crear cuenta</button>
+            <label for="password" class="formulario__label">Contraseña</label><br>
+            <input name="password" id="Campo-contrasenia" type="password" class="formulario__input"><br>
+
+            <submit class="boton-login" id="login">Iniciar sesión</submit>
+        </form>    
+        <div class="boton-registrar" id="registrar">Crear cuenta</div>
+    <div>
 </div>
 
-<link rel="stylesheet" href="~/css/login.css" />
 
 <script>
+
+    const botonLogin = document.getElementById("login");
+    const botonRegistrar= document.getElementById("registrar");  
+    const inputUsuario = document.getElementById("Campo-usuario");
+    const inputContrasenia = document.getElementById("Campo-contrasenia");
+
+    botonLogin.addEventListener('click', e => {
+        e.preventDefault();
+
+        if(camposCompletos()){
+            iniciarSesion();
+        }else{
+            mostrarCamposErroneos();
+        }
+    });
+
+    botonRegistrar.addEventListener('click', () => {
+        registrarCuenta();
+    });
+
+    inputUsuario.addEventListener("focus", () => {
+        inputUsuario.classList.remove("formulario__input-error");
+    });
+
+    inputContrasenia.addEventListener("focus", () => {
+        inputContrasenia.classList.remove("formulario__input-error");
+    });
+
+
     function iniciarSesion()
     {
+        //Aqui se realiza la consulta al servicio
+        alert("Se envio la info");
+    }
+
+
+    function camposCompletos()
+    {
+        if(inputUsuario.value.trim() != "" && inputContrasenia.value.trim() != ""){
+            return true;
+        }else{
+            return false;
+        }    
+    }
+
+    function mostrarCamposErroneos()
+    {
+        if(inputUsuario.value.trim() == "" ){
+            inputUsuario.classList.add("formulario__input-error");
+        }
         
-        $.ajax({
-                type: "GET",
-                url: "http://localhost:3324/typer/infoTyper?username=Angel de jesus",
-                jsonpCallback: false,
-                //crossDomain: true,
-                //dataType: "jsonp",
-                //contentType: "application/json",
-                //processData: false,
-                //data: JSON.stringify(alumno),
-                success: function(data) {
-                    //alert(data[0].direccion)
-                    console.log(data)
-                },
-                error: function(error){
-                    alert("Lo sentimos, hubo un error.");
-                    console.log(error)
-                }
-            });
-        
-
-        /*
-        fetch("https://b4dff4c642eb.ngrok.io/typer/obtenerCorreos?idTyper=d9b3ef22-016d-4470-a05f-db81a229e035")
-        .then(res => res.json())
-        .then(resp => alert(resp[0].direccion))
-        .catch(err => console.log(err))
-        
-
-        const xhr = new XMLHttpRequest();
-
-        xhr.open('GET', 'https://aca1e37dc2cb.ngrok.io/typer/obtenerCorreos?idTyper=d9b3ef22-016d-4470-a05f-db81a229e035');
-
-        xhr.responseType = 'json';
-
-        xhr.onload = function (respuesta) {
-            //alert(respuesta);
-            console.log(respuesta)
-        };
-
-        xhr.send();
-        */
+        if(inputContrasenia.value.trim() == "" ){
+            inputContrasenia.classList.add("formulario__input-error");
+        }
     }
 
     function registrarCuenta()
     {
         window.location.pathname = '/RegistrarCuenta'
     }
+
 </script>
