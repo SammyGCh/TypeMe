@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MSMensajes.Models;
 using MySqlConnector;
+using Newtonsoft.Json.Linq;
+using MSMensajes.Converters;
 
 namespace MSMensajes.Controllers
 {
@@ -18,6 +20,7 @@ namespace MSMensajes.Controllers
         private readonly ILogger<MensajesController> _logger;
         private const int VALOR_MINIMO_ID = 1;
         private const int NINGUN_CAMBIO_REALIZADO = 0;
+        private JObject _resultado;
 
         public MensajesController(ILogger<MensajesController> logger)
         {
@@ -31,12 +34,13 @@ namespace MSMensajes.Controllers
         /// <param name="nuevoMensaje"></param>
         /// <returns></returns>
         [HttpPost("enviar")]
-        public async Task<ActionResult<bool>> EnviarMensaje([FromBody] Mensaje nuevoMensaje)
+        public async Task<ActionResult<JObject>> EnviarMensaje([FromBody] Mensaje nuevoMensaje)
         {
             if (nuevoMensaje == null)
             {
                 _logger.LogError("Mensaje no especificado");
-                return BadRequest("Mensaje no especificado");
+                _resultado = ConvertidorDeJson.ConvertirResultadoFallido("Mensaje no especificado");
+                return BadRequest(_resultado);
             }
 
             bool existeGrupo = _mensajesContext.Grupos.Any(grupo => grupo.IdGrupo == nuevoMensaje.IdGrupo);
@@ -44,7 +48,19 @@ namespace MSMensajes.Controllers
             if (!existeGrupo)
             {
                 _logger.LogError("No existe un grupo con el id especificado");
-                return BadRequest("No existe un grupo con el id especificado");
+                _resultado = ConvertidorDeJson.ConvertirResultadoFallido("No existe un grupo con el id especificado");
+                return BadRequest(_resultado);
+            }
+
+            bool esTyperIntegranteDelGrupo = _mensajesContext.Perteneces.Any(typer =>
+                typer.IdGrupo == nuevoMensaje.IdGrupo && typer.IdTyper.Equals(nuevoMensaje.IdTyper)
+            );
+
+            if (!esTyperIntegranteDelGrupo)
+            {
+                _logger.LogError("El typer no pertenece al grupo");
+                _resultado = ConvertidorDeJson.ConvertirResultadoFallido("El typer no pertenece al grupo");
+                return BadRequest(_resultado);
             }
 
             nuevoMensaje.Fecha = DateTime.Now;
@@ -61,15 +77,19 @@ namespace MSMensajes.Controllers
             catch (DbUpdateException e)
             {
                 _logger.LogError("Sucedio una excepcion:\n" + e.Message);
-                return BadRequest(e);
+                _resultado = ConvertidorDeJson.ConvertirResultadoFallido(e.Message);
+                return BadRequest(_resultado);
             }
 
             if (resultado == NINGUN_CAMBIO_REALIZADO)
             {
-                return BadRequest(false);
+                _resultado = ConvertidorDeJson.ConvertirResultadoFallido("No se pudo enviar el mensaje");
+                return BadRequest(_resultado);
             }
 
-            return Ok(true);
+
+            _resultado = ConvertidorDeJson.ConvertirResultadoExitoso("Mensaje enviado", nuevoMensaje);
+            return Ok(_resultado);
         }
 
         /// <summary>
@@ -78,11 +98,12 @@ namespace MSMensajes.Controllers
         /// <param name="idGrupo"></param>
         /// <returns></returns>
         [HttpGet("obtener/{idGrupo}")]
-        public async Task<ActionResult<Mensaje>> ObtenerMensajesDeGrupo(int idGrupo)
+        public async Task<ActionResult<JObject>> ObtenerMensajesDeGrupo(int idGrupo)
         {
             if (idGrupo < VALOR_MINIMO_ID)
             {
-                return BadRequest("Id del grupo incorrecto ");
+                _resultado = ConvertidorDeJson.ConvertirResultadoFallido("Id del grupo incorrecto");
+                return BadRequest(_resultado);
             }
 
             List<Mensaje> mensajes = null;
@@ -96,12 +117,14 @@ namespace MSMensajes.Controllers
             catch (ArgumentNullException e)
             {
                 _logger.LogError("Sucedió una excepción:\n" + e.Message);
-                return BadRequest(e.Message);
+                _resultado = ConvertidorDeJson.ConvertirResultadoFallido(e.Message);
+                return BadRequest(_resultado);
             }
             catch (MySqlException e)
             {
                 _logger.LogError("Sucedió una excepción:\n" + e.Message);
-                return BadRequest(e.Message);
+                _resultado = ConvertidorDeJson.ConvertirResultadoFallido(e.Message);
+                return BadRequest(_resultado);
             }
 
             int noHayMensajes = 0;
@@ -109,10 +132,12 @@ namespace MSMensajes.Controllers
             if (mensajes == null || mensajes.Count == noHayMensajes)
             {
                 _logger.LogError("No hay mensajes");
-                return BadRequest("No hay mensajes en el grupo");
+                _resultado = ConvertidorDeJson.ConvertirResultadoFallido("No hay mensajes en el grupo");
+                return BadRequest(_resultado);
             }
 
-            return Ok(mensajes);
+            _resultado = ConvertidorDeJson.ConvertirResultadoExitoso("Se encontraron mensajes", mensajes);
+            return Ok(_resultado);
         }
     }
 }
