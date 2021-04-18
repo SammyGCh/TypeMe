@@ -23,7 +23,9 @@ CREATE TABLE IF NOT EXISTS `Multimedias`.`TipoMultimedia` (
   PRIMARY KEY (`IdTipoMultimedia`))
 ENGINE = InnoDB;
 
-
+INSERT INTO TipoMultimedia (Nombre) VALUES ("Foto");
+INSERT INTO TipoMultimedia (Nombre) VALUES ("Video");
+INSERT INTO TipoMultimedia (Nombre) VALUES ("Archivo");
 -- -----------------------------------------------------
 -- Table `Multimedias`.`Multimedias`
 -- -----------------------------------------------------
