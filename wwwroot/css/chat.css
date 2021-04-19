@@ -1,0 +1,198 @@
+.chat-header {
+    background-color: #D30000;
+    display: flex;
+    flex-flow: row wrap;
+    height: 80px;
+    /* box-shadow: 0 4px 2px -2px gray; */
+}
+
+.chat-footer {
+    display: flex;
+    flex-flow: row wrap;
+    height: auto;
+    vertical-align: bottom;
+}
+
+.chat-messages {
+    overflow: auto;
+    height: 500px;
+    padding: 20px;
+}
+
+.chat-messages::-webkit-scrollbar {
+    width: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: rgb(204, 204, 204);
+    border-radius: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: rgb(173, 173, 173);
+    border-radius: 10px;  
+}
+
+.chat-title {
+    color: white;
+    width: 33.33333%;
+    text-align: left;
+}
+
+.chat-description {
+    width: 33.33333%;
+    text-align: center;
+    color: white;
+    font-size: medium;
+}
+
+.chat-options {
+    color: white;
+    width: 33.33333%;
+    text-align: right;
+}
+
+.chat-multimedia {
+    width: 15%;
+    text-align: left; 
+}
+
+.chat-input {
+    /* width: 33.33333%; */
+    width: 740px;
+    height: 40px;
+    text-align: left;
+    border: none;
+    border: solid 1px gray;
+    border-radius: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+    resize: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.chat-input:focus {
+    outline: none;
+}
+
+.chat-input::-webkit-input-placeholder {
+    text-align: start;
+}
+
+:-moz-placeholder {
+    text-align: left;
+}
+
+.chat-input::-webkit-scrollbar {
+    width: 1em;
+}
+
+.chat-send {
+    width: 15%;
+    text-align: right;
+}
+
+.chat-sent-message {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    width: 350px;
+    text-align: right;
+    /* float: right; */
+    /* position: absolute;
+    right: 0; */
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.chat-sent-message::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.chat-sent-message img {
+    float: right;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.chat-sent-message span {
+    float: right;
+    color: #aaa;
+}
+
+.chat-sent-message h1 {
+    color: #aaa;
+    font-size: medium;
+}
+
+.chat-received-message {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    width: 350px;
+    text-align: left;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.chat-received-message::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.chat-received-message h1 {
+    color: black;
+    font-size: medium;
+}
+
+.chat-received-message span {
+    float: left;
+    color: #aaa;
+}
+
+.fileSelected {
+    border-radius: 10px;
+    background-color: #aaa;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    margin-top: 5px;
+    width: auto;
+    height: auto;
+    align-items: center;
+}
+
+.deleteFileButton {
+    float: right;
+}
+
+.fileName {
+    display: inline-block;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.irAbajoIcon {
+    display: none; 
+    float: right; 
+    position: absolute; 
+    top: 520px; 
+    right: 230px;
+}

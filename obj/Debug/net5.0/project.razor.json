@@ -15639,6 +15639,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\typeme\\TypeMeWeb\\Pages\\Chat.cshtml",
+      "TargetPath": "Pages\\Chat.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\typeme\\TypeMeWeb\\Pages\\Shared\\_Layout.cshtml",
       "TargetPath": "Pages\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"

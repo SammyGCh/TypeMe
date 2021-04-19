@@ -82,3 +82,4 @@ D:\Repositorios\TypeMe\TypeMeWeb\obj\Debug\net5.0\TypeMeWeb.pdb
 D:\Repositorios\TypeMe\TypeMeWeb\obj\Debug\net5.0\TypeMeWeb.genruntimeconfig.cache
 D:\Repositorios\TypeMe\TypeMeWeb\obj\Debug\net5.0\TypeMeWeb.csproj.CopyComplete
 >>>>>>> f6b6a5fee0385bce09d85318a0779058cb2ff6be
+D:\typeme\TypeMeWeb\obj\Debug\net5.0\Razor\Pages\Chat.cshtml.g.cs
