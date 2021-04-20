@@ -73,6 +73,18 @@ services:
     environment: 
         DB_CONNECTION_STRING: "server=mysql_typers;user=adminTypers;password=proyecto2021;database=Typers"
 
+  ms_mensajes:
+    image: ms_mensajes
+    depends_on: 
+      - "mysql_mensajes"
+    ports:
+      - "3325:80"
+    build: 
+      context: ../MSMensajes/
+      dockerfile: Dockerfile
+    environment: 
+      DB_CONNECTION_STRING: "server=mysql_mensajes;user=adminMensajes;password=proyecto2021;database=Mensajes"
+
 volumes:
   db_volume_typers:
   db_volume_contactos:
