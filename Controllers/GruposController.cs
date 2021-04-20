@@ -82,7 +82,7 @@ namespace MSMensajes.Controllers
         {
             List<Pertenece> integrantesDeGrupo = null;
 
-            if (idGrupo <= VALOR_MINIMO_ID)
+            if (idGrupo < VALOR_MINIMO_ID)
             {
                 _resultado = ConvertidorDeJson.ConvertirResultadoFallido("Id de grupo incorrecto.");
                 return BadRequest(_resultado);
@@ -146,8 +146,8 @@ namespace MSMensajes.Controllers
             }
             catch (DbUpdateException e)
             {
-                _logger.LogError("Sucedio una excepcion:\n" + e.Message);
-                _resultado = ConvertidorDeJson.ConvertirResultadoFallido(e.Message);
+                _logger.LogError("Sucedio una excepcion:\n" + e.InnerException.Message);
+                _resultado = ConvertidorDeJson.ConvertirResultadoFallido(e.InnerException.Message);
                 return BadRequest(_resultado);
             }
 

@@ -25,8 +25,7 @@ namespace MSMensajes.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //string connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
-                string connectionString = "server=localhost;port=3306;user=root;password=Sammy991001;database=Mensajes;";
+                string connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
                 optionsBuilder.UseMySql(connectionString, Microsoft.EntityFrameworkCore.ServerVersion.FromString("8.0.23-mysql"),
                     builder => {
                         builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
@@ -42,7 +41,7 @@ namespace MSMensajes.Models
                 entity.HasKey(e => e.IdGrupo)
                     .HasName("PRIMARY");
 
-                entity.ToTable("grupos");
+                entity.ToTable("Grupos");
 
                 entity.Property(e => e.IdGrupo).HasColumnType("int(11)");
 
@@ -64,7 +63,7 @@ namespace MSMensajes.Models
                 entity.HasKey(e => e.IdMensaje)
                     .HasName("PRIMARY");
 
-                entity.ToTable("mensajes");
+                entity.ToTable("Mensajes");
 
                 entity.HasIndex(e => e.IdGrupo, "fk_Mensaje_Grupo_idx");
 
@@ -101,7 +100,7 @@ namespace MSMensajes.Models
                     .HasName("PRIMARY")
                     .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
-                entity.ToTable("pertenece");
+                entity.ToTable("Pertenece");
 
                 entity.Property(e => e.IdGrupo).HasColumnType("int(11)");
 

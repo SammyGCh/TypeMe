@@ -63,6 +63,7 @@ namespace MSMensajes.Controllers
                 return BadRequest(_resultado);
             }
 
+            //Encriptar mensaje
             nuevoMensaje.Fecha = DateTime.Now;
             string horaActual = DateTime.Now.ToString("HH:mm:ss");
             nuevoMensaje.Hora = TimeSpan.Parse(horaActual);
