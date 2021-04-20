@@ -73,6 +73,18 @@ services:
     environment: 
         DB_CONNECTION_STRING: "server=mysql_typers;user=adminTypers;password=proyecto2021;database=Typers"
 
+  ms_multimedia:
+    image: ms_multimedia
+    depends_on: 
+        - "mysql_multimedia"
+    ports:
+        - "3325:80"
+    build: 
+        context: ../MSMultimedia/
+        dockerfile: Dockerfile
+    environment: 
+        DB_CONNECTION_STRING: "server=mysql_multimedia;user=adminMultimedia;password=proyecto2021;database=Multimedias"
+
   ms_mensajes:
     image: ms_mensajes
     depends_on: 
