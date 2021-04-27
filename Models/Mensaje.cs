@@ -13,6 +13,7 @@ namespace MSMensajes.Models
         public TimeSpan Hora { get; set; }
         public int IdGrupo { get; set; }
         public string IdTyper { get; set; }
+        public int IdMultimedia { get; set; }
 
         public virtual Grupo IdGrupoNavigation { get; set; }
     }

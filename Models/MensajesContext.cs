@@ -41,10 +41,6 @@ namespace MSMensajes.Models
                 entity.HasKey(e => e.IdGrupo)
                     .HasName("PRIMARY");
 
-                entity.ToTable("Grupos");
-
-                entity.Property(e => e.IdGrupo).HasColumnType("int(11)");
-
                 entity.Property(e => e.Descripcion)
                     .HasColumnType("varchar(200)")
                     .HasCharSet("utf8")
@@ -63,11 +59,7 @@ namespace MSMensajes.Models
                 entity.HasKey(e => e.IdMensaje)
                     .HasName("PRIMARY");
 
-                entity.ToTable("Mensajes");
-
-                entity.HasIndex(e => e.IdGrupo, "fk_Mensaje_Grupo_idx");
-
-                entity.Property(e => e.IdMensaje).HasColumnType("int(11)");
+                entity.HasIndex(e => e.IdGrupo, "fk_Mensaje_Grupo");
 
                 entity.Property(e => e.Contenido)
                     .IsRequired()
@@ -79,8 +71,6 @@ namespace MSMensajes.Models
 
                 entity.Property(e => e.Hora).HasColumnType("time");
 
-                entity.Property(e => e.IdGrupo).HasColumnType("int(11)");
-
                 entity.Property(e => e.IdTyper)
                     .IsRequired()
                     .HasColumnType("varchar(40)")
@@ -90,7 +80,6 @@ namespace MSMensajes.Models
                 entity.HasOne(d => d.IdGrupoNavigation)
                     .WithMany(p => p.Mensajes)
                     .HasForeignKey(d => d.IdGrupo)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Mensaje_Grupo");
             });
 
@@ -102,8 +91,6 @@ namespace MSMensajes.Models
 
                 entity.ToTable("Pertenece");
 
-                entity.Property(e => e.IdGrupo).HasColumnType("int(11)");
-
                 entity.Property(e => e.IdTyper)
                     .HasColumnType("varchar(40)")
                     .HasCharSet("utf8")
@@ -112,7 +99,6 @@ namespace MSMensajes.Models
                 entity.HasOne(d => d.IdGrupoNavigation)
                     .WithMany(p => p.Perteneces)
                     .HasForeignKey(d => d.IdGrupo)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Pertenece_Grupo1");
             });
 
