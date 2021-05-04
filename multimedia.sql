@@ -30,7 +30,7 @@ INSERT INTO TipoMultimedia (Nombre) VALUES ("Archivo");
 -- Table `Multimedias`.`Multimedias`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Multimedias`.`Multimedias` (
-  `IdMultimedia` INT NOT NULL AUTO_INCREMENT,
+  `IdMultimedia` VARCHAR(40) NOT NULL,
   `Ruta` VARCHAR(100) NOT NULL,
   `IdTipoMultimedia` INT NOT NULL,
   PRIMARY KEY (`IdMultimedia`),
