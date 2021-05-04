@@ -33,7 +33,6 @@ CREATE TABLE IF NOT EXISTS `Multimedias`.`Multimedias` (
   `IdMultimedia` INT NOT NULL AUTO_INCREMENT,
   `Ruta` VARCHAR(100) NOT NULL,
   `IdTipoMultimedia` INT NOT NULL,
-  `IdMensaje` INT NOT NULL,
   PRIMARY KEY (`IdMultimedia`),
   INDEX `fk_Multimedia_TipoMultimedia_idx` (`IdTipoMultimedia` ASC) VISIBLE,
   CONSTRAINT `fk_Multimedia_TipoMultimedia`

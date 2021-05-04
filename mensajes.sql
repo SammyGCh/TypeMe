@@ -35,13 +35,13 @@ CREATE TABLE IF NOT EXISTS `Mensajes`.`Mensajes` (
   `Fecha` DATE NOT NULL,
   `Hora` TIME NOT NULL,
   `IdGrupo` INT NOT NULL,
-  `Username` VARCHAR(30) NOT NULL,
+  `IdTyper` VARCHAR(40) NOT NULL,
+  `IdMultimedia` VARCHAR(40) NOT NULL,
   PRIMARY KEY (`IdMensaje`),
-  INDEX `fk_Mensaje_Grupo_idx` (`IdGrupo` ASC) VISIBLE,
   CONSTRAINT `fk_Mensaje_Grupo`
     FOREIGN KEY (`IdGrupo`)
     REFERENCES `Mensajes`.`Grupos` (`IdGrupo`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -51,12 +51,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Mensajes`.`Pertenece` (
   `IdGrupo` INT NOT NULL,
-  `Username` VARCHAR(30) NOT NULL,
-  PRIMARY KEY (`IdGrupo`, `Username`),
+  `IdTyper` VARCHAR(40) NOT NULL,
+  PRIMARY KEY (`IdGrupo`, `IdTyper`),
   CONSTRAINT `fk_Pertenece_Grupo1`
     FOREIGN KEY (`IdGrupo`)
     REFERENCES `Mensajes`.`Grupos` (`IdGrupo`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
