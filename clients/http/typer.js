@@ -19,13 +19,9 @@ class MicroservicioTypers{
         .catch(error => {return error.response.data})
     }
 
-    async ObtenerInfoTyper(username){
+    async ObtenerInfoTyper(idTyper){
         let url = "http://localhost:3324/Typer/infoTyper";
-        return axios.get(url, {
-            params: {
-                username: username
-            }
-        })
+        return axios.post(url, idTyper)
         .then(response => {return response.data.data})
         .catch(error => {return error.response.data})
     }
