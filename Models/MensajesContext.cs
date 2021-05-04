@@ -71,6 +71,12 @@ namespace MSMensajes.Models
 
                 entity.Property(e => e.Hora).HasColumnType("time");
 
+                entity.Property(e => e.IdMultimedia)
+                    .IsRequired()
+                    .HasColumnType("varchar(40)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
                 entity.Property(e => e.IdTyper)
                     .IsRequired()
                     .HasColumnType("varchar(40)")
