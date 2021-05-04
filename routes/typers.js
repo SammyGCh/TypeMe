@@ -27,9 +27,8 @@ router.post("/loginTyper", async (req, res) => {
 })
 
 router.get("/infoTyper", async (req, res) => {
-    const { username } = req.query;
 
-    microservicioTypers.ObtenerInfoTyper(username)
+    microservicioTypers.ObtenerInfoTyper(req.body)
     .then(values => {
         res.send(values);
     })
