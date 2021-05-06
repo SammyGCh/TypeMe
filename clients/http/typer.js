@@ -77,6 +77,15 @@ class MicroservicioTypers{
     }
 
 
+    async ObtenerTyperPorId(idTyper){
+        let url = "http://localhost:3324/Typer/infoTyper";
+
+        let busqueda = {identificadorTyper: idTyper}
+        return axios.post(url, busqueda)
+        .then(response => {return response.data.data.result})
+        .catch(error => {return error.response.data})
+    }
+
 }
 
 let microservicioTypers = new MicroservicioTypers();

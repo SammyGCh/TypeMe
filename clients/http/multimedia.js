@@ -6,7 +6,7 @@ class MicroservicioMultimedia{
         let url = "http://localhost:3325/Multimedia/registrarMultimedia";
 
         return axios.post(url, nuevaMultimedia)
-        .then(response => {return response.data.data})
+        .then(response => {return response.data})
         .catch(error => {return error.response.data})
     }
 
@@ -18,7 +18,7 @@ class MicroservicioMultimedia{
                 idMultimedia: idMultimedia
             }
         })
-        .then(response => {return response.data.data})
+        .then(response => {return response.data})
         .catch(error => {return error.response.data})
     }
 
