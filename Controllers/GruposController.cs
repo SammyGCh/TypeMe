@@ -305,7 +305,7 @@ namespace MSMensajes.Controllers
                 return BadRequest(_resultado);
             }
 
-            if (idTyper.Equals(""))
+            if (idTyper == null || idTyper.Equals(""))
             {
                 _resultado = ConvertidorDeJson.ConvertirResultadoFallido("Id de typer no especificado o incorrecto");
                 return BadRequest(_resultado);
