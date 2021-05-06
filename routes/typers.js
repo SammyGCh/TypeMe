@@ -1,5 +1,6 @@
 import express from 'express';
 import { microservicioTypers } from '../clients/http/typer.js';
+import { microservicioContactos } from '../clients/http/contactos.js';
 
 const router = express.Router();
 
@@ -112,5 +113,222 @@ router.delete("/eliminarTyper", async (req, res) => {
 
 })
 
+router.get("/obtenerContactos/:idTyper", async (req, res) => {
+    let idTyper = req.params.idTyper || "";
+
+    microservicioContactos.ObtenerContactos(idTyper)
+    .then(response => {
+        res.send(response)
+    })
+    .catch(error => {
+        res.send(error)
+    })
+})
+
+router.post("/agregarContacto", async (req, res) => {
+    const infoContacto = req.body || {}
+
+    microservicioContactos.AgregarContacto(infoContacto)
+    .then(response => {
+        if (response.status == true) {
+            let idTyper = response.data.result.idContacto
+            microservicioTypers.ObtenerTyperPorId(idTyper)
+            .then(typer => {
+                let resultado = {
+                    status: response.status,
+                    data: {
+                        message: response.data.message,
+                        result: {
+                            bloqueado: response.data.result.bloqueado,
+                            esFavorito: response.data.result.esFavorito,
+                            contacto: typer
+                        }
+                    }
+                }
+
+                res.send(resultado)
+            })
+        }
+        else {
+            res.send(response)
+        }
+        
+    })
+    .catch(error => {
+        res.send(error)
+    })
+})
+
+
+router.put("/bloquearContacto", async (req, res) => {
+    const infoContacto = req.body || {}
+
+    microservicioContactos.BloquearContacto(infoContacto)
+    .then(response => {
+        if (response.status == true)
+        {
+            let idTyper = response.data.result.idContacto
+            microservicioTypers.ObtenerTyperPorId(idTyper)
+            .then(typer => {
+                let resultado = {
+                    status: response.status,
+                    data: {
+                        message: response.data.message,
+                        result: {
+                            bloqueado: response.data.result.bloqueado,
+                            esFavorito: response.data.result.esFavorito,
+                            contacto: typer
+                        }
+                    }
+                }
+
+                res.send(resultado)
+            })
+        }
+        else {
+            res.send(response)
+        }
+    })
+    .catch(error => {
+        res.send(error)
+    })
+})
+
+
+router.put("/desbloquearContacto", async (req, res) => {
+    const infoContacto = req.body || {}
+
+    microservicioContactos.DesbloquearContacto(infoContacto)
+    .then(response => {
+        if (response.status == true)
+        {
+            let idTyper = response.data.result.idContacto
+            microservicioTypers.ObtenerTyperPorId(idTyper)
+            .then(typer => {
+                let resultado = {
+                    status: response.status,
+                    data: {
+                        message: response.data.message,
+                        result: {
+                            bloqueado: response.data.result.bloqueado,
+                            esFavorito: response.data.result.esFavorito,
+                            contacto: typer
+                        }
+                    }
+                }
+
+                res.send(resultado)
+            })
+        }
+        else {
+            res.send(response)
+        }
+    })
+    .catch(error => {
+        res.send(error)
+    })
+})
+
+router.put("/agregarContactoAFavorito", async (req, res) => {
+    const infoContacto = req.body || {}
+
+    microservicioContactos.AgregarAFavorito(infoContacto)
+    .then(response => {
+        if (response.status == true)
+        {
+            let idTyper = response.data.result.idContacto
+            microservicioTypers.ObtenerTyperPorId(idTyper)
+            .then(typer => {
+                let resultado = {
+                    status: response.status,
+                    data: {
+                        message: response.data.message,
+                        result: {
+                            bloqueado: response.data.result.bloqueado,
+                            esFavorito: response.data.result.esFavorito,
+                            contacto: typer
+                        }
+                    }
+                }
+
+                res.send(resultado)
+            })
+        }
+        else {
+            res.send(response)
+        }
+    })
+    .catch(error => {
+        res.send(error)
+    })
+})
+
+router.put("/quitarContactoFavorito", async (req, res) => {
+    const infoContacto = req.body || {}
+
+    microservicioContactos.QuitarFavorito(infoContacto)
+    .then(response => {
+        if (response.status == true)
+        {
+            let idTyper = response.data.result.idContacto
+            microservicioTypers.ObtenerTyperPorId(idTyper)
+            .then(typer => {
+                let resultado = {
+                    status: response.status,
+                    data: {
+                        message: response.data.message,
+                        result: {
+                            bloqueado: response.data.result.bloqueado,
+                            esFavorito: response.data.result.esFavorito,
+                            contacto: typer
+                        }
+                    }
+                }
+
+                res.send(resultado)
+            })
+        }
+        else {
+            res.send(response)
+        }
+    })
+    .catch(error => {
+        res.send(error)
+    })
+})
+
+router.put("/eliminarContacto", async (req, res) => {
+    const infoContacto = req.body || {}
+
+    microservicioContactos.EliminarContacto(infoContacto)
+    .then(response => {
+        if (response.status == true)
+        {
+            let idTyper = response.data.result.idContacto
+            microservicioTypers.ObtenerTyperPorId(idTyper)
+            .then(typer => {
+                let resultado = {
+                    status: response.status,
+                    data: {
+                        message: response.data.message,
+                        result: {
+                            bloqueado: response.data.result.bloqueado,
+                            esFavorito: response.data.result.esFavorito,
+                            contacto: typer
+                        }
+                    }
+                }
+
+                res.send(resultado)
+            })
+        }
+        else {
+            res.send(response)
+        }
+    })
+    .catch(error => {
+        res.send(error)
+    })
+})
 
 export default router;
