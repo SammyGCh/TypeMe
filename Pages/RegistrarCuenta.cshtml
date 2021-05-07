@@ -1,73 +1,218 @@
 @page
 @model RegistrarCuentaModel
 
-<div class="card border-danger contenedor">
-    <div class="card-header header">
+<div class="tarjeta">
+    <div class="header">
         <h1 class="card-title titulo">Registrar cuenta</h1>
     </div>
-    <div class="card-body">
-        <p>Ingresa los datos solicitados para formar parte de TypeMe</p>
 
-        <form method="POST">
-            <div class="contenedorInputs">
-                <div class="form-group row">
-                    <label class=" col-sm-5 col-form-label"><span style="color: red;">*</span> Email:
-                    </label>
-                    <div class="col-sm-7">
-                        <input type="email" class="form-control" id="emailPrincipal" asp-for="EmailPrincipal"
-                            placeholder="correo@ejemplo.com" required>
-                    </div>
+    <p style="margin-left: 20px; margin-top:20px">Ingresa los datos solicitados para formar parte de TypeMe</p>
+    <form action="" method="POST" id="registroCuenta" >
+        <div class="contenedorInputs">
+            <div class="form-group row">
+                <label class=" col-sm-5 col-form-label"><span style="color: red;">*</span> Email:
+                </label>
+                <div class="col-sm-7">
+                    <input type="email" class="formulario__input" id="emailPrincipal" placeholder="correo@ejemplo.com"
+                        required pattern="[a-z0-9._%+-]+&#64;[a-z0-9.-]+\.[a-z]{2,}$">
                 </div>
+            </div>
 
-                <div class="form-group row">
-                    <label class=" col-sm-5 col-form-label"><span style="color: red;">*</span> Email secundario:
-                    </label>
-                    <div class="col-sm-7">
-                        <input type="email" class="form-control" id="emailSecundario" asp-for="EmailSecundario"
-                            placeholder="correo@ejemplo.com" required>
-                    </div>
+            <div class="form-group row">
+                <label class=" col-sm-5 col-form-label"><span style="color: red;">*</span> Email secundario:
+                </label>
+                <div class="col-sm-7">
+                    <input type="email" class="formulario__input" id="emailSecundario" placeholder="correo@ejemplo.com"
+                        required >
                 </div>
+            </div>
 
-                <div class="form-group row">
-                    <label class=" col-sm-5 col-form-label"><span style="color: red;">*</span> Usuario: </label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" id="usuario" asp-for="Usuario" required>
-                    </div>
+            <div class="form-group row">
+                <label class=" col-sm-5 col-form-label"><span style="color: red;">*</span> Usuario: </label>
+                <div class="col-sm-5">
+                    <input type="text" class="formulario__input" id="usuario" required>
                 </div>
+            </div>
 
-                <div class="form-group row">
-                    <label class=" col-sm-5 col-form-label"><span style="color: red;">*</span> Contraseña: </label>
-                    <div class="col-sm-5">
-                        <input type="password" class="form-control" id="password" minlength="5" asp-for="Password" required>
-                    </div>
+            <div class="form-group row">
+                <label class=" col-sm-5 col-form-label"><span style="color: red;">*</span> Contraseña: </label>
+                <div class="col-sm-5">
+                    <input type="password" class="formulario__input" id="password" minlength="5"
+                        required>
                 </div>
+            </div>
 
-                <div class="form-group row">
-                    <label class=" col-sm-5 col-form-label"><span style="color: red;">*</span> Confirmar contraseña:
-                    </label>
-                    <div class="col-sm-5">
-                        <input type="password" class="form-control" id="confirmacionPassword" minlength="5" asp-for="ConfirmacionPassword"
-                            required>
-                    </div>
+            <div class="form-group row">
+                <label class=" col-sm-5 col-form-label"><span style="color: red;">*</span> Confirmar contraseña:
+                </label>
+                <div class="col-sm-5">
+                    <input type="password" class="formulario__input" id="confirmacionPassword" minlength="5"
+                        required>
                 </div>
             </div>
 
             <small style="color: red;">* Campos requeridos</small>
-
-            <div class="form-group colum contenedorBotonRegistrar">
-                <button type="submit" class="btn btn-danger btn-lg btn-block">Crear cuenta</button>
-            </div>
-
-        </form>
-
-        <div class="form-group colum contenedorBotonCancelar">
-            <a type="button" class="btn btn-outline-danger btn-lg btn-block" asp-page="/Index">Cancelar</a>
         </div>
+
+
+        <div class="contenedorBoton">
+            <button type="submit" class="boton" title="Crear cuenta" id="botonCrear">Crear cuenta</button>
+        </div>
+    </form>
+
+    <div class="contenedorBoton">
+        <div type="button" class="boton" onclick="cancelar()">Cancelar</div>
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="modalDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #D30000;">
+        <h5 class="modal-title" id="modalDialogTitle" style="color: white;"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div id="mensajeExito" style="display: none;">
+              <h6>¡Hola <b id="usernameTyper">Fulano</b>!</h6>
+              <p>Bienvenido a TypeMe, estamos muy contentos de que formes partes de nosotros. Ahora puedes enviar
+                  mensajes con tus amigos.
+              </p>
+              <p>Inicia sesión para acceder a tus mensajes.</p>
+          </div>
+
+          <div id="mensajeError" style="display: none;">
+              <h6>¡Ups, parece que algo pasó!</h6>
+              <p>No pudimos registrar tu cuenta ahora mismo. Por favor intenta más tarde.</p>
+
+              <p>Lamentamos el inconveniente.</p>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button id="botonFinalizar" style="display: none;" type="button" class="btn btn-danger" data-dismiss="modal" onclick="finalizarRegistro()">Aceptar</button>
+        <button id="botonAceptar" style="display: none;" type="button" class="btn btn-danger" data-dismiss="modal" data-dismiss="modal">Aceptar</button>
+        @* <button type="button" class="btn btn-primary">Save changes</button> *@
+      </div>
+    </div>
+  </div>
+</div>
+
 @section Scripts {
-    
+    <script>
+        const password = document.getElementById("password")
+        const confirmacionPassword = document.getElementById("confirmacionPassword")
+        const emailPrincipal = document.getElementById("emailPrincipal")
+        const emailSecundario = document.getElementById("emailSecundario")
+        const usuario = document.getElementById("usuario")
+        const form = $('#registroCuenta')[0]
+
+        botonCrear.addEventListener('click', e => {
+
+            if (form.checkValidity()) {
+                e.preventDefault()
+
+                $("#botonCrear").prop("disabled", true);
+                let infoTyper = {
+                    username: usuario.value,
+                    estado: "Hola, seamos amigos!",
+                    fotoDePerfil: "",
+                    estatus: 1,
+                    contrasenia: [{
+                        contrasenia1: confirmacionPassword.value
+                    }],
+                    correos: [
+                        {
+                            direccion: emailPrincipal.value,
+                            esPrincipal: 1
+                        },
+                        {
+                            direccion: emailSecundario.value,
+                            esPrincipal: 0
+                        }
+                    ]
+                }
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:4000/typers/registrarTyper",
+                    dataType: "json",
+                    async: true,
+                    contentType: "application/json",
+                    data: JSON.stringify(infoTyper),
+                    success: function(response) {
+
+                        if (response.status === true) {
+                            mostrarModalExito()
+                        }
+                        else {
+                            mostrarModalError()
+                        }
+                    },
+                    error: function (response) {
+                        mostrarModalError()
+                    }
+                })
+            }
+            else {
+                form.reportValidity()
+                $("input").addClass("boton_invalid")
+            }
+            
+            
+        });
+
+        function limpiarCampos() {
+            usuario.value = ""
+            emailPrincipal.value = ""
+            emailSecundario.value = ""
+            password.value = ""
+            confirmacionPassword.value = ""
+        }
+
+        function mostrarModalExito() {
+            $("#modalDialogTitle").text("Registro exitoso")
+            $("#mensajeExito").show()
+            $("#botonFinalizar").show()
+            $("#usernameTyper").text(usuario.value)
+            $("#modalDialog").modal("show")
+        }
+
+        function mostrarModalError() {
+            $("#modalDialogTitle").text("Error de registro")
+            $("#mensajeError").show()
+            $("#botonAceptar").show()
+            $("#modalDialog").modal("show")
+        }
+
+        function finalizarRegistro() {
+            $("#modalDialog").modal("hide")
+            window.location.pathname = '/'
+        }
+        
+
+        function cancelar() {
+            window.location.pathname = '/'
+        }
+
+        function validarContrasenias() {
+
+            if (password.value != confirmacionPassword.value) {
+                confirmacionPassword.setCustomValidity("Las contraseñas no coindicen")
+                return false;
+            }
+            else {
+                confirmacionPassword.setCustomValidity('')
+                return true;
+            }
+        }
+
+        password.onchange = validarContrasenias;
+        confirmacionPassword.onkeyup = validarContrasenias;
+    </script>
 }
 
 

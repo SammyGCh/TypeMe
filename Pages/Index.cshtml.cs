@@ -18,5 +18,12 @@ namespace TypeMeWeb.Pages
             _logger = logger;
         }
 
+        public IActionResult OnGet() {
+            if (HttpContext.Session.Get("Typer") != null)
+                return RedirectToPage("./Principal");
+
+            return Page();
+        }
+
     }
 }

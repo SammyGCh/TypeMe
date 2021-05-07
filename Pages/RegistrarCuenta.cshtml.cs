@@ -36,22 +36,6 @@ namespace TypeMeWeb.Pages
             
         }
 
-        public IActionResult OnPost()
-        {
-            bool sonPasswordsIguales = VerificarConfirmacionDePassword();
-
-            if(sonPasswordsIguales)
-            {
-                return new RedirectToPageResult("/Index");
-            }
-            else
-            {
-                
-            }
-
-            return Page();
-        }
-
         private bool VerificarConfirmacionDePassword()
         {
             return Password.Equals(ConfirmacionPassword);
