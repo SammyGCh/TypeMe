@@ -105,29 +105,14 @@
     margin: 10px 0;
     width: 350px;
     text-align: right;
-    /* float: right; */
-    /* position: absolute;
-    right: 0; */
     margin-right: 0;
     margin-left: auto;
-}
-
-.chat-sent-message::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-
-.chat-sent-message img {
-    float: right;
-    max-width: 60px;
-    width: 100%;
-    margin-right: 20px;
-    border-radius: 50%;
+    height: auto;
 }
 
 .chat-sent-message span {
-    float: right;
+    margin-right: 0;
+    margin-left: auto;
     color: #aaa;
 }
 

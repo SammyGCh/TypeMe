@@ -25,83 +25,65 @@
     </div>
 
     <div class="chat-messages" id="chat-messages" onscroll="verificarScroll()">
+        <table id="listaMensajes" >
+            <tbody id="listaMensajesBody">
+                <tr>
+                    <div class="chat-sent-message">
+                        <h1>Sammy</h1>
+                        <p>Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                        </p>
+                        <span>11:00</span>
+                    </div>
+                </tr>
 
+                <tr>
+                    <div class="chat-received-message">
+                        <h1>Ángel</h1>
+                        <p>
+                            Yeah, fine!
+                        </p>
+                        <span>11:00</span>
+                    </div>
+                </tr>
 
-        <div class="chat-sent-message">
-            <h1>Sammy</h1>
-            @* <img
-                src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                alt="Avatar"> *@
-            <p>Hello. How are you today?
-                Hello. How are you today?
-                Hello. How are you today?
-                Hello. How are you today?
-                Hello. How are you today?
-                Hello. How are you today?
-                Hello. How are you today?Hello. How are you today?
-                Hello. How are you today?
-                Hello. How are you today?
-            </p>
-            <span class="time-right">11:00</span>
-        </div>
+                <tr>
+                    <div class="chat-received-message">
+                        <h1>Ángel</h1>
+                        <p>
+                            Yeah, fine!
+                        </p>
+                        <span>11:00</span>
+                    </div>
+                </tr>
 
+                <tr>
+                    <div class="chat-sent-message">
+                        <h1>Sammy</h1>
+                        <p>Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                        </p>
+                        <span>11:00</span>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
 
-
-        <div class="chat-received-message">
-            <h1>Ángel</h1>
-            @* <img
-                src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                alt="Avatar"> *@
-            <p>
-                Yeah, fine!
-            </p>
-            <span class="time-right">11:00</span>
-        </div>
-
-        <div class="chat-received-message">
-            <h1>Ángel</h1>
-            @* <img
-                src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                alt="Avatar"> *@
-            <p>
-                Yeah, fine!
-            </p>
-            <span class="time-right">11:00</span>
-        </div>
-
-        <div class="chat-received-message">
-            <h1>Ángel</h1>
-            @* <img
-                src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                alt="Avatar"> *@
-            <p>
-                Yeah, fine!
-            </p>
-            <span class="time-right">11:00</span>
-        </div>
-
-        <div class="chat-received-message">
-            <h1>Ángel</h1>
-            @* <img
-                src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                alt="Avatar"> *@
-            <p>
-                Yeah, fine!
-            </p>
-            <span class="time-right">11:00</span>
-        </div>
-
-        <div class="chat-received-message">
-            <h1>Ángel</h1>
-            @* <img
-                src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                alt="Avatar"> *@
-            <p>
-                Yeah, fine!
-            </p>
-            <span class="time-right">11:00</span>
-        </div>
-
+       
         <a id="irAbajoIcon" type="button" class="irAbajoIcon" onclick="irAlFinalDelChat()">
             <i class='bx bxs-chevron-down-circle bx-md' style="color: #D30000;"></i>
         </a>
@@ -139,10 +121,10 @@
             </div>
         </div>
         
-        <textarea class="chat-input" placeholder="Escribe un mensaje" rows="5"></textarea>
+        <textarea id="mensaje" class="chat-input" placeholder="Escribe un mensaje" rows="5"></textarea>
 
         <a type="button" class="chat-send" onclick="enviarMensaje()">
-            <i class='bx bx-send bx-sm bx-border-circle bx-fade-right-hover' 
+            <i class='bx bx-send bx-sm bx-border-circle' 
             style="color: #D30000;"></i>
         </a>
     </div>
@@ -238,7 +220,46 @@
         }
 
         function enviarMensaje() {
-            console.log(tipoSeleccionado);
+            var mensaje = $("#mensaje").val();
+            var fecha = new Date();
+            var hora = fecha.getHours();
+            var minutos = fecha.getMinutes();
+            var usuario = "Sammy";
+
+            /*
+            $('#listaMensajes > tbody:last-child').append(
+                "<tr>" +
+                    "<div class=\"chat-sent-message\">" +
+                        "<h1>Sammy</h1>" +
+                        `<p>${mensaje}</p>` +
+                    "</div>" + 
+                "</tr>"
+            );
+            
+            
+            $('#listaMensajes').find('tbody')
+            .append($('<tr>')
+                .append(
+                    $('<div>')
+                        .append($('<h1>').append("Sammy"))
+                        
+                        .addClass('chat-sent-message')
+                    )
+            );
+            */
+
+            
+            $('#listaMensajesBody').append(`<tr id="${usuario}">
+
+                <td>
+                <div class="chat-sent-message">
+                    <h1>${usuario}</h1>
+                </div>
+                </td>
+           </tr>`);
+           
+
+            irAlFinalDelChat();
             
         }
 

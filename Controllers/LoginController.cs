@@ -6,28 +6,34 @@ using System.Text;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using TypeMeWeb.Models;
 
 namespace TypeMeWeb.Controllers
 {
     public class LoginController : Controller
     {
-        // [HttpGet]
-        // public async Task IniciarSesion()
-        // {
-        //     HttpClient client = new HttpClient();
-        //     string url = "https://aca1e37dc2cb.ngrok.io/typer/obtenerCorreos?idTyper=d9b3ef22-016d-4470-a05f-db81a229e035";
+        [HttpPost]
+        public IActionResult AgregarSesion([FromBody]Typer typer)
+        {
+            if(typer == null)
+            {
+                return new JsonResult(new {status = false});
+            }
 
-        //     string responseBody = "";
-        //     try{
+            string cad;
 
-        //         responseBody = await client.GetStringAsync(url);
-        //     }
-        //     catch(Exception e)
-        //     {
-        //         Console.WriteLine(e);
-        //     }
-        //     //values = JsonConvert.DeserializeObject(responseBody);
-        //     return responseBody.ToString();
-        // }
+            try
+            {
+                cad = JsonSerializer.Serialize(typer);
+            }
+            catch (NotSupportedException)
+            {
+                return new JsonResult(new {status = false});
+            }
+
+            HttpContext.Session.Set("Typer", Encoding.UTF8.GetBytes(cad));
+
+            return new JsonResult(new {status = true});
+        }
     }
 }

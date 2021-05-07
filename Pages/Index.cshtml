@@ -12,12 +12,14 @@
             <img src="~/img/Logo.png" alt="Logo TypeMe">
         </div>
 
-        <form action="" class="formulario">
+        <form class="formulario" method="POST">
             <label for="usuario" class="formulario__label">Usuario</label><br>
             <input name="usuario" id="Campo-usuario" type="text" class="formulario__input"><br>
 
             <label for="password" class="formulario__label">Contraseña</label><br>
             <input name="password" id="Campo-contrasenia" type="password" class="formulario__input"><br>
+
+            <span id="mensajeError" style="color: red; display:none">Usuario y/o contraseña incorrectos. Por verifique la información.</span>
 
             <submit class="boton-login" id="login">Iniciar sesión</submit>
         </form>    
@@ -33,6 +35,7 @@
     const inputUsuario = document.getElementById("Campo-usuario");
     const inputContrasenia = document.getElementById("Campo-contrasenia");
 
+    
     botonLogin.addEventListener('click', e => {
         e.preventDefault();
 
@@ -58,8 +61,59 @@
 
     function iniciarSesion()
     {
-        //Aqui se realiza la consulta al servicio
-        alert("Se envio la info");
+        $("#login").prop("disabled", true)
+        var infoTyper = {
+            identificadorTyper: inputUsuario.value,
+            informacionComplementaria: inputContrasenia.value
+        }
+
+        let url = "http://localhost:4000/typers/loginTyper";
+        
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:4000/typers/loginTyper",
+            dataType: "json",
+            async: true,
+            contentType: "application/json",
+            data: JSON.stringify(infoTyper),
+            success: function(response) {
+                console.log(response)
+                if (response.status === true) {
+                    
+                    agregarSesion(response.data.result);
+                    
+                }
+                else {
+                    $("#mensajeError").show()
+                    $("#login").prop("disabled", true)
+                }
+            },
+            error: function(response) {
+                console.log(response)
+            }
+        })
+        
+    }
+
+    function agregarSesion(typer) {
+        $.ajax({
+            type: "POST",
+            url: "/Login/AgregarSesion",
+            contentType: "application/json",
+            data: JSON.stringify(typer),
+            success: function(result) {
+                if (result.status === true)
+                {
+                    window.location.pathname = '/Principal'
+                }
+                else {
+                    alert("Ocurrió un error")
+                }
+            },
+            error: function() {
+                alert("Ocurrió un al intentar conectarse al servidor")
+            }
+        })
     }
 
 
