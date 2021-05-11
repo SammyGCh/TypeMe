@@ -22,7 +22,7 @@ class MicroservicioTypers{
     async ObtenerInfoTyper(idTyper){
         let url = "http://localhost:3324/Typer/infoTyper";
         return axios.post(url, idTyper)
-        .then(response => {return response.data.data})
+        .then(response => {return response.data})
         .catch(error => {return error.response.data})
     }
 
@@ -31,7 +31,7 @@ class MicroservicioTypers{
         let url = "http://localhost:3324/Typer/obtenerCorreos";
 
         return axios.post(url, idTyper)
-        .then(response => {return response.data.data})
+        .then(response => {return response.data})
         .catch(error => {return error.response.data})
     }
 
@@ -39,7 +39,7 @@ class MicroservicioTypers{
         let url = `http://localhost:3324/Typer/actualizarCorreo`;
 
         return axios.put(url, infoDeActualizacion)
-        .then(response => {return response.data.data})
+        .then(response => {return response.data})
         .catch(error => {return error.response.data})
 
     }
@@ -48,7 +48,7 @@ class MicroservicioTypers{
         let url = "http://localhost:3324/Typer/actualizarInfoTyper";
 
         return axios.put(url, nuevaInfo)
-        .then(response => {return response.data.data})
+        .then(response => {return response.data})
         .catch(error => {return error.response.data})
     }
 
@@ -56,7 +56,7 @@ class MicroservicioTypers{
         let url = "http://localhost:3324/Typer/actualizarContrasenia";
 
         return axios.put(url, nuevaContrasenia)
-        .then(response => {return response.data.data})
+        .then(response => {return response.data})
         .catch(error => {return error.response.data})
     }
 
@@ -64,7 +64,7 @@ class MicroservicioTypers{
         let url = "http://localhost:3324/Typer/agregarCorreo";
 
         return axios.post(url, nuevoCorreo)
-        .then(response => {return response.data.data})
+        .then(response => {return response.data})
         .catch(error => {return error.response.data})
     }
 
@@ -72,7 +72,7 @@ class MicroservicioTypers{
         let url = "http://localhost:3324/Typer/eliminarTyper";
 
         return axios.delete(url, {data: idTyper})
-        .then(response => {return response.data.data})
+        .then(response => {return response.data})
         .catch(error => {return error.response.data})
     }
 
@@ -85,7 +85,6 @@ class MicroservicioTypers{
         .then(response => {return response.data.data.result})
         .catch(error => {return error.response.data})
     }
-
 }
 
 let microservicioTypers = new MicroservicioTypers();

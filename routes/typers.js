@@ -8,13 +8,23 @@ router.post("/registrarTyper", async (req, res) => {
 
     microservicioTypers.RegistrarNuevoTyper(req.body)
     .then(values => {
-        let resultado = {
-            status: values.status,
-            message: values.data.message,
-            result: values.data.result
+        if(values.status == true){
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }else{
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
         }
-        
-        res.send(resultado);
     })
     .catch(error => {
         res.send("typers/registrarTyper", error);
@@ -25,13 +35,23 @@ router.post("/loginTyper", async (req, res) => {
     
     microservicioTypers.Login(req.body)
     .then(values => {
-        let resultado = {
-            status: values.status,
-            message: values.message,
-            result: values.result
+        if(values.status == true){
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }else{
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
         }
-        
-        res.send(resultado);
     })
     .catch(error => {
         res.send("typers/loginTyper", error);
@@ -43,7 +63,23 @@ router.post("/infoTyper", async (req, res) => {
 
     microservicioTypers.ObtenerInfoTyper(req.body)
     .then(values => {
-        res.send(values);
+        if(values.status == true){
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }else{
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }
     })
     .catch(error => {
         ressend("typers/infoTyper", error);
@@ -56,7 +92,23 @@ router.post("/obtenerCorreos", async (req, res) => {
 
     microservicioTypers.ObtenerCorreosTyper(req.body)
     .then(values => {
-        res.send(values);
+        if(values.status == true){
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }else{
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }
     })
     .catch(error => {
         ressend("typers/obtenerCorreos", error);
@@ -68,7 +120,23 @@ router.put("/actualizarCorreo", async (req, res) => {
 
     microservicioTypers.ActualizarCorreo(req.body)
     .then(values => {
-        res.send(values);
+        if(values.status == true){
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }else{
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }
     })
     .catch(error => {
         ressend("typers/actualizarCorreo", error);
@@ -81,7 +149,23 @@ router.put("/actualizarInfoTyper", async (req, res) => {
 
     microservicioTypers.ActualizarInfoDeUsuario(req.body)
     .then(values => {
-        res.send(values);
+        if(values.status == true){
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }else{
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }
     })
     .catch(error => {
         ressend("typers/actualizarInfoTyper", error);
@@ -93,7 +177,23 @@ router.put("/actualizarContrasenia", async (req, res) => {
 
     microservicioTypers.ActualizarContraseniaTyper(req.body)
     .then(values => {
-        res.send(values);
+        if(values.status == true){
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }else{
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }
     })
     .catch(error => {
         ressend("typers/actualizarContrasenia", error);
@@ -105,7 +205,23 @@ router.post("/agregarCorreo", async (req, res) => {
 
     microservicioTypers.AgregarNuevoCorreo(req.body)
     .then(values => {
-        res.send(values);
+        if(values.status == true){
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }else{
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }
     })
     .catch(error => {
         ressend("typers/agregarCorreo", error);
@@ -117,7 +233,23 @@ router.delete("/eliminarTyper", async (req, res) => {
 
     microservicioTypers.EliminarTyper(req.body)
     .then(values => {
-        res.send(values);
+        if(values.status == true){
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }else{
+            let resultado = {
+                status: values.status,
+                message: values.data.message,
+                result: values.data.result
+            }
+            
+            res.send(resultado);
+        }
     })
     .catch(error => {
         ressend("typers/eliminarTyper", error);
