@@ -8,7 +8,13 @@ router.post("/registrarTyper", async (req, res) => {
 
     microservicioTypers.RegistrarNuevoTyper(req.body)
     .then(values => {
-        res.send(values);
+        let resultado = {
+            status: values.status,
+            message: values.data.message,
+            result: values.data.result
+        }
+        
+        res.send(resultado);
     })
     .catch(error => {
         res.send("typers/registrarTyper", error);
@@ -16,10 +22,16 @@ router.post("/registrarTyper", async (req, res) => {
 })
 
 router.post("/loginTyper", async (req, res) => {
-
+    
     microservicioTypers.Login(req.body)
     .then(values => {
-        res.send(values);
+        let resultado = {
+            status: values.status,
+            message: values.message,
+            result: values.result
+        }
+        
+        res.send(resultado);
     })
     .catch(error => {
         res.send("typers/loginTyper", error);

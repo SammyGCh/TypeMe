@@ -6,7 +6,7 @@ class MicroservicioTypers{
         let url = "http://localhost:3324/Typer/registrarTyper";
 
         return axios.post(url, nuevoTyper)
-        .then(response => {return response.data.data})
+        .then(response => {return response.data})
         .catch(error => {return error.response.data})
     }
 
@@ -15,7 +15,7 @@ class MicroservicioTypers{
         let url = "http://localhost:3324/Typer/loginTyper";
 
         return axios.post(url, infoLogin)
-        .then(response => {return response.data.data})
+        .then(response => {return response.data})
         .catch(error => {return error.response.data})
     }
 
