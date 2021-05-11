@@ -1,4 +1,4 @@
-import express, { response } from 'express';
+import express from 'express';
 import { microservicioMultimedia } from '../clients/http/multimedia.js';
 import { microservicioMensaje } from '../clients/http/mensaje.js';
 import { microservicioTypers } from '../clients/http/typer.js';
