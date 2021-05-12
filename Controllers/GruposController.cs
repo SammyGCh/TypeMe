@@ -72,6 +72,48 @@ namespace MSMensajes.Controllers
             return Ok(_resultado);
         }
 
+        [HttpGet("misGrupos/{idTyper}")]
+        public async Task<ActionResult<JObject>> ObtenerMisGrupos(string idTyper)
+        {
+            List<Grupo> grupos = null;
+
+            try
+            {
+                grupos = await _mensajesContext.Perteneces
+                    .Where(integrante => integrante.IdTyper.Equals(idTyper))
+                    .Include(integrante => integrante.IdGrupoNavigation)
+                    .Select(grupo => new Grupo { 
+                        IdGrupo = grupo.IdGrupo,
+                        Nombre = grupo.IdGrupoNavigation.Nombre,
+                        Descripcion = grupo.IdGrupoNavigation.Descripcion,
+                        FechaCreacion = grupo.IdGrupoNavigation.FechaCreacion
+                    })
+                    .ToListAsync();
+            }
+            catch (ArgumentNullException e)
+            {
+                _logger.LogError("Sucedió una excepción:\n" + e.Message);
+                _resultado = ConvertidorDeJson.ConvertirResultadoFallido(e.Message);
+                return BadRequest(_resultado);
+            }
+            catch (MySqlException e)
+            {
+                _logger.LogError("Sucedió una excepción:\n" + e.Message);
+                _resultado = ConvertidorDeJson.ConvertirResultadoFallido(e.Message);
+                return BadRequest(_resultado);
+            }
+
+            if (grupos == null || grupos.Count == 0)
+            {
+                _resultado = ConvertidorDeJson.ConvertirResultadoFallido("Grupo(s) no encontrado(s) o inexistente(s)");
+                return BadRequest(_resultado);
+            }
+
+            _resultado = ConvertidorDeJson.ConvertirResultadoExitoso("Grupos encontrados", grupos);
+
+            return Ok(_resultado);
+        }
+
         /// <summary>
         /// 
         /// </summary>
