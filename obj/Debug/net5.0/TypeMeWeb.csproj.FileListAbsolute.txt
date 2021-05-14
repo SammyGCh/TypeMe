@@ -84,3 +84,7 @@ D:\Repositorios\TypeMe\TypeMeWeb\obj\Debug\net5.0\TypeMeWeb.csproj.CopyComplete
 >>>>>>> f6b6a5fee0385bce09d85318a0779058cb2ff6be
 D:\typeme\TypeMeWeb\obj\Debug\net5.0\Razor\Pages\Chat.cshtml.g.cs
 D:\typeme\TypeMeWeb\obj\Debug\net5.0\Razor\Pages\Principal.cshtml.g.cs
+D:\typeme\TypeMeWeb\obj\Debug\net5.0\Razor\Pages\Partials\_Chats.cshtml.g.cs
+D:\typeme\TypeMeWeb\obj\Debug\net5.0\Razor\Pages\Partials\_Bienvenida.cshtml.g.cs
+D:\typeme\TypeMeWeb\obj\Debug\net5.0\Razor\Pages\Partials\_MiPerfil.cshtml.g.cs
+D:\typeme\TypeMeWeb\obj\Debug\net5.0\Razor\Pages\Partials\ChatsAdmin.cshtml.g.cs

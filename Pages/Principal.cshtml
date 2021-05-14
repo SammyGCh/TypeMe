@@ -1,4 +1,113 @@
 @page
 @model PrincipalModel
 
-<h1>Bienvenido</h1>
+<div class="row">
+    
+    @* <div class="column">
+        <!--<partial name="_Chats" model="Model.MisGrupos"/>-->
+        @await Html.PartialAsync("_Chats", Model.MisGrupos)
+    </div> *@
+    
+    <div class="column">
+        <div class="contactos">
+            <header id="miCuenta">
+                <div class="tittle">
+                    Chats
+                </div>
+
+
+                <div class="dropdown dropleft chat-options">
+                    <a type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Opciones">
+                        <i class='bx bx-menu bx-md bx-tada-hover'></i>
+                    </a>
+                    <br>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" onclick="irAMiPerfil()">
+                            <i class='bx bxs-user' style="color: #D30000;"></i>&nbsp;&nbsp;Mi perfil
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <i class='bx bx-log-out' style="color: #D30000;"></i>&nbsp;&nbsp;Cerrar sesión
+                        </a>
+                    </div>
+                </div>
+            </header>
+            <div id="listaChats">
+
+            </div>
+            <div class="areaBotones">
+                <button class="btn" id="nuevoChat" data-toggle="modal" data-target="#nuevoChatModal">Nuevo chat</button>
+                <button class="btn" id="nuevoContacto">Nuevo contacto</button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="vistasContainer" class="view_container"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="nuevoChatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Nuevo chat</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      
+      <div class="modal-body">
+	  
+        <div class="modal-split">
+            <div class="form-group row">
+                <label class=" col-sm-5 col-form-label">Nombre del chat/grupo: </label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="nombreDeGrupo">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class=" col-sm-5 col-form-label">Descripción: </label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="descripcionDeGrupo">
+                </div>
+            </div>
+
+            <span id="mensajeError" style="color: red; display:none">Por favor ingresa el nombre del grupo.</span>
+		</div>
+		
+		<div class="modal-split contactos-container">
+            <p>Selecciona los integrantes del grupo</p>
+            <table id="listaDeContactos">
+                <tbody class="listaDeContactos" id="listaDeContactosBody">
+
+                </tbody>
+            </table>
+		</div>
+
+      </div>
+
+      <div class="modal-footer">
+ <!--Nothing Goes Here but is needed! -->
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#vistasContainer").load("Partials/_Bienvenida")
+            $("#listaChats").load("Partials/ChatsAdmin")
+            prep_modal();
+
+            manejarSeleccionDeContactos()
+
+            
+        })
+    </script>
+}
+<script src="~/js/principal.js"></script>
+<script src="~/js/nuevoChat.js"></script>
+<link rel="stylesheet" href="~/css/principal.css" />
+<link rel="stylesheet" href="~/css/nuevoChat.css" />
+

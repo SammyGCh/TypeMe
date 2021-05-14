@@ -35,5 +35,23 @@ namespace TypeMeWeb.Controllers
 
             return new JsonResult(new {status = true});
         }
+
+        [HttpGet]
+        public IActionResult ObtenerTyperEnSesion()
+        {
+            byte[] arr;
+            HttpContext.Session.TryGetValue("Typer", out arr);
+
+            if (arr == null)
+                return new JsonResult(new {status = false});
+
+            string cadena = Encoding.UTF8.GetString(arr);
+            Typer typerEnSesion = JsonSerializer.Deserialize<Typer>(cadena);
+
+            return new JsonResult(new {
+                status = true,
+                typer = typerEnSesion
+            });
+        }
     }
 }

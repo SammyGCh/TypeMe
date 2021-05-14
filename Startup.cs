@@ -32,7 +32,7 @@ namespace TypeMeWeb
             services.AddControllers();
 
             services.Configure<RazorViewEngineOptions>(options => {
-                options.PageViewLocationFormats.Add("/Pages/Views/{0}" + RazorViewEngine.ViewExtension);
+                options.PageViewLocationFormats.Add("/Pages/Partials/{0}" + RazorViewEngine.ViewExtension);
             });
             services.AddCors(options =>
             {

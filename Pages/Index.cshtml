@@ -61,6 +61,7 @@
 
     function iniciarSesion()
     {
+        
         $("#login").prop("disabled", true)
         var infoTyper = {
             identificadorTyper: inputUsuario.value,
@@ -80,7 +81,7 @@
                 console.log(response)
                 if (response.status === true) {
                     
-                    agregarSesion(response.data.result);
+                    agregarSesion(response.result);
                     
                 }
                 else {

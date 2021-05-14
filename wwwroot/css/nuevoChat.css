@@ -1,0 +1,39 @@
+.contacto {
+    height: 40px;
+    border-radius: 10px;
+    margin: 5px;
+    width: 200px;
+    cursor: pointer;
+    text-align: inherit;
+    vertical-align: middle;
+    padding: 5px;
+    background-color: #d84b4b;
+    color: white;
+    font-size: medium;
+}
+
+.contacto-seleccionado {
+    height: 40px;
+    border-radius: 10px;
+    margin: 5px;
+    width: 200px;
+    cursor: pointer;
+    text-align: inherit;
+    vertical-align: middle;
+    padding: 5px;
+    background-color: #D30000;
+    color: white;
+    font-size: medium;
+}
+
+.contactos-container {
+    height: 400px;
+}
+
+.listaDeContactos {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: block;
+    height: 370px;
+    width: 480px;
+}

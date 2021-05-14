@@ -1,0 +1,20 @@
+@model ChatsModel
+@{
+    Layout = null;
+    List<Models.Grupo> misGrupos = ViewData["MisGrupos"] as List<Models.Grupo>;
+}
+
+@if (misGrupos != null)
+{
+    @foreach (var grupo in misGrupos)
+    {
+        <div class="cuadroChat" id="chat">
+            <span id="idGrupo" style="display: none;">@grupo.IdGrupo</span>
+            <div class="cuadroChat_imagen" id="chat1"></div>
+            <label class="cuadroChat_texto" id="nombreGrupo">@grupo.Nombre</label>
+        </div>
+    }
+}
+
+<script src="~/js/chats.js"></script>
+<link rel="stylesheet" href="~/css/chats.css" />

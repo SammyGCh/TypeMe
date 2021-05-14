@@ -1,0 +1,110 @@
+
+.miPerfil{
+    width: 100%;/*ESTE SE CAMBIA POR 100 EN CASO DE ESTAR EN UN CONTENEDOR O SE ELEIMINA Y SE USAN LAS CLASES DE BOOTSTRAP*/
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.miPerfil header{
+    padding: 15px 20px;
+    font-size: large;
+    background-color: #D30000;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    width: 100%;
+}
+
+#nombreUsuario{
+    border-bottom: 1px solid white;
+}
+
+.header {
+    padding: 15px 20px;
+    font-size: large;
+    background-color: #D30000;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    width: 100%;
+    height: 80px;
+    min-height: 80px;
+}
+
+
+
+.informacion{
+    width: 100%;
+    /* display: flex; */
+    flex-direction: column;
+    text-align: center;
+    overflow: auto;
+}
+
+.informacion::-webkit-scrollbar {
+    width: 10px;
+}
+
+.informacion::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.informacion::-webkit-scrollbar-thumb {
+    background: rgb(204, 204, 204);
+    border-radius: 10px;
+}
+
+.informacion::-webkit-scrollbar-thumb:hover {
+    background: rgb(173, 173, 173);
+    border-radius: 10px;  
+}
+
+
+
+#imagenDePerfil{
+    background-image: url('https://www.w3schools.com/howto/img_avatar2.png');
+    margin: 20px auto;
+    box-shadow: 0 0 10px black;
+    width: 300px;
+    height: 300px;
+
+    background-position: center;
+}
+
+
+.informacion label{
+    font-weight: 700;
+}
+
+
+
+.correos{
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+    width: 500px;
+    margin-top: 30px;
+}
+
+.estado{
+    margin-top: 50px;
+}
+
+.estado input{
+    width: 80%;
+}
+
+.username_container {
+    margin-top: 20px;
+}
+
+.agregar_boton {
+    margin-left: 10px;
+    vertical-align: middle;
+}
+/*
+*/
