@@ -1,6 +1,5 @@
-const chatBtn = document.getElementById("chat")
 
-chatBtn.addEventListener("click", () => {
+$("#chat").click(function () {
     var idGrupo = $("#idGrupo").text()
     var nombreGrupo = $("#nombreGrupo").text()
     

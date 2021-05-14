@@ -37,3 +37,22 @@
     height: 370px;
     width: 480px;
 }
+
+.campos-invalidos {
+    box-shadow: 0 0 5px 1px red;
+}
+
+.campos {
+    padding: 0 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 35px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+.campos:focus{
+    outline: none;
+    border: 2px solid #9b9b9b;
+}

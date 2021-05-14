@@ -61,22 +61,23 @@
             <div class="form-group row">
                 <label class=" col-sm-5 col-form-label">Nombre del chat/grupo: </label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="nombreDeGrupo">
+                    <input type="text" class="campos" id="nombreDeGrupo">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class=" col-sm-5 col-form-label">Descripción: </label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="descripcionDeGrupo">
+                    <input type="text" class="campos" id="descripcionDeGrupo">
                 </div>
             </div>
 
-            <span id="mensajeError" style="color: red; display:none">Por favor ingresa el nombre del grupo.</span>
+            <span id="mensajeError" style="color: red; display:none">Por favor ingresa toda la información solicitada.</span>
 		</div>
 		
 		<div class="modal-split contactos-container">
             <p>Selecciona los integrantes del grupo</p>
+            <span id="mensajeErrorContactos" style="color: red; display:none">Por favor selecciona al menos un contacto.</span>
             <table id="listaDeContactos">
                 <tbody class="listaDeContactos" id="listaDeContactosBody">
 
@@ -93,21 +94,82 @@
   </div>
 </div>
 
+<div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #D30000;">
+        <h5 class="modal-title" id="modalDialogTitle" style="color: white;"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div id="mensajeGrupoCreado" style="display: none;">
+              <h6>¡Nuevo grupo creado!</h6>
+              <p>
+                  El grupo fue creado exitosamente.
+              </p>
+          </div>
+
+          <div id="mensajeErrorCreacionGrupo" style="display: none;">
+              <h6>¡Ups!</h6>
+              <p>Error al crear el grupo.</p>
+          </div>
+
+          <div id="mensajeErrorServidor" style="display: none;">
+              <h6>¡Ups, parece que algo pasó!</h6>
+              <p>No pudimos atender tu solicitud ahora mismo. Por favor intenta más tarde.</p>
+
+              <p>Lamentamos el inconveniente.</p>
+          </div>
+
+          <div id="mensajeContactoAgregado" style="display: none;">
+              <h6>¡Tú y <b id="nuevoContactoUsername"></b> ahora son amigos!</h6>
+              <p>Contacto agregado.</p>
+          </div>
+
+          <div id="mensajeContactoNoAgregado" style="display: none;">
+              <p id="mensajeContactoNoAgregado"></p>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button id="botonAceptar" type="button" class="btn btn-danger" style="width: 100px; padding: 10px;"
+        data-dismiss="modal" data-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @section Scripts {
     <script>
         $(document).ready(function () {
             $("#vistasContainer").load("Partials/_Bienvenida")
             $("#listaChats").load("Partials/ChatsAdmin")
+            var pages = $("#nuevoChatModal").find('.modal-split');
             prep_modal();
 
             manejarSeleccionDeContactos()
-
+            $('#nuevoChatModal').on('hide.bs.modal', function () {
+                $("#nombreDeGrupo").val("")
+                $("#descripcionDeGrupo").val("")
+                $("#mensajeError").hide();
+                while(contactosSeleccionados.length) {
+                    contactosSeleccionados.pop();
+                }
+                contactosYaMostrados = false
+                $(atrasBoton).hide();
+                $(siguienteBoton).text('Siguiente');
+                pages.hide();
+                pages.eq(0).show();
+            })
             
         })
     </script>
+    <script src="~/js/principal.js"></script>
+    <script src="~/js/nuevoChat.js"></script>
 }
-<script src="~/js/principal.js"></script>
-<script src="~/js/nuevoChat.js"></script>
+
+
 <link rel="stylesheet" href="~/css/principal.css" />
 <link rel="stylesheet" href="~/css/nuevoChat.css" />
 

@@ -1,27 +1,29 @@
 let contactosYaMostrados = false;
 let contactosSeleccionados = []
+var idTyper;
+var atrasBoton = document.createElement('button');
+atrasBoton.setAttribute('type', 'button');
+atrasBoton.setAttribute('class', 'btn btn-secondary btn-sm');
+atrasBoton.setAttribute('style', 'display: none; width:150px;');
+atrasBoton.innerHTML = 'Atrás';
+
+var siguienteBoton = document.createElement('button');
+siguienteBoton.setAttribute('type', 'button');
+siguienteBoton.setAttribute('class', 'btn btn-secondary btn-sm');
+siguienteBoton.setAttribute('style', 'width: 150px')
+siguienteBoton.innerHTML = 'Siguiente';
 
 
 function prep_modal() {
   $('.modal').each(function () {
+    const paginaDatosGrupo = 0;
+    const paginaSeleccionContactos = 1;
     var element = this;
     var pages = $(this).find('.modal-split');
 
     if (pages.length != 0) {
       pages.hide();
       pages.eq(0).show();
-
-      var atrasBoton = document.createElement('button');
-      atrasBoton.setAttribute('type', 'button');
-      atrasBoton.setAttribute('class', 'btn btn-secondary btn-sm');
-      atrasBoton.setAttribute('style', 'display: none; width:150px;');
-      atrasBoton.innerHTML = 'Atrás';
-
-      var siguienteBoton = document.createElement('button');
-      siguienteBoton.setAttribute('type', 'button');
-      siguienteBoton.setAttribute('class', 'btn btn-secondary btn-sm');
-      siguienteBoton.setAttribute('style', 'width: 150px')
-      siguienteBoton.innerHTML = 'Siguiente';
 
       $(this).find('.modal-footer').append(atrasBoton).append(siguienteBoton);
 
@@ -30,9 +32,9 @@ function prep_modal() {
 
       $(siguienteBoton).click(function () {
         this.blur();
-        if (page_track == 0) {
-            if ($("#nombreDeGrupo").val().length === 0) {
-                $("#mensajeError").show();
+        if (page_track == paginaDatosGrupo) {
+            if ($("#nombreDeGrupo").val().length === 0 || $("#descripcionDeGrupo").val().length === 0) {
+                $("#mensajeError").show()
             }
             else {
                 buscarContactos()
@@ -44,8 +46,13 @@ function prep_modal() {
                 $(siguienteBoton).text('Crear chat');
             }
         }
-        else if (page_track == 1) {
-            alert("hola")
+        else if (page_track == paginaSeleccionContactos) {
+            if(contactosSeleccionados.length === 0) {
+              $("#mensajeErrorContactos").show()
+            }
+            else {
+              crearGrupo()
+            }
         }
       });
 
@@ -78,7 +85,7 @@ function buscarContactos() {
       contentType: 'application/json',
       success: function (result) {
         if (result.status === true) {
-          var idTyper = result.typer.idTyper;
+          idTyper = result.typer.idTyper;
 
           mostrarContactosDeTyper(idTyper);
         }
@@ -88,8 +95,9 @@ function buscarContactos() {
       },
     });
   }
+}
 
-  function mostrarContactosDeTyper(idTyper) {
+function mostrarContactosDeTyper(idTyper) {
     $.ajax({
       type: 'GET',
       url: 'http://localhost:4000/typers/obtenerContactos/' + idTyper,
@@ -123,25 +131,21 @@ function buscarContactos() {
         console.log(response);
       },
     });
-  }
-    
 }
+    
+
 
 function manejarSeleccionDeContactos() {
   $('#listaDeContactos tbody').on('click', 'tr', function () {
-
-    /**
-     Si está seleccionado, se quita la clase de seleccion y se quita del arreglo de contactos seleccionados
-     Si no está seleccionado, se agrega la clase de seleccion y se agrega a los contactos seleccionados
-    */
     let id = $(this).find('div').find('p').text()
 
     if ($(this).find('div').hasClass('contacto-seleccionado')) {
+      
       $(this).find('div').removeClass('contacto-seleccionado')
       contactosSeleccionados = eliminarContactoSeleccionado(contactosSeleccionados, id)
-      console.log(contactosSeleccionados)
     }
     else {
+      $("#mensajeErrorContactos").hide()
       $(this).find('div').addClass('contacto-seleccionado');
       
       contactosSeleccionados.push({
@@ -160,4 +164,58 @@ function eliminarContactoSeleccionado(arr, id) {
   return arr.filter(function(ele){ 
       return ele.idTyper != id; 
   });
+}
+
+function crearGrupo() {
+  contactosSeleccionados.push({
+    idTyper: idTyper
+  })
+  let infoGrupo = {
+    nombre: $("#nombreDeGrupo").val(),
+    descripcion: $("#descripcionDeGrupo").val(),
+    perteneces: contactosSeleccionados
+  }
+
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:4000/mensajes/crearGrupo',
+    dataType: 'json',
+    async: true,
+    contentType: 'application/json',
+    data: JSON.stringify(infoGrupo),
+    success: function (response) {
+      console.log(response);
+      if (response.status === true) {
+          mostrarMensajeExito()
+
+          $('#nuevoChatModal').modal('hide')
+          $("#listaChats").load("Partials/ChatsAdmin")
+      }
+      else {
+        mostrarMensajeError()
+      }
+    },
+    error: function (response) {
+      console.log(response);
+      mostrarErrorServer()
+    },
+  });
+}
+
+function mostrarMensajeExito() {
+  $("#modalDialogTitle").text("Grupo creado")
+  $("#mensajeGrupoCreado").show()
+  $("#dialog").modal("show")
+}
+
+function mostrarMensajeError() {
+  $("#modalDialogTitle").text("Error")
+  $("#mensajeErrorCreacionGrupo").show()
+  $("#dialog").modal("show")
+}
+
+function mostrarErrorServer() {
+  $("#modalDialogTitle").text("Error")
+  $("#mensajeErrorServidor").show()
+  $("#dialog").modal("show")
 }
