@@ -262,12 +262,45 @@ router.get("/obtenerContactos/:idTyper", async (req, res) => {
 
     microservicioContactos.ObtenerContactos(idTyper)
     .then(response => {
-        let resultado = {
-            status: response.status,
-            message: response.data.message,
-            result: response.data.result
+        // let resultado = {
+        //     status: response.status,
+        //     message: response.data.message,
+        //     result: response.data.result
+        // }
+        // res.send(resultado)
+        let resultado;
+        if (response.status === true) {
+            Promise.all(
+                response.data.result.map(async (contacto) => {
+                    return microservicioTypers.ObtenerTyperPorId(contacto.idContacto)
+                    .then(typer => {
+                        if (typer) {
+                            return {
+                                bloqueado: contacto.bloqueado,
+                                esFavorito: contacto.esFavorito,
+                                contacto: typer
+                            }
+                        }
+                    })
+                })
+            )
+            .then(contactos => {
+                resultado = {
+                    status: response.status,
+                    message: response.data.message,
+                    result: contactos
+                }
+
+                res.send(resultado)
+            })
         }
-        res.send(resultado)
+        else {
+            resultado = {
+                status: response.status,
+                message: response.data.message,
+                result: response.data.result
+            }
+        }
     })
     .catch(error => {
         res.send(error)
