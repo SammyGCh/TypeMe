@@ -36,7 +36,7 @@
             </div>
             <div class="areaBotones">
                 <button class="btn" id="nuevoChat" data-toggle="modal" data-target="#nuevoChatModal">Nuevo chat</button>
-                <button class="btn" id="nuevoContacto">Nuevo contacto</button>
+                <button class="btn" id="nuevoContacto" data-toggle="modal" data-target="#agregarContactoDialog">Nuevo contacto</button>
             </div>
         </div>
     </div>
@@ -124,7 +124,7 @@
           </div>
 
           <div id="mensajeContactoAgregado" style="display: none;">
-              <h6>¡Tú y <b id="nuevoContactoUsername"></b> ahora son amigos!</h6>
+              <h6>¡<b id="nuevoContactoUsername"></b> y tú ahora son amigos!</h6>
               <p>Contacto agregado.</p>
           </div>
 
@@ -135,6 +135,37 @@
       <div class="modal-footer">
         <button id="botonAceptar" type="button" class="btn btn-danger" style="width: 100px; padding: 10px;"
         data-dismiss="modal" data-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="agregarContactoDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #D30000;">
+        <h5 class="modal-title" style="color: white;">Nuevo contacto</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row" style="padding: 10px;">
+            <label class="input-usuario-contacto">Usuario: </label>
+            <div >
+                <input type="text" class="campos campo-nuevo-contacto" id="usuarioContacto">
+            </div>  
+            <span id="mensajeNuevoContacto" class="mensajeNuevoContacto">El usuario no existe</span>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button id="botonCancelar" type="button" class="btn btn-danger" style="width: 100px; padding: 10px;"
+        data-dismiss="modal" data-dismiss="modal">Cancelar</button>
+
+        <button id="botonAgregarContacto" type="button" class="btn btn-danger" 
+            style="width: 150px; padding: 10px;" onclick="agregarContacto()">Agregar contacto</button>
       </div>
     </div>
   </div>
@@ -167,6 +198,7 @@
     </script>
     <script src="~/js/principal.js"></script>
     <script src="~/js/nuevoChat.js"></script>
+    <script src="~/js/nuevoContacto.js"></script>
 }
 
 
