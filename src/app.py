@@ -33,7 +33,7 @@ def agregar_contacto():
 
         nuevo_contacto = {}
         if existeTyper:
-            ya_tiene_contacto_agregado = mongo.db.contacta.find_one({'contactos.idContacto': idContacto})
+            ya_tiene_contacto_agregado = mongo.db.contacta.find_one({'idTyper': idTyper,'contactos.idContacto': idContacto})
 
             if ya_tiene_contacto_agregado:
                 resultado = convertirResultadoFallido("El contacto ya se encuentra agrgeado")
