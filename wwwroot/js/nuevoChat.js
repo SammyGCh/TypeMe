@@ -37,13 +37,14 @@ function prep_modal() {
                 $("#mensajeError").show()
             }
             else {
-                buscarContactos()
+                //buscarContactos()
                 page_track++;
                 pages.hide();
                 pages.eq(page_track).show();
                 $(atrasBoton).show();
                 $("#mensajeError").hide();
                 $(siguienteBoton).text('Crear chat');
+                buscarContactos()
             }
         }
         else if (page_track == paginaSeleccionContactos) {
@@ -184,7 +185,6 @@ function crearGrupo() {
     contentType: 'application/json',
     data: JSON.stringify(infoGrupo),
     success: function (response) {
-      console.log(response);
       if (response.status === true) {
           mostrarMensajeExito()
 

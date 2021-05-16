@@ -88,3 +88,5 @@ D:\typeme\TypeMeWeb\obj\Debug\net5.0\Razor\Pages\Partials\_Chats.cshtml.g.cs
 D:\typeme\TypeMeWeb\obj\Debug\net5.0\Razor\Pages\Partials\_Bienvenida.cshtml.g.cs
 D:\typeme\TypeMeWeb\obj\Debug\net5.0\Razor\Pages\Partials\_MiPerfil.cshtml.g.cs
 D:\typeme\TypeMeWeb\obj\Debug\net5.0\Razor\Pages\Partials\ChatsAdmin.cshtml.g.cs
+D:\typeme\TypeMeWeb\obj\Debug\net5.0\Razor\Pages\Partials\_Chat.cshtml.g.cs
+D:\typeme\TypeMeWeb\bin\Debug\net5.0\libman.json

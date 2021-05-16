@@ -1,10 +1,13 @@
 @page
+@using Models
+@model MiPerfilModel
 @{
     Layout = null;
+    Typer typer = ViewData["Typer"] as Typer;
 }
 <div class="miPerfil">
     <div class="header">
-        <div id="nombreUsuario">Angel de jesus</div>
+        <div id="nombreUsuario">@typer.Username</div>
 
         <div class="dropdown dropleft chat-options">
             <a type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Opciones">
@@ -21,23 +24,6 @@
             </div>
         </div>
     </div>
-    @* <header>
-        <div id="nombreUsuario">Angel de jesus</div>
-
-        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-danger" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class='bx bx-menu'></i>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <li><a class="dropdown-item" href="#" id="accion1">Action 1</a></li>
-                    <li><a class="dropdown-item" href="#" id="accion2">Action 2</a></li>
-                    <li><a class="dropdown-item" href="#" id="accion3">Action 3</a></li>
-                    <li><a class="dropdown-item" href="#" id="accion4">Action 4</a></li>
-                </ul>
-            </div>
-        </div>
-    </header> *@
 
     <div class="informacion">
 
@@ -45,57 +31,121 @@
         @* <img src="~/img/perfil.jpg" id="imagenDePerfil"> *@
 
         <div class="username_container">
-            <input type="text" name="" id="nombreDeUsuario" value="Nombre">
-            <a type="button" class="agregar_boton">
-                <i class='bx bx-plus-circle bx-sm bx-tada-hover' style="color: #D30000;"></i>
+            <input type="text" name="" id="nombreDeUsuario" value="@typer.Username" disabled>
+            <a type="button" class="icono_boton" id="actualizarUsernameBtn" style="display: none;" onclick="confirmarActualizacionUsername('@typer.IdTyper')">
+                <i class='bx bx-check-circle bx-sm bx-tada-hover' style="color: #D30000;"></i>
+            </a>
+
+            <a type="button" class="icono_boton" id="editarUsernameBtn" onclick="editarMiUsername()">
+                <i class='bx bx-edit bx-sm bx-tada-hover' style="color: #D30000;"></i>
+            </a>
+
+            <a type="button" class="icono_boton" id="cancelarEdicionUsernameBtn" style="display: none;" onclick="cancelarEdicion()">
+                <i class='bx bx-x-circle bx-sm bx-tada-hover' style="color: #D30000;"></i>
             </a>
         </div>
 
         
 
         <div class="correos">
+            @foreach (var correo in typer.Correos)
+            {
+                @if(Convert.ToBoolean(correo.EsPrincipal)) {
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>Correo principal: </label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="email" name="" id="correoPrincipal" value="@correo.Direccion" disabled>
+                        </div>
 
-            <div class="row">
-                <div class="col-sm-4">
-                    <label>Correo principal: </label>
-                </div>
-                <div class="col-sm-4">
-                    <input type="email" name="" id="correoPrincipal" value="Correo electrónico">
-                </div>
+                        <div class="col-sm-3">
+                            <a type="button" class="icono_boton" id="actualizarCorreoPrincipalBtn" style="display: none;" onclick="confirmarEdicionCorreoPrincipal('@typer.IdTyper', '@correo.Direccion')">
+                                <i class='bx bx-check-circle bx-sm bx-tada-hover' style="color: #D30000;"></i>
+                            </a>
 
-                <div class="col-sm-3">
-                    <a type="button" class="agregar_boton">
-                        <i class='bx bx-plus-circle bx-sm bx-tada-hover' style="color: #D30000;"></i>
-                    </a>
-                </div>
+                            <a type="button" class="icono_boton" id="editarCorreoPrincipalBtn" onclick="editarCorreoPrincipal()">
+                                <i class='bx bx-edit bx-sm bx-tada-hover' style="color: #D30000;"></i>
+                            </a>
+
+                            <a type="button" class="icono_boton" id="cancelarCorreoPrincipalBtn" style="display: none;" onclick="cancelarEdicion()">
+                                <i class='bx bx-x-circle bx-sm bx-tada-hover' style="color: #D30000;"></i>
+                            </a>
+                        </div>
                 
-            </div>
+                    </div>
+                }
+                else {
+                    <div class="row" style="margin-top:10px;">
+                        <div class="col-sm-4">
+                            <label>Correo secundario: </label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="email" name="" id="correoSecundario" value="@correo.Direccion" disabled>
+                        </div>
 
-            <div class="row" style="margin-top:10px;">
-                <div class="col-sm-4">
-                    <label>Correo secundario: </label>
-                </div>
-                <div class="col-sm-4">
-                    <input type="email" name="" id="correoSecundario" value="Correo electrónico">
-                </div>
+                        <div class="col-sm-3">
+                            <a type="button" class="icono_boton" id="actualizarCorreoSecundarioBtn" style="display: none;" onclick="confirmarEdicionCorreoSecundario('@typer.IdTyper', '@correo.Direccion')">
+                                <i class='bx bx-check-circle bx-sm bx-tada-hover' style="color: #D30000;"></i>
+                            </a>
 
-                <div class="col-sm-3">
-                    <a type="button" class="agregar_boton">
-                        <i class='bx bx-plus-circle bx-sm bx-tada-hover' style="color: #D30000;"></i>
-                    </a>
-                </div>
+                            <a type="button" class="icono_boton" id="editarCorreoSecundarioBtn" onclick="editarCorreoSecundario()">
+                                <i class='bx bx-edit bx-sm bx-tada-hover' style="color: #D30000;"></i>
+                            </a>
+
+                            <a type="button" class="icono_boton" id="cancelarCorreoSecundarioBtn" style="display: none;" onclick="cancelarEdicion()">
+                                <i class='bx bx-x-circle bx-sm bx-tada-hover' style="color: #D30000;"></i>
+                            </a>
+                        </div>
                 
-            </div>
+                    </div>
+                }
+            }  
         </div>
 
         <div class="estado">
             <label for="estado">Estado: </label>
-            <input type="text" name="estado" id="estado" value="Estado">
-            <a type="button" class="agregar_boton">
-                <i class='bx bx-plus-circle bx-sm bx-tada-hover' style="color: #D30000;"></i>
+            <input type="text" name="estado" id="estado" value="@typer.Estado" disabled>
+            <a type="button" class="icono_boton" id="actualizarEstadoBtn" style="display: none;" onclick="confirmarEdicionEstado('@typer.IdTyper')">
+                <i class='bx bx-check-circle bx-sm bx-tada-hover' style="color: #D30000;"></i>
+            </a>
+
+            <a type="button" class="icono_boton" id="editarEstadoBtn" onclick="editarEstado()">
+                <i class='bx bx-edit bx-sm bx-tada-hover' style="color: #D30000;"></i>
+            </a>
+
+            <a type="button" class="icono_boton" id="cancelarEstadoBtn" style="display: none;" onclick="cancelarEdicion()">
+                <i class='bx bx-x-circle bx-sm bx-tada-hover' style="color: #D30000;"></i>
             </a>
         </div>
 
     </div>
 </div>
+
+<div class="modal fade" id="dialogActualizacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #D30000;">
+        <h5 class="modal-title" id="titulo" style="color: white;"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrarModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6 id="dialogMensajePrincipal"></h6>
+        <p id="dialogMensaje"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" style="width: 100px; padding: 10px;"
+        data-dismiss="modal" onclick="cerrarModal()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="~/js/miPerfil.js"></script>
+
+@section Scripts {
+    
+}
 <link rel="stylesheet" href="~/css/miPerfil.css" />

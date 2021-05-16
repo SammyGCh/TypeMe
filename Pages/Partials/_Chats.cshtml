@@ -8,13 +8,21 @@
 {
     @foreach (var grupo in misGrupos)
     {
-        <div class="cuadroChat" id="chat">
-            <span id="idGrupo" style="display: none;">@grupo.IdGrupo</span>
+        <div class="cuadroChat" id="chat" onclick="irAGrupo(@grupo.IdGrupo, '@grupo.Nombre');">
             <div class="cuadroChat_imagen" id="chat1"></div>
             <label class="cuadroChat_texto" id="nombreGrupo">@grupo.Nombre</label>
         </div>
     }
 }
 
-<script src="~/js/chats.js"></script>
+<script>
+    function irAGrupo(idGrupo, nombre) {
+        $("#vistasContainer").load("Partials/_Chat")
+    } 
+</script>
+
+@section Scripts {
+    
+}
+
 <link rel="stylesheet" href="~/css/chats.css" />

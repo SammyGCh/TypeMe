@@ -102,9 +102,27 @@
     margin-top: 20px;
 }
 
-.agregar_boton {
+.icono_boton {
     margin-left: 10px;
     vertical-align: middle;
+}
+
+.campo_invalido {
+    border: 2px solid #D30000;
+}
+
+input:focus{
+    outline: none;
+    border: 2px solid #9b9b9b;
+}
+
+input {
+    
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    height: 35px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
 }
 /*
 */

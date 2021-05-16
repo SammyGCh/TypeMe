@@ -14,16 +14,16 @@
 
         <form class="formulario" method="POST">
             <label for="usuario" class="formulario__label">Usuario</label><br>
-            <input name="usuario" id="Campo-usuario" type="text" class="formulario__input"><br>
+            <input name="usuario" id="Campo-usuario" type="text" class="formulario__input" oninput="manejarEntrada()"><br>
 
             <label for="password" class="formulario__label">Contraseña</label><br>
-            <input name="password" id="Campo-contrasenia" type="password" class="formulario__input"><br>
+            <input name="password" id="Campo-contrasenia" type="password" class="formulario__input" oninput="manejarEntrada()"><br>
 
-            <span id="mensajeError" style="color: red; display:none">Usuario y/o contraseña incorrectos. Por verifique la información.</span>
-
-            <submit class="boton-login" id="login">Iniciar sesión</submit>
+            <span id="mensajeError" style="color: red; display:none"></span>
+            <div class="loader" id="loader"></div>
+            <button class="boton-login" id="login">Iniciar sesión</button>
         </form>    
-        <div class="boton-registrar" id="registrar">Crear cuenta</div>
+        <button class="boton-registrar" id="registrar">Crear cuenta</button>
     <div>
 </div>
 
@@ -61,8 +61,11 @@
 
     function iniciarSesion()
     {
+        $("#loader").show();
+        $("#mensajeError").hide()
         
-        $("#login").prop("disabled", true)
+        botonLogin.disabled = true;
+        botonRegistrar.disabled = true;
         var infoTyper = {
             identificadorTyper: inputUsuario.value,
             informacionComplementaria: inputContrasenia.value
@@ -78,19 +81,28 @@
             contentType: "application/json",
             data: JSON.stringify(infoTyper),
             success: function(response) {
-                console.log(response)
+                
                 if (response.status === true) {
                     
                     agregarSesion(response.result);
                     
                 }
                 else {
-                    $("#mensajeError").show()
-                    $("#login").prop("disabled", true)
+                    $("#loader").hide();
+                    var mensajeError = $("#mensajeError")
+                    mensajeError.text("Usuario y/o contraseña incorrectos. Por verifique la información.")
+                    mensajeError.show()
+                    botonLogin.disabled = false;
+                    botonRegistrar.disabled = false;
                 }
             },
             error: function(response) {
-                console.log(response)
+                var mensajeError = $("#mensajeError")
+                mensajeError.text("Ocurrió un error con el servidor. Intente más tarde.")
+                mensajeError.show()
+                $("#loader").hide();
+                botonLogin.disabled = false;
+                botonRegistrar.disabled = false;
             }
         })
         
@@ -105,14 +117,25 @@
             success: function(result) {
                 if (result.status === true)
                 {
+                    $("#loader").hide();
                     window.location.pathname = '/Principal'
                 }
                 else {
-                    alert("Ocurrió un error")
+                    var mensajeError = $("#mensajeError")
+                    mensajeError.text("Ocurrió un error con el servidor. Intente más tarde.")
+                    mensajeError.show()
+                    $("#loader").hide();
+                    botonLogin.disabled = false;
+                    botonRegistrar.disabled = false;
                 }
             },
             error: function() {
-                alert("Ocurrió un al intentar conectarse al servidor")
+                var mensajeError = $("#mensajeError")
+                mensajeError.text("Ocurrió un error con el servidor. Intente más tarde.")
+                mensajeError.show()
+                $("#loader").hide();
+                botonLogin.disabled = false;
+                botonRegistrar.disabled = false;
             }
         })
     }
@@ -141,6 +164,10 @@
     function registrarCuenta()
     {
         window.location.pathname = '/RegistrarCuenta'
+    }
+
+    function manejarEntrada() {
+        $("#mensajeError").hide()
     }
 
 </script>

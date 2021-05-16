@@ -66,3 +66,8 @@ function mostrarMensajeContactoAgregado(nuevoContacto) {
     $("#mensajeContactoAgregado").show()
     $("#dialog").modal("show")
 }
+
+$('#agregarContactoDialog').on('hidden.bs.modal', function (e) {
+    mensaje.hide()
+    $("#usuarioContacto").val("")
+})

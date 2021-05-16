@@ -1,0 +1,143 @@
+@page
+@model ChatModel
+@{
+    Layout = null;
+}
+
+<div class="chat-container">
+    <div class="chat-header">
+        <h2 class="chat-title">Ángel</h2>
+
+        <h4 class="chat-description">What doesn’t kill you, simply makes you stranger!</h4>
+        <div class="dropdown dropleft group-options">
+            <a type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Opciones">
+                <i class='bx bx-menu bx-md bx-tada-hover'></i>
+            </a>
+            <br>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">
+                    <i class='bx bx-block' style="color: #D30000;"></i>&nbsp;&nbsp;Bloquear contacto
+                </a>
+                <a class="dropdown-item" href="#">
+                    <i class='bx bxs-star' style="color: #D30000;"></i>&nbsp;&nbsp;Añadir a favorito
+                </a>
+                <a class="dropdown-item" href="#">
+                    <i class='bx bxs-user-minus' style="color: #D30000;"></i>&nbsp;&nbsp;Eliminar contacto
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-messages" id="chat-messages" onscroll="verificarScroll()">
+        <table id="listaMensajes" >
+            <tbody id="listaMensajesBody">
+                <tr>
+                    <div class="chat-sent-message">
+                        <h1>Sammy</h1>
+                        <p>Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                        </p>
+                        <span>11:00</span>
+                    </div>
+                </tr>
+
+                <tr>
+                    <div class="chat-received-message">
+                        <h1>Ángel</h1>
+                        <p>
+                            Yeah, fine!
+                        </p>
+                        <span>11:00</span>
+                    </div>
+                </tr>
+
+                <tr>
+                    <div class="chat-received-message">
+                        <h1>Ángel</h1>
+                        <p>
+                            Yeah, fine!
+                        </p>
+                        <span>11:00</span>
+                    </div>
+                </tr>
+
+                <tr>
+                    <div class="chat-sent-message">
+                        <h1>Sammy</h1>
+                        <p>Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?Hello. How are you today?
+                            Hello. How are you today?
+                            Hello. How are you today?
+                        </p>
+                        <span>11:00</span>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+
+       
+        <a id="irAbajoIcon" type="button" class="irAbajoIcon" onclick="irAlFinalDelChat()">
+            <i class='bx bxs-chevron-down-circle bx-md' style="color: #D30000;"></i>
+        </a>
+
+        
+
+    </div>
+
+    <div class="card-footer chat-footer" id="chat-footer">
+        <div class="dropdown dropup chat-multimedia">
+            <a type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Adjuntar">
+                <i class='bx bx-paperclip bx-sm bx-border-circle bx-tada-hover' style="color: #D30000; transform: rotate(135deg);"></i>
+            </a>
+            <br>
+            <div class="dropdown-menu">
+                <input type="file" id="files" style="display: none;"/>
+                <a class="dropdown-item" type="button" onclick="seleccionarArchivo()">
+                    <i class='bx bx-file' style="color: #D30000;"></i>&nbsp;&nbsp;Archivo
+                </a>
+
+                <input type="file" id="images" style="display: none;" accept="image/*"/>
+                <a class="dropdown-item"  type="button" onclick="seleccionarImagen()">
+                    <i class='bx bxs-image' style="color: #D30000;"></i>&nbsp;&nbsp;Imagen
+                </a>
+
+                <input type="file" id="videos" style="display: none;" accept="video/mp4,video/x-m4v,video/*"/>
+                <a class="dropdown-item" type="button" onclick="seleccionarVideo()">
+                    <i class='bx bxs-video' style="color: #D30000;"></i>&nbsp;&nbsp;Vídeo
+                </a>
+            </div>
+
+            <div id="fileInformationContainer" style="display: none;">
+                <span id="fileName" class="fileName">&nbsp;</span>
+                <a type="button" onclick="eliminarArchivoSeleccionado()" class="deleteFileButton"><i class="bx bx-x" style="color: #D30000;"></i></a>
+            </div>
+        </div>
+        
+        <textarea id="mensaje" class="chat-input" placeholder="Escribe un mensaje" rows="5"></textarea>
+
+        <a type="button" class="chat-send" onclick="enviarMensaje()">
+            <i class='bx bx-send bx-sm bx-border-circle' 
+            style="color: #D30000;"></i>
+        </a>
+    </div>
+
+</div>
+
+
+    
+<!--<script src="~/js/chat.js"></script>-->
+
+
+<link rel="stylesheet" href="~/css/chat.css" />
