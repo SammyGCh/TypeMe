@@ -32,7 +32,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Mensajes`.`Mensajes` (
   `IdMensaje` INT NOT NULL AUTO_INCREMENT,
   `Contenido` MEDIUMTEXT NOT NULL,
-  `Fecha` DATE NOT NULL,
+  `Fecha` DATETIME NOT NULL,
   `Hora` TIME NOT NULL,
   `IdGrupo` INT NOT NULL,
   `IdTyper` VARCHAR(40) NOT NULL,
