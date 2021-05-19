@@ -8,7 +8,7 @@
 {
     @foreach (var grupo in misGrupos)
     {
-        <div class="cuadroChat" id="chat" onclick="irAGrupo(@grupo.IdGrupo, '@grupo.Nombre');">
+        <div class="cuadroChat" id="chat" onclick="irAGrupo(@grupo.IdGrupo);">
             <div class="cuadroChat_imagen" id="chat1"></div>
             <label class="cuadroChat_texto" id="nombreGrupo">@grupo.Nombre</label>
         </div>
@@ -16,8 +16,9 @@
 }
 
 <script>
-    function irAGrupo(idGrupo, nombre) {
-        $("#vistasContainer").load("Partials/_Chat")
+    function irAGrupo(idGrupo) {
+        console.log(idGrupo)
+        $("#vistasContainer").load("Partials/_Chat?idGrupo=" + idGrupo)
     } 
 </script>
 

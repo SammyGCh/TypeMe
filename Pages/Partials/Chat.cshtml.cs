@@ -16,20 +16,85 @@ namespace TypeMeWeb.Pages.Partials
     public class ChatModel : PageModel
     {
         private readonly ILogger<ErrorModel> _logger;
+        private WebClient webClient;
+        [ViewData]
+        public Grupo Grupo { get; set; }
+        [ViewData]
+        public List<MensajeDominio> MisMensajes { get; set; }
+        [ViewData]
+        public Typer TyperEnSesion { get; set; }
 
         public ChatModel(ILogger<ErrorModel> logger)
         {
             _logger = logger;
+            webClient = new WebClient();
         }
 
-        public void OnGet()
+        public void OnGet(int idGrupo)
         {
-                    
+            ObtenerInfoGrupo(idGrupo);
+            ObtenerMensajesDeGrupo(idGrupo);
+            ObtenerTyperEnSesion();
         }
 
-        public void OnPostGetMensajes([FromBody] Grupo grupo)
+        private void ObtenerTyperEnSesion()
         {
-            Console.Write(grupo.Nombre); 
+            byte[] arr;
+            HttpContext.Session.TryGetValue("Typer", out arr);
+
+            if (arr != null)
+            {
+                string cadena = Encoding.UTF8.GetString(arr);
+                TyperEnSesion = JsonSerializer.Deserialize<Typer>(cadena);
+            }
+        }
+
+        private void ObtenerMensajesDeGrupo(int idGrupo)
+        {
+            string mensajesJson;
+
+            try
+            {
+                mensajesJson =  webClient.DownloadString("http://localhost:4000/mensajes/obtenerMensajes/" + idGrupo);
+                
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
+            }
+
+            ResultadoAPIMensajes resultado = JsonSerializer.Deserialize<ResultadoAPIMensajes>(mensajesJson);
+            MisMensajes = resultado.result;
+        }
+
+        private void ObtenerInfoGrupo(int idGrupo)
+        {
+            // string grupoJson;
+            // try
+            // {
+            //     grupoJson = webClient.DownloadString(new Uri("http://localhost:4000/mensajes/obtenerGrupos?idGrupo=" + idGrupo));
+                
+            // }
+            // catch (System.Exception)
+            // {
+                
+            //     throw;
+            // }
+
+            // ResultadoAPIGrupos result = JsonSerializer.Deserialize<ResultadoAPIGrupos>(grupoJson);
+            // Grupo = result.result[0];
+
+            byte[] arr;
+            HttpContext.Session.TryGetValue("MisGrupos", out arr);
+
+            if (arr != null)
+            {
+                string cadena = Encoding.UTF8.GetString(arr);
+                List<Grupo> gruposEnSesion = JsonSerializer.Deserialize<List<Grupo>>(cadena);
+
+                Grupo = gruposEnSesion.Find(grupo => grupo.IdGrupo == idGrupo);
+            }
         }
     }
 }

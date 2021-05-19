@@ -51,6 +51,26 @@ namespace TypeMeWeb.Pages.Partials
             ResultadoAPIGrupos result = JsonSerializer.Deserialize<ResultadoAPIGrupos>(grupoJson);
 
             MisGrupos = result.result;
+            AgregarGruposASesion(MisGrupos);
+            
+        }
+
+        private void AgregarGruposASesion(List<Grupo> grupos)
+        {
+            HttpContext.Session.Remove("MisGrupos");
+
+            string cadena = "";
+
+            try
+            {
+                cadena = JsonSerializer.Serialize(grupos);
+            }
+            catch (NotSupportedException)
+            {
+               
+            }
+
+            HttpContext.Session.Set("MisGrupos", Encoding.UTF8.GetBytes(cadena));
         }
     }
 }

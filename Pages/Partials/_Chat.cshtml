@@ -1,14 +1,18 @@
 @page
+@using Models
 @model ChatModel
 @{
     Layout = null;
+    Grupo grupo = ViewData["Grupo"] as Grupo;
+    List<MensajeDominio> misMensajes = ViewData["MisMensajes"] as List<MensajeDominio>;
+    Typer typer = ViewData["TyperEnSesion"] as Typer;
 }
 
 <div class="chat-container">
     <div class="chat-header">
-        <h2 class="chat-title">Ángel</h2>
+        <h4 class="chat-title">@grupo.Nombre</h4>
 
-        <h4 class="chat-description">What doesn’t kill you, simply makes you stranger!</h4>
+        <h4 class="chat-description">@grupo.Descripcion</h4>
         <div class="dropdown dropleft group-options">
             <a type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Opciones">
                 <i class='bx bx-menu bx-md bx-tada-hover'></i>
@@ -29,8 +33,36 @@
     </div>
 
     <div class="chat-messages" id="chat-messages" onscroll="verificarScroll()">
-        <table id="listaMensajes" >
+        <table id="listaMensajes">
             <tbody id="listaMensajesBody">
+                @if (misMensajes != null)
+                {
+                    @foreach (var mensaje in misMensajes.OrderByDescending(m => m.Fecha))
+                    {
+                        @if (mensaje.Typer.Username.Equals(typer.Username))
+                        {
+                            <tr>
+                                <div class="chat-sent-message">
+                                    <h1>@mensaje.Typer.Username</h1>
+                                    <p>@mensaje.Contenido</p>
+                                    <span>@mensaje.Hora</span>
+                                </div>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <div class="chat-received-message">
+                                    <h1>@mensaje.Typer.Username</h1>
+                                    <p>@mensaje.Contenido</p>
+                                    <span>@mensaje.Hora</span>
+                                </div>
+                            </tr>
+                        }
+                        
+                    }
+                }
+                <!--
                 <tr>
                     <div class="chat-sent-message">
                         <h1>Sammy</h1>
@@ -84,6 +116,7 @@
                         <span>11:00</span>
                     </div>
                 </tr>
+                -->
             </tbody>
         </table>
 
@@ -135,9 +168,10 @@
 
 </div>
 
+@section Scripts {
+    <script src="~/js/chat.js"></script>
+}
 
-    
-<!--<script src="~/js/chat.js"></script>-->
 
 
 <link rel="stylesheet" href="~/css/chat.css" />
