@@ -64,7 +64,7 @@ namespace MSMensajes.Controllers
             }
 
             nuevoMensaje.Fecha = DateTime.Now;
-            string horaActual = DateTime.Now.ToString("HH:mm:ss");
+            string horaActual = DateTime.Now.ToString("HH:mm");
             nuevoMensaje.Hora = TimeSpan.Parse(horaActual);
             _mensajesContext.Entry(nuevoMensaje).State = EntityState.Added;
 
