@@ -228,6 +228,27 @@ router.post("/enviarMensaje", async (req, res) => {
     
         microservicioMensaje.EnviarMensaje(nuevoMensaje)
         .then(() => {
+            // microservicioMensaje.ObtenerGrupos("",nuevoMensaje.idGrupo)
+            // .then((response) => {
+            //     var grupo = response.data.result[0]
+            //     microservicioTypers.ObtenerTyperPorId(nuevoMensaje.idTyper)
+            //     .then(typer => {
+            //         let resultado = {
+            //             status: true,
+            //             message: "Mensaje enviado",
+            //             result: {
+            //                 contenido: nuevoMensajeBody.contenido,
+            //                 grupo: grupo,
+            //                 typer: typer,
+            //                 multimedia: {}
+            //             }
+            //         }
+            //         res.send(resultado)
+            //     })
+            // })
+            // .catch((error) => {
+            //     res.send(error);
+            // });
 
             microservicioTypers.ObtenerTyperPorId(nuevoMensaje.idTyper)
             .then(typer => {
@@ -257,7 +278,7 @@ router.get("/obtenerMensajes/:idGrupo", async (req, res) => {
 
     let response = await microservicioMensaje.ObtenerMensajesDeGrupo(idGrupo);
 
-    if (response.status == true) {
+    if (response.status === true) {
         Promise.all(
             response.data.result.map(async (mensaje) => {
                 return microservicioTypers.ObtenerTyperPorId(mensaje.IdTyper)

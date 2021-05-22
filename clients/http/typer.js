@@ -1,9 +1,11 @@
 import axios from 'axios';
 
+const URL_MS_TYPERS = process.env.URL_MS_TYPERS;
+
 class MicroservicioTypers{
     
     async RegistrarNuevoTyper(nuevoTyper){
-        let url = "http://localhost:3324/Typer/registrarTyper";
+        let url = URL_MS_TYPERS + "/Typer/registrarTyper";
 
         return axios.post(url, nuevoTyper)
         .then(response => {return response.data})
@@ -12,7 +14,7 @@ class MicroservicioTypers{
 
     
     async Login(infoLogin){
-        let url = "http://localhost:3324/Typer/loginTyper";
+        let url = URL_MS_TYPERS + "/Typer/loginTyper";
 
         return axios.post(url, infoLogin)
         .then(response => {return response.data})
@@ -20,7 +22,7 @@ class MicroservicioTypers{
     }
 
     async ObtenerInfoTyper(idTyper){
-        let url = "http://localhost:3324/Typer/infoTyper";
+        let url = URL_MS_TYPERS + "/Typer/infoTyper";
         return axios.post(url, idTyper)
         .then(response => {return response.data})
         .catch(error => {return error.response.data})
@@ -28,7 +30,7 @@ class MicroservicioTypers{
 
 
     async ObtenerCorreosTyper(idTyper){
-        let url = "http://localhost:3324/Typer/obtenerCorreos";
+        let url = URL_MS_TYPERS + "/Typer/obtenerCorreos";
 
         return axios.post(url, idTyper)
         .then(response => {return response.data})
@@ -36,7 +38,7 @@ class MicroservicioTypers{
     }
 
     async ActualizarCorreo(infoDeActualizacion){
-        let url = `http://localhost:3324/Typer/actualizarCorreo`;
+        let url = URL_MS_TYPERS + `/Typer/actualizarCorreo`;
 
         return axios.put(url, infoDeActualizacion)
         .then(response => {return response.data})
@@ -45,7 +47,7 @@ class MicroservicioTypers{
     }
 
     async ActualizarInfoDeUsuario(nuevaInfo){
-        let url = "http://localhost:3324/Typer/actualizarInfoTyper";
+        let url = URL_MS_TYPERS + "/Typer/actualizarInfoTyper";
 
         return axios.put(url, nuevaInfo)
         .then(response => {return response.data})
@@ -53,7 +55,7 @@ class MicroservicioTypers{
     }
 
     async ActualizarContraseniaTyper(nuevaContrasenia){
-        let url = "http://localhost:3324/Typer/actualizarContrasenia";
+        let url = URL_MS_TYPERS + "/Typer/actualizarContrasenia";
 
         return axios.put(url, nuevaContrasenia)
         .then(response => {return response.data})
@@ -61,7 +63,7 @@ class MicroservicioTypers{
     }
 
     async AgregarNuevoCorreo(nuevoCorreo){
-        let url = "http://localhost:3324/Typer/agregarCorreo";
+        let url = URL_MS_TYPERS + "/Typer/agregarCorreo";
 
         return axios.post(url, nuevoCorreo)
         .then(response => {return response.data})
@@ -69,7 +71,7 @@ class MicroservicioTypers{
     }
 
     async EliminarTyper(idTyper){
-        let url = "http://localhost:3324/Typer/eliminarTyper";
+        let url = URL_MS_TYPERS + "/Typer/eliminarTyper";
 
         return axios.delete(url, {data: idTyper})
         .then(response => {return response.data})
@@ -78,7 +80,7 @@ class MicroservicioTypers{
 
 
     async ObtenerTyperPorId(idTyper){
-        let url = "http://localhost:3324/Typer/infoTyper";
+        let url = URL_MS_TYPERS + "/Typer/infoTyper";
 
         let busqueda = {identificadorTyper: idTyper, modificadorDeMetodo: "id"}
         return axios.post(url, busqueda)
@@ -87,7 +89,7 @@ class MicroservicioTypers{
     }
 
     async ObtenerTyperPorUsuario(username){
-        let url = "http://localhost:3324/Typer/infoTyper";
+        let url = URL_MS_TYPERS + "/Typer/infoTyper";
 
         let busqueda = {identificadorTyper: username, modificadorDeMetodo: "usuario"}
         return axios.post(url, busqueda)

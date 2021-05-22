@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const CONTACTOS_URL = "http://localhost:3327"
+const CONTACTOS_URL = process.env.URL_MS_CONTACTOS;
 
 class MicroservicioContactos {
     async ObtenerContactos(idTyper) {

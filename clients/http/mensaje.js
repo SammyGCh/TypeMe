@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const MS_MENSAJES_URL = "http://localhost:3326";
+const MS_MENSAJES_URL = process.env.URL_MS_MENSAJES;
 
 class MicroservicioMensaje {
     async ObtenerGrupos(nombre, idGrupo)

@@ -1,9 +1,10 @@
 import axios from 'axios';
 
+const URL_MS_MULTIMEDIA = process.env.URL_MS_MULTIMEDIA
 class MicroservicioMultimedia{
     
     async RegistrarMultimedia(nuevaMultimedia){
-        let url = "http://localhost:3325/Multimedia/registrarMultimedia";
+        let url = URL_MS_MULTIMEDIA + "/Multimedia/registrarMultimedia";
 
         return axios.post(url, nuevaMultimedia)
         .then(response => {return response.data})
@@ -11,7 +12,7 @@ class MicroservicioMultimedia{
     }
 
     async obtenerMultimedia(idMultimedia){
-        let url = "http://localhost:3325/Multimedia/obtenerMultimedia";
+        let url = URL_MS_MULTIMEDIA + "/Multimedia/obtenerMultimedia";
 
         return axios.get(url,  {
             params: {
