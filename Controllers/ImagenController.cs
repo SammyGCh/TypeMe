@@ -29,17 +29,16 @@ namespace MSMultimedia.Controllers
         }
 
         [HttpPost("registrarImagen")]
-        public async Task<ActionResult<JObject>> RegistrarMultimedia([FromForm]FileUploadAPI objFile, [FromQuery] string idGrupo = "")
+        public async Task<ActionResult<JObject>> RegistrarMultimedia([FromForm]FileUploadAPI objFile, [FromQuery]string idTyper = "")
         {
             JObject resultadoAEnviar;
             Multimedia nuevaMultimedia = new Multimedia();
-            string directorioDeSalida = "C:\\Users\\Angel\\Desktop\\Base de datos\\";
+            string directorioDeSalida = Directory.GetCurrentDirectory() + "/imagenes/";
 
-            if(idGrupo.Equals("") || objFile.file.Length <= 0)
+            if(objFile.file.Length <= 0)
             {
                 resultadoAEnviar = ConvertidorDeJson.ConvertirResultadoFallido("Los datos estan incompletos");
                 return BadRequest(resultadoAEnviar);
-
             }
 
             try
@@ -49,7 +48,7 @@ namespace MSMultimedia.Controllers
                     Directory.CreateDirectory(directorioDeSalida);
                 }
 
-                using(FileStream fileStream = System.IO.File.Create(directorioDeSalida + objFile.file.FileName)){
+                using(FileStream fileStream = System.IO.File.Create(directorioDeSalida + idTyper + objFile.file.FileName)){
                     objFile.file.CopyTo(fileStream);
                     fileStream.Flush();    
                 }
@@ -73,7 +72,7 @@ namespace MSMultimedia.Controllers
 
 
         [HttpGet("obtenerImagen")]
-        public async Task<ActionResult<JObject>> ObtenerMultimedia([FromQuery]string idMultimedia = "")
+        public async Task<ActionResult<JObject>> ObtenerMultimedia([FromQuery]string idImagen = "")
         {
             JObject resultadoAEnviar;
             Multimedia multimedia = null;
@@ -81,7 +80,7 @@ namespace MSMultimedia.Controllers
             try
             {
                 multimedia = await  baseDeDatos.Multimedias
-                .Where(registro => registro.IdMultimedia.Equals(idMultimedia)).SingleOrDefaultAsync();
+                .Where(registro => registro.IdMultimedia.Equals(idImagen)).SingleOrDefaultAsync();
                 
                 if (multimedia == null)
                 {
@@ -92,13 +91,7 @@ namespace MSMultimedia.Controllers
                 string direccionDeImagen = multimedia.Ruta;
                 var bytes = await System.IO.File.ReadAllBytesAsync(direccionDeImagen);
                     
-                // construir la respuesta para el cliente y retornarla
-                //return File(bytes, "image/jpeg");
-
-                
-                resultadoAEnviar = ConvertidorDeJson.ConvertirResultadoExitoso("Archivo multimedia encontrado", multimedia);
-                return Ok(resultadoAEnviar);
-
+                return File(bytes, "image/jpeg");
             }
             catch (Exception ex)
             {
