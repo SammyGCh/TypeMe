@@ -1,21 +1,26 @@
-
-
-
-$(document).ready(irAlFinalDelChat());
-
 const ningunArchivoSeleccionado = 0;
 const archivoSeleccionado = 1;
 const imagenSeleccionada = 2;
 const videoSeleccionado = 3;
 var scrollTopInicial;
-var tipoSeleccionado = ningunArchivoSeleccionado;
+
+
+$(document).ready(irAlFinalDelChat());
+
+
+//var tipoSeleccionado = ningunArchivoSeleccionado;
 
 function irAlFinalDelChat() {
 //     console.log($('#chat-messages').scrollTop())
 //     console.log($('#chat-messages')[0].scrollHeight)
-//    $('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
-    var tamañoScrollSobrante = 100;
-    scrollTopInicial = $('#chat-messages').scrollTop() - tamañoScrollSobrante;
+    var chatMessages = $('#chat-messages')
+
+    if(chatMessages) {
+      chatMessages.scrollTop(chatMessages[0].scrollHeight);
+      var tamañoScrollSobrante = 100;
+      scrollTopInicial = chatMessages.scrollTop() - tamañoScrollSobrante;
+    }
+    
 //     var chatMessages = $('#chat-messages')
 //     chatMessages[0].scrollIntoView();
 }
@@ -79,54 +84,76 @@ function eliminarArchivoSeleccionado() {
   tipoSeleccionado = ningunArchivoSeleccionado;
 }
 
-function enviarMensaje() {
-  var mensaje = $('#mensaje').val();
+function enviarMensaje(idTyper) {
+  idTyperEnSesion = idTyper
+  var contenido = $('#mensaje').val();
   var fecha = new Date();
-  var hora = fecha.getHours();
-  var minutos = fecha.getMinutes();
-  var usuario = 'Sammy';
-  connection.invoke("EnviarMensaje", usuario, mensaje).catch(function (err) {
-    return console.log(err)
-  })
+  var mensaje = {
+    contenido: contenido,
+    idGrupo: grupoSeleccionado.idGrupo,
+    idTyper: idTyper
+  }
 
-  /*
-            $('#listaMensajes > tbody:last-child').append(
-                "<tr>" +
-                    "<div class=\"chat-sent-message\">" +
-                        "<h1>Sammy</h1>" +
-                        `<p>${mensaje}</p>` +
-                    "</div>" + 
-                "</tr>"
-            );
-            
-            
-            $('#listaMensajes').find('tbody')
-            .append($('<tr>')
-                .append(
-                    $('<div>')
-                        .append($('<h1>').append("Sammy"))
-                        
-                        .addClass('chat-sent-message')
-                    )
-            );
-            */
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:4000/mensajes/enviarMensaje',
+    dataType: 'json',
+    async: true,
+    contentType: 'application/json',
+    data: JSON.stringify(mensaje),
+    success: function (response) {
+      console.log(response)
+      if (response.status === true) {
+        chatConnection.invoke("EnviarMensaje", response.result).catch(function (err) {
+          return console.log(err)
+        })
+      } else {
+        
+      }
+    },
+    error: function (response) {
+      console.log(response)
+    },
+  });
 
-  $('#listaMensajesBody').append(`<tr id="${usuario}">
+  
+}
 
-                <td>
-                <div class="chat-sent-message">
-                    <h1>${usuario}</h1>
-                </div>
-                </td>
-           </tr>`);
+function recibirMensaje(mensaje) {
+  var fecha = mensaje.fecha.split("T")
+  //var fechaCompuesta = fecha.getDate() + fecha.getHours() + ":" + fecha.getMinutes()
+  var fechaCompuesta = fecha.getHours() + ":" + fecha.getMinutes()
+  console.log(fecha)
 
-  irAlFinalDelChat();
+  if (idTyperEnSesion === mensaje.typer.idTyper) {
+    $('#listaMensajes')
+    .append($('<li>')
+      .append($('<div>')
+        .append($('<h1>').append("Sammy"))
+        .append($('<p>').text(mensaje.contenido))
+        .addClass('chat-sent-message')
+        .append($('<span>').text(fechaCompuesta))
+      )
+    );
+  }
+  else {
+    $('#listaMensajes')
+    .append($('<li>')
+      .append($('<div>')
+        .append($('<h1>').append("Sammy"))
+        .append($('<p>').text(mensaje.contenido))
+        .addClass('chat-received-message')
+        .append($('<span>').text(fechaCompuesta))
+      )
+    );
+  }
+  
 }
 
 function verificarScroll() {
   var scrollTop = $('#chat-messages').scrollTop();
   var scrollHeight = $('#chat-messages')[0].scrollHeight;
-  console.log(scrollTop)
+  //console.log(scrollTop)
   if (scrollTop < scrollTopInicial) {
     $('#irAbajoIcon').show('swing');
   } else {

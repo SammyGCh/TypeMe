@@ -3,27 +3,34 @@
     Layout = null;
     List<Models.Grupo> misGrupos = ViewData["MisGrupos"] as List<Models.Grupo>;
 }
+<link rel="stylesheet" href="~/css/chats.css" />
 
 @if (misGrupos != null)
 {
     @foreach (var grupo in misGrupos)
     {
-        <div class="cuadroChat" id="chat" onclick="irAGrupo(@grupo.IdGrupo);">
+        <div class="cuadroChat" id="@grupo.IdGrupo" onclick="irAGrupo(@grupo.IdGrupo, '@grupo.Nombre');">
             <div class="cuadroChat_imagen" id="chat1"></div>
-            <label class="cuadroChat_texto" id="nombreGrupo">@grupo.Nombre</label>
+            <p class="cuadroChat_texto" id="nombreGrupo">@grupo.Nombre</p>
+            <i class='bx bxs-circle bx-tada' style="color: red; margin-top: 30px; display:none;" id="icono-nuevo-mensaje"></i>
         </div>
     }
 }
 
 <script>
-    function irAGrupo(idGrupo) {
-        console.log(idGrupo)
-        $("#vistasContainer").load("Partials/_Chat?idGrupo=" + idGrupo)
+
+    function irAGrupo(idGrupo, nombre) {
+        grupoSeleccionado = {
+            idGrupo: idGrupo,
+            nombre: nombre,
+            tipoArchivoSeleccionado: ningunArchivoSeleccionado
+        }
+
+        $("#vistasContainer").load("Partials/_Chat?idGrupo=" + idGrupo, function(response, status, xhr) {
+            if(status === "success")
+                $("#" + idGrupo).find("#icono-nuevo-mensaje").hide();
+        })
     } 
 </script>
 
-@section Scripts {
-    
-}
 
-<link rel="stylesheet" href="~/css/chats.css" />

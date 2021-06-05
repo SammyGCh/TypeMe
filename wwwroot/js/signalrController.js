@@ -1,13 +1,22 @@
 "use strict";
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+var chatConnection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
-connection.start().then(function () {
+chatConnection.start().then(function () {
   //Agregar los grupos que tiene a la conexión
+  
 }).catch(function (err) {
   console.log(err)
 })
 
-connection.on("RecibirMensaje", function (user, message) {
-  console.log(user, message)
+chatConnection.on("RecibirMensaje", function (message) {
+  console.log(message)
+  if(grupoSeleccionado.idGrupo && grupoSeleccionado.idGrupo === message.idGrupo) {
+    console.log("estoy en el grupo " + grupoSeleccionado.nombre)
+    recibirMensaje(message)
+  }
+  else {
+    console.log("no estoy en el grupo XD")
+    $("#listaChats").find("#" + message.idGrupo).find("#icono-nuevo-mensaje").show();
+  }
 });

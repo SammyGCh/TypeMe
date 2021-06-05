@@ -22,10 +22,10 @@
                     </a>
                     <br>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" onclick="irAMiPerfil()">
+                        <a class="dropdown-item" onclick="irAMiPerfil()" style="cursor: pointer;">
                             <i class='bx bxs-user' style="color: #D30000;"></i>&nbsp;&nbsp;Mi perfil
                         </a>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" onclick="cerrarSesion()" style="cursor: pointer;">
                             <i class='bx bx-log-out' style="color: #D30000;"></i>&nbsp;&nbsp;Cerrar sesión
                         </a>
                     </div>
@@ -173,10 +173,29 @@
 
 @section Scripts {
     <script>
+      var grupoSeleccionado = {}
+      var idTyperEnSesion = ""
         $(document).ready(function () {
             $("#loader").show()
             $("#vistasContainer").load("Partials/_Bienvenida")
-            $("#listaChats").load("Partials/ChatsAdmin")
+            $("#listaChats").load("Partials/ChatsAdmin", function() {
+              console.log("Ya cargué")
+              /*
+              $.ajax({
+                type: 'GET',
+                url: '/Login/ObtenerGruposEnSesion',
+                contentType: 'application/json',
+                success: function (result) {
+                  console.log(result)
+                },
+                error: function (err) {
+                  console.error(err)
+                },
+              });*/
+            })
+
+
+
             var pages = $("#nuevoChatModal").find('.modal-split');
             prep_modal();
 
@@ -196,12 +215,16 @@
             })
             
         })
+
+      
     </script>
     
     <script src="~/js/principal.js"></script>
     <script src="~/js/nuevoChat.js"></script>
     <script src="~/js/nuevoContacto.js"></script>
+    
     <script src="~/js/signalrController.js"></script>
+    <script src="~/js/chat.js"></script>
     
 }
 

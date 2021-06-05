@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using TypeMeWeb.Models;
 using System.Text.Json;
 using System.Text;
+using System.IO;
 
 namespace TypeMeWeb.Pages.Partials
 {
@@ -30,11 +31,14 @@ namespace TypeMeWeb.Pages.Partials
             webClient = new WebClient();
         }
 
-        public void OnGet(int idGrupo)
+        public async Task<IActionResult> OnGetAsync(int idGrupo)
         {
             ObtenerInfoGrupo(idGrupo);
-            ObtenerMensajesDeGrupo(idGrupo);
             ObtenerTyperEnSesion();
+            MisMensajes = await ObtenerMensajesDeGrupo(idGrupo);
+            
+
+            return Page();
         }
 
         private void ObtenerTyperEnSesion()
@@ -49,13 +53,13 @@ namespace TypeMeWeb.Pages.Partials
             }
         }
 
-        private void ObtenerMensajesDeGrupo(int idGrupo)
+        private async Task<List<MensajeDominio>> ObtenerMensajesDeGrupo(int idGrupo)
         {
             string mensajesJson;
 
             try
             {
-                mensajesJson =  webClient.DownloadString("http://localhost:4000/mensajes/obtenerMensajes/" + idGrupo);
+                mensajesJson =  await webClient.DownloadStringTaskAsync("http://localhost:4000/mensajes/obtenerMensajes?idGrupo=" + idGrupo);
                 
             }
             catch (System.Exception)
@@ -65,7 +69,7 @@ namespace TypeMeWeb.Pages.Partials
             }
 
             ResultadoAPIMensajes resultado = JsonSerializer.Deserialize<ResultadoAPIMensajes>(mensajesJson);
-            MisMensajes = resultado.result;
+            return resultado.result;
         }
 
         private void ObtenerInfoGrupo(int idGrupo)

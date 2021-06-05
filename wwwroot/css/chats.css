@@ -90,9 +90,11 @@ body{
 }
 
 
-.cuadroChat_texto{
+.cuadroChat_texto {
     margin-left: 15px;
     cursor: pointer;
+    margin-right: 10px;
+    width: 90%;
 }
 
 .areaBotones{

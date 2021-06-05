@@ -76,7 +76,6 @@ namespace TypeMeWeb.Controllers
             if(String.IsNullOrEmpty(cad))
                 return new JsonResult(new {status = false});
 
-            HttpContext.Session.Clear();
 
             HttpContext.Session.Set("Typer", Encoding.UTF8.GetBytes(cad));
 
@@ -87,6 +86,24 @@ namespace TypeMeWeb.Controllers
         public void CerrarSesion()
         {
             HttpContext.Session.Clear();
+        }
+
+        [HttpGet]
+        public IActionResult ObtenerGruposEnSesion() 
+        {
+            byte[] gruposArr;
+            HttpContext.Session.TryGetValue("MisGrupos", out gruposArr);
+
+            if(gruposArr == null)
+                return new JsonResult(new {status = false});
+
+            string cadena = Encoding.UTF8.GetString(gruposArr);
+            List<Grupo> gruposEnSesion = JsonSerializer.Deserialize<List<Grupo>>(cadena);
+
+            return new JsonResult(new {
+                status = true,
+                grupos = gruposEnSesion
+            });
         }
     }
 }

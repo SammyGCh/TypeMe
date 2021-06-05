@@ -10,115 +10,64 @@
 
 <div class="chat-container">
     <div class="chat-header">
-        <h4 class="chat-title">@grupo.Nombre</h4>
+        <h4 class="chat-title">@Model.Grupo.Nombre</h4>
 
-        <h4 class="chat-description">@grupo.Descripcion</h4>
+        <h4 class="chat-description">@Model.Grupo.Descripcion</h4>
         <div class="dropdown dropleft group-options">
             <a type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Opciones">
                 <i class='bx bx-menu bx-md bx-tada-hover'></i>
             </a>
             <br>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">
-                    <i class='bx bx-block' style="color: #D30000;"></i>&nbsp;&nbsp;Bloquear contacto
+                <a class="dropdown-item">
+                    <i class='bx bxs-user-plus' style="color: #D30000;"></i>&nbsp;&nbsp;Nuevo integrante
                 </a>
-                <a class="dropdown-item" href="#">
-                    <i class='bx bxs-star' style="color: #D30000;"></i>&nbsp;&nbsp;Añadir a favorito
+                <a class="dropdown-item">
+                    <i class='bx bx-info-circle' style="color: #D30000;"></i>&nbsp;&nbsp;Info del grupo
                 </a>
-                <a class="dropdown-item" href="#">
-                    <i class='bx bxs-user-minus' style="color: #D30000;"></i>&nbsp;&nbsp;Eliminar contacto
+                <a class="dropdown-item">
+                    <i class='bx bx-exit' style="color: #D30000;"></i>&nbsp;&nbsp;Salir del grupo
+                </a>
+                <a class="dropdown-item">
+                    <i class='bx bx-x-circle' style="color: #D30000;"></i>&nbsp;&nbsp;Cerrar chat
                 </a>
             </div>
         </div>
     </div>
 
     <div class="chat-messages" id="chat-messages" onscroll="verificarScroll()">
-        <table id="listaMensajes">
-            <tbody id="listaMensajesBody">
-                @if (misMensajes != null)
+        
+
+        <ul id="listaMensajes" style="list-style-type: none;">
+            @if(Model.MisMensajes != null && Model.TyperEnSesion != null) {
+                @foreach (var mensaje in Model.MisMensajes)
                 {
-                    @foreach (var mensaje in misMensajes.OrderByDescending(m => m.Fecha))
+                    @if (mensaje.Typer.Username.Equals(Model.TyperEnSesion.Username))
                     {
-                        @if (mensaje.Typer.Username.Equals(typer.Username))
-                        {
-                            <tr>
-                                <div class="chat-sent-message">
-                                    <h1>@mensaje.Typer.Username</h1>
-                                    <p>@mensaje.Contenido</p>
-                                    <span>@mensaje.Hora</span>
-                                </div>
-                            </tr>
-                        }
-                        else
-                        {
-                            <tr>
-                                <div class="chat-received-message">
-                                    <h1>@mensaje.Typer.Username</h1>
-                                    <p>@mensaje.Contenido</p>
-                                    <span>@mensaje.Hora</span>
-                                </div>
-                            </tr>
-                        }
-                        
+                        <li>
+                            <div class="chat-sent-message">
+                                <h1>@mensaje.Typer.Username</h1>
+                                <p>@mensaje.Contenido</p>
+                                <span>@mensaje.Hora</span>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <div class="chat-received-message">
+                                <h1>@mensaje.Typer.Username</h1>
+                                <p>@mensaje.Contenido</p>
+                                <span>@mensaje.Hora</span>
+                            </div>
+                        </li>
                     }
                 }
-                <!--
-                <tr>
-                    <div class="chat-sent-message">
-                        <h1>Sammy</h1>
-                        <p>Hello. How are you today?
-                            Hello. How are you today?
-                            Hello. How are you today?
-                            Hello. How are you today?
-                            Hello. How are you today?
-                            Hello. How are you today?
-                            Hello. How are you today?Hello. How are you today?
-                            Hello. How are you today?
-                            Hello. How are you today?
-                        </p>
-                        <span>11:00</span>
-                    </div>
-                </tr>
-
-                <tr>
-                    <div class="chat-received-message">
-                        <h1>Ángel</h1>
-                        <p>
-                            Yeah, fine!
-                        </p>
-                        <span>11:00</span>
-                    </div>
-                </tr>
-
-                <tr>
-                    <div class="chat-received-message">
-                        <h1>Ángel</h1>
-                        <p>
-                            Yeah, fine!
-                        </p>
-                        <span>11:00</span>
-                    </div>
-                </tr>
-
-                <tr>
-                    <div class="chat-sent-message">
-                        <h1>Sammy</h1>
-                        <p>Hello. How are you today?
-                            Hello. How are you today?
-                            Hello. How are you today?
-                            Hello. How are you today?
-                            Hello. How are you today?
-                            Hello. How are you today?
-                            Hello. How are you today?Hello. How are you today?
-                            Hello. How are you today?
-                            Hello. How are you today?
-                        </p>
-                        <span>11:00</span>
-                    </div>
-                </tr>
-                -->
-            </tbody>
-        </table>
+            }
+            else {
+                <p>No hay mensajes en el grupo. Envía uno nuevo.</p>
+            }
+        </ul>
 
        
         <a id="irAbajoIcon" type="button" class="irAbajoIcon" onclick="irAlFinalDelChat()">
@@ -160,7 +109,7 @@
         
         <textarea id="mensaje" class="chat-input" placeholder="Escribe un mensaje" rows="5"></textarea>
 
-        <a type="button" class="chat-send" onclick="enviarMensaje()">
+        <a type="button" class="chat-send" onclick="enviarMensaje('@typer.IdTyper')">
             <i class='bx bx-send bx-sm bx-border-circle' 
             style="color: #D30000;"></i>
         </a>
@@ -168,8 +117,9 @@
 
 </div>
 
+
 @section Scripts {
-    <script src="~/js/chat.js"></script>
+    
 }
 
 
