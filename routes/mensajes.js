@@ -1,23 +1,44 @@
+import fs from 'fs';
 import express from 'express';
 import { microservicioMultimedia } from '../clients/http/multimedia.js';
 import { microservicioMensaje } from '../clients/http/mensaje.js';
 import { microservicioTypers } from '../clients/http/typer.js';
 
+var folderPath = process.cwd() + "/archivosTemporales/";
+fs.mkdir(folderPath, null, function (err) {
+    if (err) {
+        console.log(err);
+    }
+})
+
 const router = express.Router();
 
 router.post("/registrarMultimedia", async (req, res) => {
+    var idTyper = req.query.idTyper;
+    var { file }  = req.files;
+    var filePath = folderPath + file.name;
 
-    microservicioMultimedia.RegistrarMultimedia(req.body)
-    .then(response => {
-        let resultado = {
-            status: response.status,
-            message: response.data.message,
-            result: response.data.result
+    fs.writeFile(filePath, file.data, function (err) {
+        if (err) {
+            res.send(err);
+        }else{
+            microservicioMultimedia.RegistrarMultimedia(filePath, idTyper)
+            .then(response => {
+                let resultado = {
+                    status: response.status,
+                    message: response.data.message,
+                    result: response.data.result
+                }
+                res.send(resultado)
+            })
+            .catch(error => {
+                res.send(error);
+            }).finally(() => {
+                fs.unlink(filePath, function (err) {
+                    if (err) console.log(err);
+                });
+            })
         }
-        res.send(resultado)
-    })
-    .catch(error => {
-        res.send(error);
     })
 })
 

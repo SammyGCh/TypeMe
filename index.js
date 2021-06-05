@@ -2,6 +2,7 @@ import express from 'express';
 import typerRouter from './routes/typers.js';
 import mensajeRouter from './routes/mensajes.js';
 import cors from 'cors';
+import fileupload from "express-fileupload";
 
 const app = express();
 const PORT = 4000;
@@ -29,7 +30,8 @@ var corsOptionsDelegate = function (req, callback) {
 
 app.use(cors())
 
-app.use(express.urlencoded({extended: true})); 
+app.use(express.urlencoded({extended: true}));
+app.use(fileupload());
 app.use(express.json());
 
 app.use("/typers", cors(corsOptionsDelegate), typerRouter);
