@@ -42,22 +42,18 @@ router.post("/registrarMultimedia", async (req, res) => {
     })
 })
 
+
+
 router.get("/obtenerMultimedia", async (req, res) => {
     const { idMultimedia } = req.query;
-
+    
     microservicioMultimedia.obtenerMultimedia(idMultimedia)
     .then(response => {
-        let resultado = {
-            status: response.status,
-            message: response.data.message,
-            result: response.data.result
-        }
-        res.send(resultado)
+        res.send({'urlMultimedia': response});
     })
     .catch(error => {
-        ressend("mensajes/infoTyper", error);
+        res.send(error);
     })
-
 })
 
 router.get("/obtenerGrupos", async (req, res) => {

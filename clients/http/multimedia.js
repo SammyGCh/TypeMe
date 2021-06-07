@@ -4,10 +4,11 @@ import fs from 'fs';
 
 
 const URL_MS_MULTIMEDIA = process.env.URL_MS_MULTIMEDIA
+const URL_MULTIMEDIA_DIRECTA = process.env.URL_AMISTOSA;
 class MicroservicioMultimedia{
     
     async RegistrarMultimedia(filePath, idTyper){
-        let url = URL_MS_MULTIMEDIA + `/imagen/registrarImagen?idTyper=${idTyper}`;
+        let url = URL_MS_MULTIMEDIA + `/multimedia/registrarMultimedia?idTyper=${idTyper}`;
 
         var form = new FormData();
         form.append('file', fs.createReadStream(filePath));
@@ -23,15 +24,8 @@ class MicroservicioMultimedia{
     }
 
     async obtenerMultimedia(idMultimedia){
-        let url = URL_MS_MULTIMEDIA + "/imagen/obtenerImagen";
-
-        return axios.get(url,  {
-            params: {
-                idMultimedia: idMultimedia
-            }
-        })
-        .then(response => {return response.data})
-        .catch(error => {return error.response.data})
+        let url = URL_MULTIMEDIA_DIRECTA + `/multimedia/obtenerMultimedia?idMultimedia=${idMultimedia}`;
+        return url;
     }
 
 }
