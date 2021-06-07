@@ -16,26 +16,26 @@ namespace MSMultimedia.Controllers
     [ApiController]
     [Route("[controller]")]
     [Produces("application/json")]
-    public class ImagenController : ControllerBase
+    public class MultimediaController : ControllerBase
     {
-        private readonly ILogger<ImagenController> _logger;
+        private readonly ILogger<MultimediaController> _logger;
         private MultimediasContext baseDeDatos;
         private const int TIPO_MULTIMEDIA_FOTO = 1;
 
-        public ImagenController(ILogger<ImagenController> logger)
+        public MultimediaController(ILogger<MultimediaController> logger)
         {
             _logger = logger;
             baseDeDatos = new MultimediasContext();
         }
 
-        [HttpPost("registrarImagen")]
-        public async Task<ActionResult<JObject>> RegistrarMultimedia([FromForm]FileUploadAPI objFile, [FromQuery]string idTyper = "")
+        [HttpPost("registrarMultimedia")]
+        public async Task<ActionResult<JObject>> RegistrarMultimedia([FromForm]FileUploadAPI file, [FromQuery]string idTyper = "")
         {
             JObject resultadoAEnviar;
             Multimedia nuevaMultimedia = new Multimedia();
             string directorioDeSalida = Directory.GetCurrentDirectory() + "/imagenes/";
 
-            if(objFile.file.Length <= 0)
+            if(file.file.Length <= 0)
             {
                 resultadoAEnviar = ConvertidorDeJson.ConvertirResultadoFallido("Los datos estan incompletos");
                 return BadRequest(resultadoAEnviar);
@@ -48,12 +48,12 @@ namespace MSMultimedia.Controllers
                     Directory.CreateDirectory(directorioDeSalida);
                 }
 
-                using(FileStream fileStream = System.IO.File.Create(directorioDeSalida + idTyper + objFile.file.FileName)){
-                    objFile.file.CopyTo(fileStream);
+                using(FileStream fileStream = System.IO.File.Create(directorioDeSalida + idTyper + file.file.FileName)){
+                    file.file.CopyTo(fileStream);
                     fileStream.Flush();    
                 }
 
-                nuevaMultimedia.Ruta = directorioDeSalida + objFile.file.FileName;
+                nuevaMultimedia.Ruta = directorioDeSalida + idTyper + file.file.FileName;
                 nuevaMultimedia.IdMultimedia = Guid.NewGuid().ToString();
                 nuevaMultimedia.IdTipoMultimedia = TIPO_MULTIMEDIA_FOTO;
           
@@ -71,8 +71,8 @@ namespace MSMultimedia.Controllers
         }
 
 
-        [HttpGet("obtenerImagen")]
-        public async Task<ActionResult<JObject>> ObtenerMultimedia([FromQuery]string idImagen = "")
+        [HttpGet("obtenerMultimedia")]
+        public async Task<ActionResult> ObtenerMultimedia([FromQuery]string idMultimedia = "")
         {
             JObject resultadoAEnviar;
             Multimedia multimedia = null;
@@ -80,7 +80,7 @@ namespace MSMultimedia.Controllers
             try
             {
                 multimedia = await  baseDeDatos.Multimedias
-                .Where(registro => registro.IdMultimedia.Equals(idImagen)).SingleOrDefaultAsync();
+                .Where(registro => registro.IdMultimedia.Equals(idMultimedia)).SingleOrDefaultAsync();
                 
                 if (multimedia == null)
                 {
