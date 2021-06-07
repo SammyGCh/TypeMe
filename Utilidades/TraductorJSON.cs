@@ -23,7 +23,7 @@ namespace MSTypers.Utilidades
         /// <returns>La serialización de un JObject</returns>
         public static JObject ConvertirResultadoExitoso(string message, object data)
         {
-            _dataObject = new JObject
+            JObject _dataObject = new JObject
             {
                 { "message", message }
             };
@@ -41,7 +41,7 @@ namespace MSTypers.Utilidades
             }
 
             _status = true;
-            _resultado = new JObject
+            JObject _resultado = new JObject
             {
                 {"status", _status },
                 {"data", _dataObject}
@@ -57,14 +57,14 @@ namespace MSTypers.Utilidades
         /// <returns>La serialización de un JObjecto</returns>
         public static JObject ConvertirResultadoFallido(string message)
         {
-            _dataObject = new JObject
+            JObject _dataObject = new JObject
             {
                 { "message", message },
                 { "result", null }
             };
 
             _status = false;
-            _resultado = new JObject
+            JObject _resultado = new JObject
             {
                 { "status", _status },
                 { "data", _dataObject }
