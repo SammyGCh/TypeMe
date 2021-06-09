@@ -23,7 +23,7 @@ class MicroservicioMultimedia{
         .catch(error => {console.error("Error en axios " + error);return error.response.data})
     }
 
-    async obtenerMultimedia(idMultimedia){
+    obtenerMultimedia(idMultimedia){
         let url = URL_MULTIMEDIA_DIRECTA + `/multimedia/obtenerMultimedia?idMultimedia=${idMultimedia}`;
         return url;
     }

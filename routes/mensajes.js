@@ -47,13 +47,10 @@ router.post("/registrarMultimedia", async (req, res) => {
 router.get("/obtenerMultimedia", async (req, res) => {
     const { idMultimedia } = req.query;
     
-    microservicioMultimedia.obtenerMultimedia(idMultimedia)
-    .then(response => {
-        res.send({'urlMultimedia': response});
-    })
-    .catch(error => {
-        res.send(error);
-    })
+    res.send(
+        {
+            'urlMultimedia': microservicioMultimedia.obtenerMultimedia(idMultimedia)
+        });
 })
 
 router.get("/obtenerGrupos", async (req, res) => {
@@ -190,104 +187,58 @@ router.put("/salirDeGrupo", async (req, res) => {
 router.post("/enviarMensaje", async (req, res) => {
     const nuevoMensajeBody = req.body
 
-    if (nuevoMensajeBody.multimedia)
-    {
-        microservicioMultimedia.RegistrarMultimedia(nuevoMensajeBody.multimedia)
-        .then(result => {
-
-            if (result.status == true)
-            {
-                let nuevoMensaje = {
-                    contenido: nuevoMensajeBody.contenido,
-                    idGrupo: nuevoMensajeBody.idGrupo,
-                    idTyper: nuevoMensajeBody.idTyper,
-                    idMultimedia: result.data.result.IdMultimedia
-                }
-            
-                microservicioMensaje.EnviarMensaje(nuevoMensaje)
-                .then(() => {
-
-                    microservicioTypers.ObtenerTyperPorId(nuevoMensaje.idTyper)
-                    .then(typer => {
-                        let respuesta = {
-                            status: true,
-                            message: "Mensaje enviado",
-                            result: {
-                                contenido: nuevoMensajeBody.contenido,
-                                idGrupo: nuevoMensajeBody.idGrupo,
-                                typer: typer,
-                                multimedia: result.data.result
-                            }
-                        }
-
-                        res.send(respuesta)
-                    })
-                    
-                })
-                .catch(error => {
-                    res.send(error)
-                })
-            }
-        })
-        .catch(error => {
-            res.send(error)
-        })
-        
+    let nuevoMensaje = {
+        contenido: nuevoMensajeBody.contenido,
+        idGrupo: nuevoMensajeBody.idGrupo,
+        idTyper: nuevoMensajeBody.idTyper,
+        idMultimedia: nuevoMensajeBody.idMultimedia
     }
-    else
-    {
-        let nuevoMensaje = {
-            contenido: nuevoMensajeBody.contenido,
-            idGrupo: nuevoMensajeBody.idGrupo,
-            idTyper: nuevoMensajeBody.idTyper,
-            idMultimedia: ""
-        }
-    
-        microservicioMensaje.EnviarMensaje(nuevoMensaje)
-        .then(() => {
-            // microservicioMensaje.ObtenerGrupos("",nuevoMensaje.idGrupo)
-            // .then((response) => {
-            //     var grupo = response.data.result[0]
-            //     microservicioTypers.ObtenerTyperPorId(nuevoMensaje.idTyper)
-            //     .then(typer => {
-            //         let resultado = {
-            //             status: true,
-            //             message: "Mensaje enviado",
-            //             result: {
-            //                 contenido: nuevoMensajeBody.contenido,
-            //                 grupo: grupo,
-            //                 typer: typer,
-            //                 multimedia: {}
-            //             }
-            //         }
-            //         res.send(resultado)
-            //     })
-            // })
-            // .catch((error) => {
-            //     res.send(error);
-            // });
 
-            microservicioTypers.ObtenerTyperPorId(nuevoMensaje.idTyper)
-            .then(typer => {
-                let resultado = {
+    microservicioMensaje.EnviarMensaje(nuevoMensaje)
+    .then((response) => {
+        microservicioTypers.ObtenerTyperPorId(nuevoMensaje.idTyper)
+        .then(typer => {
+            let resultado = {}
+
+            if (nuevoMensajeBody.idMultimedia){
+                resultado = {
                     status: true,
                     message: "Mensaje enviado",
-                    result: {
+                    result : {
+                        idMensaje: response.data.result.IdMensaje,
                         contenido: nuevoMensajeBody.contenido,
-                        idGrupo: nuevoMensajeBody.idGrupo,
+                        fecha: response.data.result.Fecha,
+                        hora: response.data.result.Hora,
+                        idGrupo: response.data.result.IdGrupo,
                         typer: typer,
-                        multimedia: {}
+                        idMultimedia: microservicioMultimedia.obtenerMultimedia(nuevoMensajeBody.idMultimedia)
+                    }
+                };
+            }else{
+                resultado = {
+                    status: true,
+                    message: "Mensaje enviado",
+                    result : {
+                        idMensaje: response.data.result.IdMensaje,
+                        contenido: nuevoMensajeBody.contenido,
+                        fecha: response.data.result.Fecha,
+                        hora: response.data.result.Hora,
+                        idGrupo: response.data.result.IdGrupo,
+                        typer: typer,
+                        idMultimedia: ""
                     }
                 }
+            }
 
-                res.send(resultado)
-            })
-            
+            res.send(resultado)
         })
         .catch(error => {
             res.send(error)
         })
-    }
+    })
+    .catch(error => {
+        res.send(error)
+    })
 })
 
 router.get("/obtenerMensajes/:idGrupo", async (req, res) => {
@@ -302,25 +253,15 @@ router.get("/obtenerMensajes/:idGrupo", async (req, res) => {
                 .then(typer => {
                     if (typer) {
                         if (mensaje.IdMultimedia) {
-                            return microservicioMultimedia
-                                .obtenerMultimedia(mensaje.IdMultimedia)
-                                .then((values) => {
-        
-                                    if (values) {
-                                        return {
-                                            idMensaje: mensaje.IdMensaje,
-                                            contenido: mensaje.Contenido,
-                                            fecha: mensaje.Fecha,
-                                            hora: mensaje.Hora,
-                                            idGrupo: mensaje.IdGrupo,
-                                            typer: typer,
-                                            multimedia: values.data.result,
-                                        };
-                                    }
-                                    else {
-                                        return {}
-                                    }
-                                });
+                            return {
+                                idMensaje: mensaje.IdMensaje,
+                                contenido: mensaje.Contenido,
+                                fecha: mensaje.Fecha,
+                                hora: mensaje.Hora,
+                                idGrupo: mensaje.IdGrupo,
+                                typer: typer,
+                                idMultimedia: microservicioMultimedia.obtenerMultimedia(mensaje.IdMultimedia)
+                            };
                         } else {
                             return {
                                 idMensaje: mensaje.IdMensaje,
@@ -329,7 +270,7 @@ router.get("/obtenerMensajes/:idGrupo", async (req, res) => {
                                 hora: mensaje.Hora,
                                 idGrupo: mensaje.IdGrupo,
                                 typer: typer,
-                                multimedia: {},
+                                idMultimedia: "",
                             };
                         }
                     }
