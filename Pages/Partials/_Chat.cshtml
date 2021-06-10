@@ -19,16 +19,16 @@
             </a>
             <br>
             <div class="dropdown-menu">
-                <a class="dropdown-item">
+                <a class="dropdown-item" style="cursor: pointer;" onclick="mostrarAgregarIntegrantesDialog(@Model.Grupo.IdGrupo, '@Model.TyperEnSesion.IdTyper')">
                     <i class='bx bxs-user-plus' style="color: #D30000;"></i>&nbsp;&nbsp;Nuevo integrante
                 </a>
-                <a class="dropdown-item">
+                <a class="dropdown-item" style="cursor: pointer;">
                     <i class='bx bx-info-circle' style="color: #D30000;"></i>&nbsp;&nbsp;Info del grupo
                 </a>
-                <a class="dropdown-item">
+                <a class="dropdown-item" style="cursor: pointer;">
                     <i class='bx bx-exit' style="color: #D30000;"></i>&nbsp;&nbsp;Salir del grupo
                 </a>
-                <a class="dropdown-item">
+                <a class="dropdown-item" style="cursor: pointer;">
                     <i class='bx bx-x-circle' style="color: #D30000;"></i>&nbsp;&nbsp;Cerrar chat
                 </a>
             </div>
@@ -47,6 +47,10 @@
                         <li>
                             <div class="chat-sent-message">
                                 <h1>@mensaje.Typer.Username</h1>
+                                @if(!String.IsNullOrEmpty(mensaje.IdMultimedia))
+                                {
+                                    <img src="@mensaje.IdMultimedia">
+                                }
                                 <p>@mensaje.Contenido</p>
                                 <span>@mensaje.Hora</span>
                             </div>
@@ -57,6 +61,10 @@
                         <li>
                             <div class="chat-received-message">
                                 <h1>@mensaje.Typer.Username</h1>
+                                @if(!String.IsNullOrEmpty(mensaje.IdMultimedia))
+                                {
+                                    <img src="@mensaje.IdMultimedia">
+                                }
                                 <p>@mensaje.Contenido</p>
                                 <span>@mensaje.Hora</span>
                             </div>
@@ -115,6 +123,33 @@
         </a>
     </div>
 
+</div>
+
+<div class="modal fade" id="agregarIntegrantesDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #D30000;">
+        <h5 class="modal-title" id="agregarIntegrantesDialogTitle" style="color: white;">Agregar integrantes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <h6>Selecciona el/los nuevo(s) integrante(s)</h6>
+
+          <div id="listaContactosIntegrantes" >
+              <div class="loader" id="loader"></div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button id="botonCancelarAgregacion" type="button" class="btn btn-danger" style="width: 100px; padding: 10px;"
+        data-dismiss="modal" data-dismiss="modal">Cancelar</button>
+
+        <button id="botonAgregarContacto" type="button" class="btn btn-danger" 
+            style="width: 150px; padding: 10px;">Agregar</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 

@@ -59,7 +59,7 @@ namespace TypeMeWeb.Pages.Partials
 
             try
             {
-                mensajesJson =  await webClient.DownloadStringTaskAsync("http://localhost:4000/mensajes/obtenerMensajes?idGrupo=" + idGrupo);
+                mensajesJson =  await webClient.DownloadStringTaskAsync("http://localhost:4000/mensajes/obtenerMensajes/" + idGrupo);
                 
             }
             catch (System.Exception)

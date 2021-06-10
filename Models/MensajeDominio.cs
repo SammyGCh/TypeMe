@@ -19,7 +19,7 @@ namespace TypeMeWeb.Models
         public int IdGrupo { get; set; }
         [JsonPropertyName("typer")]
         public Typer Typer { get; set; }
-        [JsonPropertyName("multimedia")]
-        public Multimedia Multimedia { get; set; }
+        [JsonPropertyName("idMultimedia")]
+        public string IdMultimedia { get; set; }
     }
 }

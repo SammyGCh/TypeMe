@@ -152,7 +152,6 @@ function manejarSeleccionDeContactos() {
       contactosSeleccionados.push({
         idTyper: id
       })
-      console.log(contactosSeleccionados)
     }
     
 

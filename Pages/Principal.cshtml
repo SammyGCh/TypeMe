@@ -3,11 +3,6 @@
 
 <div class="row">
     
-    @* <div class="column">
-        <!--<partial name="_Chats" model="Model.MisGrupos"/>-->
-        @await Html.PartialAsync("_Chats", Model.MisGrupos)
-    </div> *@
-    
     <div class="column">
         <div class="contactos">
             <header id="miCuenta">
@@ -24,6 +19,9 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" onclick="irAMiPerfil()" style="cursor: pointer;">
                             <i class='bx bxs-user' style="color: #D30000;"></i>&nbsp;&nbsp;Mi perfil
+                        </a>
+                        <a class="dropdown-item" onclick="cerrarSesion()" style="cursor: pointer;">
+                            <i class='bx bxs-contact' style="color: #D30000;"></i>&nbsp;&nbsp;Contactos
                         </a>
                         <a class="dropdown-item" onclick="cerrarSesion()" style="cursor: pointer;">
                             <i class='bx bx-log-out' style="color: #D30000;"></i>&nbsp;&nbsp;Cerrar sesión
@@ -225,7 +223,7 @@
     
     <script src="~/js/signalrController.js"></script>
     <script src="~/js/chat.js"></script>
-    
+    <script src="~/js/agregarIntegrantes.js"></script>
 }
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>

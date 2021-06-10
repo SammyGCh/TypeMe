@@ -1,0 +1,54 @@
+.integranteContainer {
+    background-color: #d37676;
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    color: white;
+    align-content: center;
+    padding: 10px;
+    font-size: large;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.integranteContainer span {
+    display: inline-block;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.integranteContainer i {
+    float: right;
+}
+
+.contactoContainer {
+    background-color: #d37676;
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    color: white;
+    align-content: center;
+    padding: 10px;
+    font-size: large;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.contactoContainer span {
+    display: inline-block;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.contactoContainer i {
+    float: right;
+}
+
+.contactoContainer-seleccionado {
+    background-color: #d30000;
+}

@@ -33,7 +33,6 @@ async function agregarNuevoContacto(nuevoContacto) {
                     contentType: 'application/json',
                     data: JSON.stringify(infoNuevoContacto),
                     success: function (response) {
-                      console.log(response);
                       if (response.status === true) {
                         mostrarMensajeContactoAgregado(nuevoContacto)
                         $("#agregarContactoDialog").modal("hide")
@@ -69,5 +68,10 @@ function mostrarMensajeContactoAgregado(nuevoContacto) {
 
 $('#agregarContactoDialog').on('hidden.bs.modal', function (e) {
     mensaje.hide()
+    $("#mensajeContactoAgregado").hide()
+    $("#mensajeContactoNoAgregado").hide()
+    $("#mensajeGrupoCreado").hide()
+    $("#mensajeErrorCreacionGrupo").hide()
+    $("#mensajeErrorServidor").hide()
     $("#usuarioContacto").val("")
 })

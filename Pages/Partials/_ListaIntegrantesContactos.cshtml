@@ -1,0 +1,37 @@
+@page
+@using TypeMeWeb.Models
+@model ListaIntegrantesContactosModel
+@{
+    List<ContactoDominio> Contactos = ViewData["Contactos"] as List<ContactoDominio>;
+    List<Typer> IntegrantesGrupos = ViewData["IntegrantesGrupos"] as List<Typer>;
+    
+    bool EsIntegrante(ContactoDominio contacto){
+        return IntegrantesGrupos.Any(typer => typer.IdTyper.Equals(contacto.Contacto.IdTyper));
+    }
+}
+
+@if(Model.Contactos != null && Model.IntegrantesGrupos != null)
+{
+    if (Model.Contactos.Count == Model.IntegrantesGrupos.Count){
+        <p>Actualmente todos tus contactos forman parte de este grupo.</p>
+    }
+    else{
+        @foreach (var contacto in Model.Contactos)
+        {
+            if (EsIntegrante(contacto)){
+                <div class="integranteContainer">
+                    <span>@contacto.Contacto.Username</span>
+                    <i class='bx bxs-check-circle bx-sm' style="color: #D30000;"></i>
+                </div>
+            }
+            else{
+                <div id="@contacto.Contacto.IdTyper" class="contactoContainer" onclick="seleccionarNuevoIntegrante('@contacto.Contacto.IdTyper')">
+                    <span>@contacto.Contacto.Username</span>
+                    <i class='bx bxs-check-circle bx-sm' style='color:#1bff00; display: none;'></i>
+                </div> 
+            }
+        }
+    }
+}
+
+<link rel="stylesheet" href="~/css/integrantesContactos.css" />

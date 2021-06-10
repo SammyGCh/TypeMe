@@ -23,7 +23,8 @@
         grupoSeleccionado = {
             idGrupo: idGrupo,
             nombre: nombre,
-            tipoArchivoSeleccionado: ningunArchivoSeleccionado
+            tipoArchivoSeleccionado: ningunArchivoSeleccionado,
+            archivoSeleccionado: undefined
         }
 
         $("#vistasContainer").load("Partials/_Chat?idGrupo=" + idGrupo, function(response, status, xhr) {

@@ -47,7 +47,9 @@ function seleccionarImagen() {
   $('#images').change(function () {
     if ($('#images')[0].files.length > 0) {
       var filename = $('#images')[0].files[0].name;
-      var file = $('#images')[0].files;
+      var file = $('#images');
+      
+      grupoSeleccionado.archivoSeleccionado = file
 
       $('#fileInformationContainer').show('swing', function () {
         $('#fileInformationContainer').addClass('fileSelected');
@@ -84,16 +86,115 @@ function eliminarArchivoSeleccionado() {
   tipoSeleccionado = ningunArchivoSeleccionado;
 }
 
-function enviarMensaje(idTyper) {
+async function enviarMensaje(idTyper) {
+  
   idTyperEnSesion = idTyper
   var contenido = $('#mensaje').val();
-  var fecha = new Date();
+
+  if (!contenido && grupoSeleccionado.archivoSeleccionado === undefined) {
+    return
+  }
+
   var mensaje = {
     contenido: contenido,
     idGrupo: grupoSeleccionado.idGrupo,
-    idTyper: idTyper
+    idTyper: idTyper,
+    idMultimedia: ""
   }
 
+  if ((grupoSeleccionado.archivoSeleccionado != undefined && contenido) || 
+      (grupoSeleccionado.archivoSeleccionado != undefined && !contenido)) 
+  {
+    enviarMultimedia()
+    .then((response) => {
+      console.log(response)
+
+      if(response.status === true) {
+        mensaje.idMultimedia = response.result.IdMultimedia
+
+        $.ajax({
+          type: 'POST',
+          url: 'http://localhost:4000/mensajes/enviarMensaje',
+          dataType: 'json',
+          async: true,
+          contentType: 'application/json',
+          data: JSON.stringify(mensaje),
+          success: function (response) {
+            console.log(response)
+            if (response.status === true) {
+              chatConnection.invoke("EnviarMensaje", response.result).catch(function (err) {
+                return console.log(err)
+              })
+            } else {
+              
+            }
+          },
+          error: function (response) {
+            console.log(response)
+          },
+        });
+      }
+    })
+  } 
+  else {
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost:4000/mensajes/enviarMensaje',
+      dataType: 'json',
+      async: true,
+      contentType: 'application/json',
+      data: JSON.stringify(mensaje),
+      success: function (response) {
+        console.log(response)
+        if (response.status === true) {
+          chatConnection.invoke("EnviarMensaje", response.result).catch(function (err) {
+            return console.log(err)
+          })
+        } else {
+          
+        }
+      },
+      error: function (response) {
+        console.log(response)
+      },
+    });
+  }
+  
+}
+
+function enviarMultimedia(mensaje) {
+  var form = new FormData();
+  form.append(
+    'file',
+    grupoSeleccionado.archivoSeleccionado[0].files[0],
+    grupoSeleccionado.archivoSeleccionado.val()
+  );
+
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url:
+        'http://localhost:4000/mensajes/registrarMultimedia?idTyper=' + idTyper,
+      method: 'POST',
+      timeout: 0,
+      processData: false,
+      mimeType: 'multipart/form-data',
+      contentType: false,
+      data: form,
+      success: function (response) {
+        var respuesta = JSON.parse(response.toString());
+        resolve(respuesta)
+  
+      },
+      error: function (error) {
+        reject(error)
+      },
+    });
+  })
+}
+
+function enviarMensajeNormal(mensaje) {
+
+  
   $.ajax({
     type: 'POST',
     url: 'http://localhost:4000/mensajes/enviarMensaje',
@@ -115,37 +216,62 @@ function enviarMensaje(idTyper) {
       console.log(response)
     },
   });
-
-  
 }
 
 function recibirMensaje(mensaje) {
-  var fecha = mensaje.fecha.split("T")
-  //var fechaCompuesta = fecha.getDate() + fecha.getHours() + ":" + fecha.getMinutes()
-  var fechaCompuesta = fecha.getHours() + ":" + fecha.getMinutes()
-  console.log(fecha)
-
   if (idTyperEnSesion === mensaje.typer.idTyper) {
-    $('#listaMensajes')
-    .append($('<li>')
-      .append($('<div>')
-        .append($('<h1>').append("Sammy"))
-        .append($('<p>').text(mensaje.contenido))
-        .addClass('chat-sent-message')
-        .append($('<span>').text(fechaCompuesta))
-      )
-    );
+
+    if (mensaje.idMultimedia) {
+      $('#listaMensajes').append(
+        $('<li>').append(
+          $('<div>')
+            .append($('<h1>').append(mensaje.typer.username))
+            .append($('<img>').attr('src', mensaje.idMultimedia))
+            .append($('<p>').text(mensaje.contenido))
+            .addClass('chat-sent-message')
+            .append($('<span>').text(mensaje.fecha))
+        )
+      );
+    }
+    else {
+      $('#listaMensajes').append(
+        $('<li>').append(
+          $('<div>')
+            .append($('<h1>').append(mensaje.typer.username))
+            .append($('<p>').text(mensaje.contenido))
+            .addClass('chat-sent-message')
+            .append($('<span>').text(mensaje.fecha))
+        )
+      );
+    }
+    
   }
   else {
-    $('#listaMensajes')
-    .append($('<li>')
-      .append($('<div>')
-        .append($('<h1>').append("Sammy"))
-        .append($('<p>').text(mensaje.contenido))
-        .addClass('chat-received-message')
-        .append($('<span>').text(fechaCompuesta))
-      )
-    );
+
+    if (mensaje.idMultimedia) {
+      $('#listaMensajes').append(
+        $('<li>').append(
+          $('<div>')
+            .append($('<h1>').append(mensaje.typer.username))
+            .append($('<img>').attr('src', mensaje.idMultimedia))
+            .append($('<p>').text(mensaje.contenido))
+            .addClass('chat-received-message')
+            .append($('<span>').text(mensaje.fecha))
+        )
+      );
+    }
+    else{
+      $('#listaMensajes').append(
+        $('<li>').append(
+          $('<div>')
+            .append($('<h1>').append(mensaje.typer.username))
+            .append($('<p>').text(mensaje.contenido))
+            .addClass('chat-received-message')
+            .append($('<span>').text(mensaje.fecha))
+        )
+      );
+    }
+    
   }
   
 }
