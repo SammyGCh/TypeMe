@@ -172,8 +172,39 @@
     margin-top: 10px;
     display: none;
 }
+
+.loader2 {
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #D30000; /* Blue */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+    margin-left: 25ch;
+}
   
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.contactoContainer {
+    background-color: #D30000;
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    color: white;
+    align-content: center;
+    padding: 10px;
+    font-size: large;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.listaMisContactos {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: block;
+    height: 370px;
+    width: 480px;
 }

@@ -17,3 +17,81 @@ function cerrarSesion() {
         },
     });    
 }
+
+function abrirListaMisContactos() {
+    $("#misContactosDialog").modal('show')
+
+    //idTyper: result.typer.idTyper
+    obtenerTyperEnSesion()
+    .then((result) => {
+        console.log(result)
+        if(result.status === true) {
+            var idTyper = result.typer.idTyper
+            buscarContactos(idTyper)
+            .then((resultado) => {
+                console.log(resultado)
+                $("#loader2").hide()
+                var contactos = Array.from(resultado.result)
+                
+                if(resultado.status === true) {
+                   
+                    mostrarMisContactos(contactos)
+                    
+                }
+                else {
+                    $("#mensajeErrorMisContactos").text("Aun no tiene contactos. Agregue uno nuevo.")
+                    $("#mensajeErrorMisContactos").show()
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+                $("#loader2").hide()
+                $("#mensajeErrorMisContactos").text("Ocurrió un error con el servidor. Intente más tarde.")
+                $("#mensajeErrorMisContactos").show()
+            })
+        } else {
+            $("#loader2").hide()
+            $("#mensajeErrorMisContactos").text(result.message)
+            $("#mensajeErrorMisContactos").show()
+        }
+    })
+    .catch((err) => {
+        console.log(err)
+        $("#loader2").hide()
+        $("#mensajeErrorMisContactos").text("Ocurrió un error con el servidor. Intente más tarde.")
+        $("#mensajeErrorMisContactos").show()
+    })
+}
+
+function obtenerTyperEnSesion() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+          type: 'GET',
+          url: '/Login/ObtenerTyperEnSesion',
+          contentType: 'application/json',
+          success: function (result) {
+            resolve(result)
+          },
+          error: function(err) {
+            reject(err)
+          }
+        });
+    })
+}
+
+function mostrarMisContactos(misContactos) {
+    misContactos.forEach(contacto => {
+        $("#listaMisContactos").append(
+            '<div id="'+ contacto.contacto.IdTyper +'" class="contactoContainer">' +
+                '<span>' + contacto.contacto.Username + '</span>'
+            +'</div>'
+        )
+    })
+}
+
+function cerrarMisContactosDialog() {
+    $("#mensajeErrorMisContactos").hide()
+    $("#listaMisContactos").html("")
+    $("#misContactosDialog").modal('hide')
+    $("#loader2").show()
+}

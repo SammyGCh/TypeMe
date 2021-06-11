@@ -7,22 +7,14 @@ var scrollTopInicial;
 
 $(document).ready(irAlFinalDelChat());
 
-
-//var tipoSeleccionado = ningunArchivoSeleccionado;
-
 function irAlFinalDelChat() {
-//     console.log($('#chat-messages').scrollTop())
-//     console.log($('#chat-messages')[0].scrollHeight)
-    var chatMessages = $('#chat-messages')
+    // var chatMessages = $('#chat-messages')
 
-    if(chatMessages) {
-      chatMessages.scrollTop(chatMessages[0].scrollHeight);
-      var tamañoScrollSobrante = 100;
-      scrollTopInicial = chatMessages.scrollTop() - tamañoScrollSobrante;
-    }
-    
-//     var chatMessages = $('#chat-messages')
-//     chatMessages[0].scrollIntoView();
+    // if(chatMessages) {
+    //   chatMessages.scrollTop(chatMessages[0].scrollHeight);
+    //   var tamañoScrollSobrante = 100;
+    //   scrollTopInicial = chatMessages.scrollTop() - tamañoScrollSobrante;
+    // }
 }
 
 function seleccionarArchivo() {
@@ -83,6 +75,7 @@ function eliminarArchivoSeleccionado() {
   $('#videos').val(null);
   $('#fileName').text('');
   $('#fileInformationContainer').hide('swing');
+  grupoSeleccionado.archivoSeleccionado = undefined;
   tipoSeleccionado = ningunArchivoSeleccionado;
 }
 
@@ -107,8 +100,6 @@ async function enviarMensaje(idTyper) {
   {
     enviarMultimedia()
     .then((response) => {
-      console.log(response)
-
       if(response.status === true) {
         mensaje.idMultimedia = response.result.IdMultimedia
 
@@ -120,7 +111,7 @@ async function enviarMensaje(idTyper) {
           contentType: 'application/json',
           data: JSON.stringify(mensaje),
           success: function (response) {
-            console.log(response)
+            
             if (response.status === true) {
               chatConnection.invoke("EnviarMensaje", response.result).catch(function (err) {
                 return console.log(err)
@@ -145,7 +136,7 @@ async function enviarMensaje(idTyper) {
       contentType: 'application/json',
       data: JSON.stringify(mensaje),
       success: function (response) {
-        console.log(response)
+        
         if (response.status === true) {
           chatConnection.invoke("EnviarMensaje", response.result).catch(function (err) {
             return console.log(err)
@@ -162,7 +153,7 @@ async function enviarMensaje(idTyper) {
   
 }
 
-function enviarMultimedia(mensaje) {
+function enviarMultimedia() {
   var form = new FormData();
   form.append(
     'file',
@@ -192,33 +183,8 @@ function enviarMultimedia(mensaje) {
   })
 }
 
-function enviarMensajeNormal(mensaje) {
-
-  
-  $.ajax({
-    type: 'POST',
-    url: 'http://localhost:4000/mensajes/enviarMensaje',
-    dataType: 'json',
-    async: true,
-    contentType: 'application/json',
-    data: JSON.stringify(mensaje),
-    success: function (response) {
-      console.log(response)
-      if (response.status === true) {
-        chatConnection.invoke("EnviarMensaje", response.result).catch(function (err) {
-          return console.log(err)
-        })
-      } else {
-        
-      }
-    },
-    error: function (response) {
-      console.log(response)
-    },
-  });
-}
-
 function recibirMensaje(mensaje) {
+  var fechaCompleta = obtenerFechaCompleta(mensaje.fecha)
   if (idTyperEnSesion === mensaje.typer.idTyper) {
 
     if (mensaje.idMultimedia) {
@@ -229,7 +195,7 @@ function recibirMensaje(mensaje) {
             .append($('<img>').attr('src', mensaje.idMultimedia))
             .append($('<p>').text(mensaje.contenido))
             .addClass('chat-sent-message')
-            .append($('<span>').text(mensaje.fecha))
+            .append($('<span>').text(fechaCompleta))
         )
       );
     }
@@ -240,11 +206,14 @@ function recibirMensaje(mensaje) {
             .append($('<h1>').append(mensaje.typer.username))
             .append($('<p>').text(mensaje.contenido))
             .addClass('chat-sent-message')
-            .append($('<span>').text(mensaje.fecha))
+            .append($('<span>').text(fechaCompleta))
         )
       );
     }
+
     
+    $('#mensaje').val("");
+    eliminarArchivoSeleccionado()
   }
   else {
 
@@ -256,7 +225,7 @@ function recibirMensaje(mensaje) {
             .append($('<img>').attr('src', mensaje.idMultimedia))
             .append($('<p>').text(mensaje.contenido))
             .addClass('chat-received-message')
-            .append($('<span>').text(mensaje.fecha))
+            .append($('<span>').text(fechaCompleta))
         )
       );
     }
@@ -267,7 +236,7 @@ function recibirMensaje(mensaje) {
             .append($('<h1>').append(mensaje.typer.username))
             .append($('<p>').text(mensaje.contenido))
             .addClass('chat-received-message')
-            .append($('<span>').text(mensaje.fecha))
+            .append($('<span>').text(fechaCompleta))
         )
       );
     }
@@ -276,13 +245,23 @@ function recibirMensaje(mensaje) {
   
 }
 
+function obtenerFechaCompleta(fecha) {
+  var fechaObj = new Date(fecha.toString())
+  return fechaObj.getDate() + "/" + (fechaObj.getMonth() + 1).toLocaleString("en-US", {minimumIntegerDigits: 2,
+    useGrouping: false}) + "/" + fechaObj.getFullYear() + " " + 
+    fechaObj.getHours() + ":" + fechaObj.getMinutes()
+}
+
 function verificarScroll() {
   var scrollTop = $('#chat-messages').scrollTop();
   var scrollHeight = $('#chat-messages')[0].scrollHeight;
-  //console.log(scrollTop)
   if (scrollTop < scrollTopInicial) {
     $('#irAbajoIcon').show('swing');
   } else {
     $('#irAbajoIcon').hide('swing');
   }
+}
+
+function cerrarChat() {
+  $("#vistasContainer").load("Partials/_Bienvenida")
 }

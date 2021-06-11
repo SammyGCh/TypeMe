@@ -20,7 +20,7 @@
                         <a class="dropdown-item" onclick="irAMiPerfil()" style="cursor: pointer;">
                             <i class='bx bxs-user' style="color: #D30000;"></i>&nbsp;&nbsp;Mi perfil
                         </a>
-                        <a class="dropdown-item" onclick="cerrarSesion()" style="cursor: pointer;">
+                        <a class="dropdown-item" onclick="abrirListaMisContactos()" style="cursor: pointer;">
                             <i class='bx bxs-contact' style="color: #D30000;"></i>&nbsp;&nbsp;Contactos
                         </a>
                         <a class="dropdown-item" onclick="cerrarSesion()" style="cursor: pointer;">
@@ -169,6 +169,30 @@
   </div>
 </div>
 
+<div class="modal fade" id="misContactosDialog" tabindex="-1" role="dialog" aria-labelledby="misContactosDialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #D30000;">
+        <h5 class="modal-title" style="color: white;">Mis contactos</h5>
+        <button type="button" class="close" onclick="cerrarMisContactosDialog()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="loader2" id="loader2"></div>
+        <span id="mensajeErrorMisContactos" style="display: none;"></span>
+        <div id="listaMisContactos" class="listaMisContactos">
+            
+        </div>    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" style="width: 100px; padding: 10px;"
+        onclick="cerrarMisContactosDialog()" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @section Scripts {
     <script>
       var grupoSeleccionado = {}
@@ -224,6 +248,7 @@
     <script src="~/js/signalrController.js"></script>
     <script src="~/js/chat.js"></script>
     <script src="~/js/agregarIntegrantes.js"></script>
+    <script src="~/js/salirDeGrupo.js"></script>
 }
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>

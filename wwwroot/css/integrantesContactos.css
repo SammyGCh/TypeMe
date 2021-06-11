@@ -52,3 +52,11 @@
 .contactoContainer-seleccionado {
     background-color: #d30000;
 }
+
+.listaDeContactosIntegrantes {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: block;
+    height: 370px;
+    width: 480px;
+}

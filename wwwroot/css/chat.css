@@ -72,34 +72,12 @@
     margin-top: 20px;
 }
 
-/* .chat-title {
-    color: white;
-    text-align: left;
-    margin-left: 20px;
-    margin-top: 15px;
-}
-
-.chat-description {
-    text-align: center;
-    color: white;
-    font-size: medium;
-    margin-top: 15px;
-}
-
-.group-options {
-    color: white;
-    text-align: right;
-    margin-left: 50px;
-    margin-top: 15px;
-} */
-
 .chat-multimedia {
     width: 15%;
     text-align: left; 
 }
 
 .chat-input {
-    /* width: 33.33333%; */
     width: 500px;
     height: 40px;
     text-align: left;
@@ -141,6 +119,8 @@
     padding: 10px;
     margin: 10px 0 10px 0;
     width: 350px;
+    min-width: 350px;
+    max-width: 400px;
     text-align: right;
     margin-right: 0;
     margin-left: auto;
@@ -153,15 +133,19 @@
     color: #aaa;
 }
 
+.chat-sent-message p {
+    text-align: left;
+}
+
 .chat-sent-message h1 {
     color: #aaa;
     font-size: medium;
 }
 
 .chat-sent-message img {
-    width: 300px;
+    width: 100%;
     height: 300px;
-    border-radius: 10px;
+    cursor: pointer;
 }
 
 .chat-received-message {
@@ -177,12 +161,6 @@
     height: auto;
 }
 
-/* .chat-received-message::after {
-    content: "";
-    clear: both;
-    display: table;
-} */
-
 .chat-received-message h1 {
     color: black;
     font-size: medium;
@@ -195,9 +173,9 @@
 }
 
 .chat-received-message img {
-    width: 300px;
+    width: 100%;
     height: 300px;
-    border-radius: 10px;
+    cursor: pointer;
 }
 
 .fileSelected {

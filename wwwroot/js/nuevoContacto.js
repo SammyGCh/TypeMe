@@ -60,10 +60,11 @@ $("#usuarioContacto").keypress(function () {
 })
 
 function mostrarMensajeContactoAgregado(nuevoContacto) {
+    
+    $("#dialog").modal("show")
     $("#modalDialogTitle").text("Contacto agregado")
     $("#nuevoContactoUsername").text(nuevoContacto)
     $("#mensajeContactoAgregado").show()
-    $("#dialog").modal("show")
 }
 
 $('#agregarContactoDialog').on('hidden.bs.modal', function (e) {

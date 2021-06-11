@@ -2,11 +2,8 @@
 @using TypeMeWeb.Models
 @model ListaIntegrantesContactosModel
 @{
-    List<ContactoDominio> Contactos = ViewData["Contactos"] as List<ContactoDominio>;
-    List<Typer> IntegrantesGrupos = ViewData["IntegrantesGrupos"] as List<Typer>;
-    
     bool EsIntegrante(ContactoDominio contacto){
-        return IntegrantesGrupos.Any(typer => typer.IdTyper.Equals(contacto.Contacto.IdTyper));
+        return Model.IntegrantesGrupos.Any(typer => typer.IdTyper.Equals(contacto.Contacto.IdTyper));
     }
 }
 

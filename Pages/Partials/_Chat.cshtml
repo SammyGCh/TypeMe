@@ -25,10 +25,10 @@
                 <a class="dropdown-item" style="cursor: pointer;">
                     <i class='bx bx-info-circle' style="color: #D30000;"></i>&nbsp;&nbsp;Info del grupo
                 </a>
-                <a class="dropdown-item" style="cursor: pointer;">
+                <a class="dropdown-item" style="cursor: pointer;" onclick="salirDelGrupo('@Model.Grupo.Nombre' ,@Model.Grupo.IdGrupo, '@Model.TyperEnSesion.IdTyper')">
                     <i class='bx bx-exit' style="color: #D30000;"></i>&nbsp;&nbsp;Salir del grupo
                 </a>
-                <a class="dropdown-item" style="cursor: pointer;">
+                <a class="dropdown-item" style="cursor: pointer;" onclick="cerrarChat()">
                     <i class='bx bx-x-circle' style="color: #D30000;"></i>&nbsp;&nbsp;Cerrar chat
                 </a>
             </div>
@@ -52,7 +52,7 @@
                                     <img src="@mensaje.IdMultimedia">
                                 }
                                 <p>@mensaje.Contenido</p>
-                                <span>@mensaje.Hora</span>
+                                <span>@mensaje.Fecha.ToString("dd/MM/yyy") @mensaje.Hora</span>
                             </div>
                         </li>
                     }
@@ -66,7 +66,7 @@
                                     <img src="@mensaje.IdMultimedia">
                                 }
                                 <p>@mensaje.Contenido</p>
-                                <span>@mensaje.Hora</span>
+                                <span>@mensaje.Fecha.ToString("dd/MM/yyy") @mensaje.Hora</span>
                             </div>
                         </li>
                     }
@@ -125,38 +125,57 @@
 
 </div>
 
-<div class="modal fade" id="agregarIntegrantesDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="agregarIntegrantesDialog" tabindex="-1" role="dialog" aria-labelledby="agregarIntegrantesDialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header" style="background-color: #D30000;">
         <h5 class="modal-title" id="agregarIntegrantesDialogTitle" style="color: white;">Agregar integrantes</h5>
+        <button type="button" class="close" onclick="cerrarAgregarIntegranteDialog()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <h6>Selecciona el/los nuevo(s) integrante(s)</h6>
+        <span id="mensajeErrorNuevosIntegrantes" style="color: #D30000; display: none;"></span>
+
+        <div id="listaContactosIntegrantes" class="listaDeContactosIntegrantes">
+          <div class="loader" id="loader"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="botonCancelarAgregacion" type="button" class="btn btn-danger" style="width: 100px; padding: 10px;"
+        onclick="cerrarAgregarIntegranteDialog()">Cancelar</button>
+
+        <button id="botonAgregarContacto" type="button" class="btn btn-danger" 
+            style="width: 150px; padding: 10px;" onclick="agregarNuevosIntegrantes()">Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="salirDeGrupoDialog" tabindex="-1" role="dialog" aria-labelledby="salirDeGrupoDialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #D30000;">
+        <h5 class="modal-title" id="salirDeGrupoDialogTitle" style="color: white;">Salir de grupo</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-          <h6>Selecciona el/los nuevo(s) integrante(s)</h6>
-
-          <div id="listaContactosIntegrantes" >
-              <div class="loader" id="loader"></div>
-          </div>
+        <p>¿Está seguro que desea salir del grupo <b id="nombreGrupoASalir"></b> ?</p>
       </div>
       <div class="modal-footer">
-        <button id="botonCancelarAgregacion" type="button" class="btn btn-danger" style="width: 100px; padding: 10px;"
-        data-dismiss="modal" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" style="width: 100px; padding: 10px;"
+        data-dismiss="modal">Cancelar</button>
 
-        <button id="botonAgregarContacto" type="button" class="btn btn-danger" 
-            style="width: 150px; padding: 10px;">Agregar</button>
+        <button type="button" class="btn btn-danger" 
+            style="width: 150px; padding: 10px;" onclick="confirmarSalidaDeGrupo()">Aceptar</button>
       </div>
     </div>
   </div>
 </div>
 
 
-@section Scripts {
-    
-}
-
-
-
 <link rel="stylesheet" href="~/css/chat.css" />
+<link rel="stylesheet" href="~/css/integrantesContactos.css" />
