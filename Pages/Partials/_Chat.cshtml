@@ -22,7 +22,7 @@
                 <a class="dropdown-item" style="cursor: pointer;" onclick="mostrarAgregarIntegrantesDialog(@Model.Grupo.IdGrupo, '@Model.TyperEnSesion.IdTyper')">
                     <i class='bx bxs-user-plus' style="color: #D30000;"></i>&nbsp;&nbsp;Nuevo integrante
                 </a>
-                <a class="dropdown-item" style="cursor: pointer;">
+                <a class="dropdown-item" style="cursor: pointer;" onclick="consultarInfoDeGrupo(@Model.Grupo.IdGrupo)">
                     <i class='bx bx-info-circle' style="color: #D30000;"></i>&nbsp;&nbsp;Info del grupo
                 </a>
                 <a class="dropdown-item" style="cursor: pointer;" onclick="salirDelGrupo('@Model.Grupo.Nombre' ,@Model.Grupo.IdGrupo, '@Model.TyperEnSesion.IdTyper')">
@@ -171,6 +171,35 @@
 
         <button type="button" class="btn btn-danger" 
             style="width: 150px; padding: 10px;" onclick="confirmarSalidaDeGrupo()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="infoDeGrupoDialog" tabindex="-1" role="dialog" aria-labelledby="infoDeGrupoDialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #D30000;">
+        <h5 class="modal-title" id="infoDeGrupoDialogTitle" style="color: white;">Información del grupo</h5>
+        <button type="button" class="close" onclick="cerrarInfoGrupoDialog()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="infoGrupo">
+            <div class="loader3" id="loader3"></div>
+            <span id="nombreDelGrupo" class="nombreDelGrupo"></span>
+            <span id="descripcionDelGrupo" class="descripcionDelGrupo"></span>
+            <span id="fechaCreacionDelGrupo" class="fechaCreacionDelGrupo"></span>
+        </div>
+        <div id="listaIntegrantesDeGrupo" class="listaIntegrantesDeGrupo">
+            <span><b>Integrantes del grupo:</b></span>
+            <div class="loader4" id="loader4"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" style="width: 100px; padding: 10px;"
+        onclick="cerrarInfoGrupoDialog()">Cerrar</button>
       </div>
     </div>
   </div>

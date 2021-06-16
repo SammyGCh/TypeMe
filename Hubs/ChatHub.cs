@@ -15,5 +15,9 @@ namespace TypeMeWeb.Hubs
         {
             await Clients.All.SendAsync("RecibirMensaje", mensaje);
         }
+
+        public async Task AgregarNuevoIntegrante(string idTyper) {
+            await Clients.All.SendAsync("EntrarANuevoGrupo", idTyper);
+        }
     }
 }

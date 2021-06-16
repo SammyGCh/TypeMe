@@ -105,8 +105,13 @@ function agregarNuevosIntegrantes() {
           contentType: 'application/json',
           data: JSON.stringify(nuevosIntegrantesInfo.integrantes),
           success: function (response) {
-              console.log(response)
             if (response.status === true) {
+                response.result.forEach(nuevoIntegrante => {
+                    chatConnection.invoke("AgregarNuevoIntegrante", nuevoIntegrante.IdTyper).catch(function (err) {
+                        return console.log(err)
+                    })
+                })
+                
                 mostrarMensajeNuevoIntegrante()
             } else {
               mostrarMensajeErrorNuevosIntegrantes(response.message)

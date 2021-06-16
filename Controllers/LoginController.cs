@@ -105,5 +105,28 @@ namespace TypeMeWeb.Controllers
                 grupos = gruposEnSesion
             });
         }
+
+        [HttpGet]
+        public IActionResult ObtenerGrupo(int idGrupo) 
+        {
+            byte[] gruposArr;
+            HttpContext.Session.TryGetValue("MisGrupos", out gruposArr);
+
+            if(gruposArr == null)
+                return new JsonResult(new {status = false});
+
+            string cadena = Encoding.UTF8.GetString(gruposArr);
+            List<Grupo> gruposEnSesion = JsonSerializer.Deserialize<List<Grupo>>(cadena);
+
+            Grupo grupoConsultado = gruposEnSesion.FirstOrDefault(grupo => grupo.IdGrupo == idGrupo);
+
+            if(grupoConsultado == null)
+                return new JsonResult(new {status = false});
+
+            return new JsonResult(new {
+                status = true,
+                grupo = grupoConsultado
+            });
+        }
     }
 }

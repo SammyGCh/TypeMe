@@ -21,15 +21,12 @@ function cerrarSesion() {
 function abrirListaMisContactos() {
     $("#misContactosDialog").modal('show')
 
-    //idTyper: result.typer.idTyper
     obtenerTyperEnSesion()
     .then((result) => {
-        console.log(result)
         if(result.status === true) {
             var idTyper = result.typer.idTyper
             buscarContactos(idTyper)
             .then((resultado) => {
-                console.log(resultado)
                 $("#loader2").hide()
                 var contactos = Array.from(resultado.result)
                 
@@ -82,8 +79,9 @@ function obtenerTyperEnSesion() {
 function mostrarMisContactos(misContactos) {
     misContactos.forEach(contacto => {
         $("#listaMisContactos").append(
-            '<div id="'+ contacto.contacto.IdTyper +'" class="contactoContainer">' +
-                '<span>' + contacto.contacto.Username + '</span>'
+            '<div id="'+ contacto.contacto.IdTyper +'" class="integrante">' +
+                '<span class="nombreIntegrante">' + contacto.contacto.Username + '</span>' +
+                '<span class="estadoIntegrante">' + contacto.contacto.Estado + '</span>'
             +'</div>'
         )
     })
