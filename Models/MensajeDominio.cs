@@ -7,19 +7,19 @@ namespace TypeMeWeb.Models
 {
     public class MensajeDominio
     {
-        [JsonPropertyName("idMensaje")]
+        [JsonPropertyName("IdMensaje")]
         public int IdMensaje { get; set; }
-        [JsonPropertyName("contenido")]
+        [JsonPropertyName("Contenido")]
         public string Contenido { get; set; }
-        [JsonPropertyName("fecha")]
+        [JsonPropertyName("Fecha")]
         public DateTime Fecha { get; set; }
         [JsonIgnore]
         public String Hora { get {return Fecha.ToString("HH:mm");} set {} }
-        [JsonPropertyName("idGrupo")]
+        [JsonPropertyName("IdGrupo")]
         public int IdGrupo { get; set; }
-        [JsonPropertyName("typer")]
+        [JsonPropertyName("Typer")]
         public Typer Typer { get; set; }
-        [JsonPropertyName("idMultimedia")]
+        [JsonPropertyName("IdMultimedia")]
         public string IdMultimedia { get; set; }
     }
 }
