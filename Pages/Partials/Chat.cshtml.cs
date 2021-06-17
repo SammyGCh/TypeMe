@@ -17,6 +17,7 @@ namespace TypeMeWeb.Pages.Partials
     public class ChatModel : PageModel
     {
         private readonly ILogger<ErrorModel> _logger;
+        private static string URL_API = Environment.GetEnvironmentVariable("URL_API");
         private WebClient webClient;
         [ViewData]
         public Grupo Grupo { get; set; }
@@ -59,8 +60,7 @@ namespace TypeMeWeb.Pages.Partials
 
             try
             {
-                mensajesJson =  await webClient.DownloadStringTaskAsync("http://localhost:4000/mensajes/obtenerMensajes/" + idGrupo);
-                
+                mensajesJson =  await webClient.DownloadStringTaskAsync(URL_API + "/mensajes/obtenerMensajes/" + idGrupo);
             }
             catch (System.Exception)
             {

@@ -20,7 +20,8 @@
                 "pattern": "\\\\bNow listening on:\\\\s+(https?://\\\\S+)"
             },
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "URL_API": "http://localhost:4000"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"

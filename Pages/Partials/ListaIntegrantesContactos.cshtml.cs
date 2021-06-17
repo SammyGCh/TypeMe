@@ -16,6 +16,7 @@ namespace TypeMeWeb.Pages.Partials
     public class ListaIntegrantesContactosModel : PageModel
     {
         private readonly ILogger<ErrorModel> _logger;
+        private static string URL_API = Environment.GetEnvironmentVariable("URL_API");
         private WebClient webClient;
 
         [ViewData]
@@ -44,7 +45,7 @@ namespace TypeMeWeb.Pages.Partials
 
             try
             {
-                integrantesJson =  await webClient.DownloadStringTaskAsync("http://localhost:4000/mensajes/integrantesDeGrupo/" + idGrupo);
+                integrantesJson =  await webClient.DownloadStringTaskAsync(URL_API + "/mensajes/integrantesDeGrupo/" + idGrupo);
                 
             }
             catch (System.Exception)
@@ -64,7 +65,7 @@ namespace TypeMeWeb.Pages.Partials
 
             try
             {
-                contactosJson =  await webClient.DownloadStringTaskAsync("http://localhost:4000/typers/obtenerContactos/" + idTyper);
+                contactosJson =  await webClient.DownloadStringTaskAsync(URL_API + "/typers/obtenerContactos/" + idTyper);
                 
             }
             catch (System.Exception)

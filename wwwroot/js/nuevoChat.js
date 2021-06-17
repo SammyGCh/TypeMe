@@ -45,6 +45,7 @@ function prep_modal() {
                 $("#mensajeError").hide();
                 $(siguienteBoton).text('Crear chat');
                 buscarContactos()
+                console.log("entré aquí, al click")
             }
         }
         else if (page_track == paginaSeleccionContactos) {
@@ -78,13 +79,14 @@ function prep_modal() {
 }
 
 function buscarContactos() {
-
+  console.log("entré al metodo 1")
   if (contactosYaMostrados === false) {
     $.ajax({
       type: 'GET',
       url: '/Login/ObtenerTyperEnSesion',
       contentType: 'application/json',
       success: function (result) {
+        console.log(result)
         if (result.status === true) {
           idTyper = result.typer.idTyper;
 
@@ -99,6 +101,7 @@ function buscarContactos() {
 }
 
 function mostrarContactosDeTyper(idTyper) {
+  console.log("entré al metodo 2")
     $.ajax({
       type: 'GET',
       url: 'http://localhost:4000/typers/obtenerContactos/' + idTyper,
