@@ -27,8 +27,8 @@
     <string name="action_settings1">Configuración 1</string>
     <string name="action_settings2">Configuración 2</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_home">Chats</string>
+    <string name="menu_gallery">Contactos</string>
+    <string name="menu_slideshow">Mi perfil</string>
     <string name="title_activity_registrar_cuenta">RegistrarCuentaActivity</string>
 </resources>

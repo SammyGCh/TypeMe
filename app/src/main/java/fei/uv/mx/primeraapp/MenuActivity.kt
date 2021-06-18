@@ -3,6 +3,7 @@ package fei.uv.mx.primeraapp
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -30,8 +31,8 @@ class MenuActivity : AppCompatActivity() {
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
-            val intento = Intent(this, EditarAlumnoActivity::class.java)
-            startActivityForResult(intento, AlumnoNuevoGuardado)
+            val toast = Toast.makeText(this@MenuActivity, "Función en proceso", Toast.LENGTH_LONG)
+            toast.show()
         }
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
